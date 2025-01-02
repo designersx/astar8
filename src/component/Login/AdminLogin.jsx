@@ -14,6 +14,7 @@ export default function AdminLogin() {
   const [error, setError] = useState("");
   const [isButtonDisabled, setButtonDisabled] = useState(true);
   const [isEmailInvalid, setEmailInvalid] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isPasswordInvalid, setPasswordInvalid] = useState(false);
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -32,7 +33,7 @@ export default function AdminLogin() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     let hasError = false;
 
     if (!validateEmail(email)) {
@@ -76,6 +77,8 @@ export default function AdminLogin() {
     } catch (apiError) {
       console.error("Login API Error:", apiError.message);
       setError(apiError.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -142,7 +145,7 @@ export default function AdminLogin() {
                         className="btn btn-primary btn-lg btn-block"
                         // disabled={isButtonDisabled}
                       >
-                        Login
+                        {loading ? "Loading..." : "Login"}
                       </button>
                     </div>
                   </div>
