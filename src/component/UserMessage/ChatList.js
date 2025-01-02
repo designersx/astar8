@@ -1,0 +1,36 @@
+import React, { useState } from "react";
+import ChatItem from "./ChatItem";
+
+const ChatList = ({ users, onSelectUser }) => {
+  // console.log("userListdddddd",users)
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredUsers = users?.filter((user) =>
+    user.user_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div className="chat-list bg-light-gray">
+      <div className="chat-search">
+        <span className="ti-search" />
+        <input
+          type="text"
+          placeholder="Search Contact"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      <div className="notification-list">
+        {filteredUsers && filteredUsers.length > 0 ? (
+          filteredUsers.map((user) => (
+            <ChatItem key={user.user_id} user={user} onSelectUser={onSelectUser} />
+          ))
+        ) : (
+          <p>No user found</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default ChatList;

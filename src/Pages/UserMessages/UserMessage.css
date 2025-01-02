@@ -1,0 +1,11 @@
+
+.datesearch {
+  display: flex;
+  width: 100%;
+  justify-content: right;
+  align-items: center;
+}
+.input-b{
+    align-items: center;
+    display: flex;
+}
