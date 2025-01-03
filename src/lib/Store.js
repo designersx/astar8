@@ -186,6 +186,7 @@ export const setSeenMessages = async (data) => {
   }
 };
 
+// add daily forecast
 export const addDailyForecast = async (token, date, prediction) => {
   try {
     const response = await axios.post(
@@ -204,6 +205,22 @@ export const addDailyForecast = async (token, date, prediction) => {
     return error;
   }
 };
+
+// ..get daily like dislike
+
+// export const getDailyLikeDislike = async (predictionId) => {
+//   try {
+//     const response = await axios.get(
+//       `${Url}/p1g6s9ik3n/gj276m301s/${predictionId}`
+//     );
+//     const data = response.data;
+//     return data;
+//   } catch (error) {
+//     console.log(error, "error");
+//     return error;
+//   }
+// };
+
 // get forecast
 export const getForecastData = async (token, status) => {
   try {
@@ -219,6 +236,18 @@ export const getForecastData = async (token, status) => {
     return data;
   } catch (error) {
     console.log("errorrr", error);
+    return error;
+  }
+};
+
+// .admin dashboard api
+export const dashboardApi = async (req, res) => {
+  try {
+    const response = await axios.get(`${Url}/d8km1ch50/d37km1o0qf`);
+    const data = response.data;
+    return data;
+  } catch (error) {
+    console.log(error, "error");
     return error;
   }
 };

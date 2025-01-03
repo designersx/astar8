@@ -15,7 +15,8 @@ export default function Profile() {
   const [updatedUsername, setUpdatedUsername] = useState("");
   const [updatedEmail, setUpdatedEmail] = useState("");
   const [imageSrc, setImageSrc] = useState(null);
-  const [loading,setLoading]=useState(false)
+  const [loading,setLoading]=useState(false);
+  const [isDisable,setIsdisable]=useState(false)
   const fileInputRef = useRef(null);
   const handleIconClick = () => {
     fileInputRef.current.click();
@@ -86,7 +87,9 @@ export default function Profile() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
+    setIsdisable(true);
+    console.log("Button disabled state:", isDisable)
     try {
       const id = localStorage.getItem("userId");
       const name = updatedUsername;
@@ -103,6 +106,7 @@ export default function Profile() {
       console.log(error, "error");
     }finally{
       setLoading(false)
+      setIsdisable(false)
     }
   };
   return (
@@ -251,6 +255,7 @@ export default function Profile() {
                                     type="button"
                                     className="btn btn-primary"
                                     onClick={onUpdateClick}
+                                    disabled={isDisable}
                                   >
                                     Update Profile
                                   </button>

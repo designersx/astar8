@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
-import { getForecastData } from "../../lib/Store";
+import { getDailyLikeDislike, getForecastData } from "../../lib/Store";
 import Loader from "../Loader/Loader";
 
 export default function DailyForecartList() {
@@ -12,10 +12,12 @@ export default function DailyForecartList() {
   const name = localStorage.getItem("name");
   const token = localStorage.getItem("UserToken");
 
+
   const fetchForecastData = async (status = "all") => {
     try {
       setLoading(true);
       const response = await getForecastData(token, status);
+      console.log(response,"ASDFGHJ")
       setForecastData(response?.predictions || []);
     } catch (error) {
       console.error("Error fetching forecast data:", error);
