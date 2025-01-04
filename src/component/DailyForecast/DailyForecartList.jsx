@@ -8,16 +8,16 @@ export default function DailyForecartList() {
   const [displayCount, setDisplayCount] = useState(5);
   const [selectedTab, setSelectedTab] = useState("all");
   const [loading, setLoading] = useState(false);
+  console.log("foreCastData", ForecastData);
 
   const name = localStorage.getItem("name");
   const token = localStorage.getItem("UserToken");
-
 
   const fetchForecastData = async (status = "all") => {
     try {
       setLoading(true);
       const response = await getForecastData(token, status);
-      console.log(response,"ASDFGHJ")
+      console.log(response, "ASDFGHJ");
       setForecastData(response?.predictions || []);
     } catch (error) {
       console.error("Error fetching forecast data:", error);
@@ -52,6 +52,16 @@ export default function DailyForecartList() {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", options);
   };
+
+  function convertFirestoreTimestampToDate(timestamp) {
+    const { _seconds } = timestamp;
+    const date = new Date(_seconds * 1000); // Convert seconds to milliseconds
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getUTCDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
 
   return (
     <>
@@ -195,9 +205,20 @@ export default function DailyForecartList() {
                                               color: "#888",
                                             }}
                                           >
-                                            {formatDate(
+                                            {typeof forecast.prediction_date ===
+                                              "object" &&
+                                            "_seconds" in
+                                              forecast.prediction_date &&
+                                            "_nanoseconds" in
                                               forecast.prediction_date
-                                            )}
+                                              ? formatDate(
+                                                  convertFirestoreTimestampToDate(
+                                                    forecast.prediction_date
+                                                  )
+                                                )
+                                              : formatDate(
+                                                  forecast.prediction_date
+                                                )}
                                           </span>
                                         </div>
 
@@ -230,18 +251,24 @@ export default function DailyForecartList() {
                                             <div
                                               style={{
                                                 padding: "4px 8px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: "4px",
                                               }}
                                             >
-                                              <AiFillLike color="green" />(
-                                              {forecast.likes})
+                                              <AiFillLike color="green" />{" "}
+                                              {forecast.likes}
                                             </div>
                                             <div
                                               style={{
                                                 padding: "4px 8px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: "4px",
                                               }}
                                             >
-                                              <AiFillDislike color="red" />(
-                                              {forecast.dislikes})
+                                              <AiFillDislike color="red" />
+                                              {forecast.dislikes}
                                             </div>
                                           </div>
                                           <a
