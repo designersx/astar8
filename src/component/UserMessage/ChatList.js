@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChatItem from "./ChatItem";
+import Loader from "../Loader/Loader";
 
 const ChatList = ({ users, onSelectUser }) => {
   // console.log("userListdddddd",users)
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true); // Add loading state
+  useEffect(() => {
+    if (users) {
+      setLoading(false);
+    }
+  }, [users]);
 
   const filteredUsers = users?.filter((user) =>
     user.user_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -21,9 +28,17 @@ const ChatList = ({ users, onSelectUser }) => {
         />
       </div>
       <div className="notification-list">
-        {filteredUsers && filteredUsers.length > 0 ? (
+        {loading ? (
+          <div className="">
+            <Loader />
+          </div>
+        ) : filteredUsers && filteredUsers.length > 0 ? (
           filteredUsers.map((user) => (
-            <ChatItem key={user.user_id} user={user} onSelectUser={onSelectUser} />
+            <ChatItem
+              key={user.user_id}
+              user={user}
+              onSelectUser={onSelectUser}
+            />
           ))
         ) : (
           <p>No user found</p>

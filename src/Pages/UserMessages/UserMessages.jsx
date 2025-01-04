@@ -9,8 +9,10 @@ import { getAdminUserMessages } from "../../lib/Store";
 
 const UserMessages = () => {
   const [usersList, setUsersList] = useState();
+  console.log("userListtt",usersList)
   const [selectedUser, setSelectedUser] = useState(null);
   const [sample, setsample] = useState(0)
+  const [userId, setuserId] = useState(localStorage.getItem("userId") || "")
 
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -27,6 +29,7 @@ const UserMessages = () => {
 
   const fetchUserList = async () => {
     const finalDate = {
+      receiver_id:userId,
       from:fromDate,
       to:toDate
     }

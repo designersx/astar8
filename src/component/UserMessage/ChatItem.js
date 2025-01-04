@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { setSeenMessages } from "../../lib/Store";
 
 const ChatItem = ({ user, onSelectUser }) => {
   // console.log("chatitemmmmm", user);
+  const [unseenMessagesCount, setUnseenMessagesCount] = useState(0);
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "short", day: "numeric" };
@@ -10,9 +11,20 @@ const ChatItem = ({ user, onSelectUser }) => {
     return date.toLocaleDateString("en-US", options);
   };
 
-  const unseenMessagesCount = user.messages.filter(
-    (message) => message.messageSeenStatus === 0
-  ).length;
+  useEffect(() => {
+    const count = user.messages.filter(
+      (message) => message.messageSeenStatus === 0
+    ).length;
+    console.log("countttt",count)
+    setUnseenMessagesCount(count);
+  }, [user]);
+  
+  // console.log("unseeen Messs", unseenMessagesCount);
+
+  const mostRecentMessage = user.messages.sort(
+    (a, b) => new Date(b.message_created_at) - new Date(a.message_created_at)
+  )[0];
+
 
   const setSeenMessage = async (id) => {
     const finalDate = {
@@ -23,7 +35,6 @@ const ChatItem = ({ user, onSelectUser }) => {
     // console.log("ress",response)
     onSelectUser(id);
   };
-
 
   return (
     <div className="chat-item py-2  border-bottom">
@@ -52,7 +63,7 @@ const ChatItem = ({ user, onSelectUser }) => {
               {user.user_name}
             </h6>
             <span className="text-muted small">
-              {formatDate(user.messages[0].message_created_at)}
+              {formatDate(mostRecentMessage.message_created_at)}
             </span>
           </div>
 

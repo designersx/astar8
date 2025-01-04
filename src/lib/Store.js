@@ -162,17 +162,16 @@ export const getAdminUserMessages = async (finalData) => {
   }
 };
 
-export const getUserChatMessages = async (userId) => {
+export const getUserChatMessages = async (finaldata) => {
   try {
-    const response = await axios.post(`${Url}/m1afg56903/zopdyhg57d`, {
-      userId: userId,
-    });
+    const response = await axios.post(`${Url}/m1afg56903/zopdyhg57d`,finaldata)
     const data = await response.data;
     return data;
   } catch (error) {
     return error;
   }
 };
+
 
 // message Seen Unseen
 export const setSeenMessages = async (data) => {

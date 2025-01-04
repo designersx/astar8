@@ -4,22 +4,38 @@ import { SiMinutemailer } from "react-icons/si";
 import { getUserChatMessages, setSeenMessages } from "../../lib/Store";
 import { io } from "socket.io-client";
 import { BeatLoader } from "react-spinners";
+import Loader from "../Loader/Loader";
 
 const ChatDetails = ({ user, onMessageSent }) => {
-  const adminId = 6;
+  // console.log("userrr", user);
   const [userChatMessages, setUserChatMessages] = useState([]);
-  // console.log("userrr", userChatMessages);
+  // console.log("userMEssss", userChatMessages);
   const [messageInput, setMessageInput] = useState("");
   const [socket, setSocket] = useState(null);
   const [loading, setLoading] = useState(true); // Add loading state
+  const [adminId, setadminId] = useState(localStorage.getItem("userId" || ""));
+  const [adminProfile, setadminProfile] = useState(localStorage.getItem("profilePic" || ""))
 
   const messagesEndRef = useRef(null);
 
   const fetchUserChats = async () => {
     setLoading(true);
-    const response = await getUserChatMessages(user?.user_id);
+    const finalData = {
+      senderId: adminId,
+      receiverId: user?.user_id,
+    };
+    const response = await getUserChatMessages(finalData);
     setUserChatMessages(response.messages);
     setLoading(false);
+  };
+
+  const setSeenMessage = async (id) => {
+    const finalDate = {
+      userId: id,
+      isSeen: 1,
+    };
+    const response = await setSeenMessages(finalDate);
+    // console.log("ress",response)
   };
 
   useEffect(() => {
@@ -32,33 +48,43 @@ const ChatDetails = ({ user, onMessageSent }) => {
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
-      newSocket.emit("register", { userId: 6 }); // Replace 6 with the actual user ID
+      newSocket.emit("register", { userId: adminId });
     });
 
     // Listen for real-time messages
     newSocket.on("receive-message", (data) => {
       console.log("Received message:", data);
-      const data1 = {
-        created: data.timestamp,
-        message: data.message,
-        messageId: data.messageId,
-        receiverId: data.recipientId,
-        senderId: data.userId,
-        updated: data.timestamp,
-      };
-      setUserChatMessages((prevMessages) => [...prevMessages, data1]);
+
+      // Add message only if it's from the current chat
+      if (data.userId === user?.user_id || data.recipientId === user?.user_id) {
+        const formattedMessage = {
+          created: data.timestamp,
+          message: data.message,
+          messageId: data.messageId,
+          receiverId: data.recipientId,
+          senderId: data.userId,
+          updated: data.timestamp,
+        };
+
+        setUserChatMessages((prevMessages) => [
+          ...prevMessages,
+          formattedMessage,
+        ]);
+        // console.log("asdsadadsd",user?.user_id)
+        setSeenMessage(user?.user_id);
+      }
       onMessageSent();
     });
 
     return () => newSocket.disconnect();
-  }, []);
+  }, [user]);
 
   // Send a message to the server
   const handleSendMessage = () => {
     if (!messageInput.trim()) return;
 
     const messageData = {
-      userId: "6",
+      userId: adminId,
       recipientId: user?.user_id,
       message: messageInput,
     };
@@ -80,10 +106,6 @@ const ChatDetails = ({ user, onMessageSent }) => {
     return date.toLocaleTimeString("en-US", options);
   };
 
-  // useEffect(() => {
-  //   console.log("trigger done");
-  // }, [userChatMessages]);
-
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -93,7 +115,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
   useEffect(() => {
     const setSeenMessage = async () => {
       if (user) {
-        console.log("checkUserrr---------0", user.user_id);
+        // console.log("checkUserrr---------0", user.user_id);
         const finalDate = {
           userId: user.user_id,
           isSeen: 1,
@@ -101,7 +123,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
 
         try {
           const response = await setSeenMessages(finalDate);
-          console.log("Message seen response:", response);
+          // console.log("Message seen response:", response);
         } catch (error) {
           console.error("Error setting message as seen:", error);
         }
@@ -178,7 +200,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
             >
               {loading ? (
                 <div className="text-center">
-                  <BeatLoader color="black" size={10} />
+                  <Loader />
                 </div> // Loading indicator
               ) : (
                 <div>
@@ -195,7 +217,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
                       {message.senderId === user?.user_id && (
                         <img
                           src={
-                            message.profilePic ||
+                            user.user_profile_pic ||
                             "https://be.astar8.com/images/dummy.jpg"
                           }
                           alt="User profile"
@@ -230,7 +252,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
                       {message.senderId !== user?.user_id && (
                         <img
                           src={
-                            message.profilePic ||
+                            adminProfile ||
                             "https://be.astar8.com/images/dummy.jpg"
                           }
                           alt="User profile"
