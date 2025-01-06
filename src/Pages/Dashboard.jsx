@@ -1,6 +1,21 @@
-import React from "react";
+import {React,useEffect,useState} from "react";
 import Header from "../component/Dashboard/Header";
+import { dashboardApi } from "../lib/Store";
 export default function DashBoard() {
+  const [activeCount, setactiveCount] = useState([]);
+  const [totalCount,setTotalCount]=useState([])
+  const fetchDashboardData = async () => {
+    try {
+      const response = await dashboardApi();
+      setactiveCount(response.activeCount)
+      setTotalCount(response.totalCount)
+    } catch (err) {
+      console.log(err, "error");
+    }
+  };
+  useEffect(() => {
+    fetchDashboardData();
+  }, [totalCount,activeCount]);
   return (
     <>
       <Header />
@@ -31,7 +46,7 @@ export default function DashBoard() {
                 <div className="progress-box text-center">
                   <h5 className="text-blue padding-top-10 h5"> Total User</h5>
                   <span className="d-block">
-                    23020 Users <i className="fa fa-line-chart text-blue" />
+                    {totalCount} Users <i className="fa fa-line-chart text-blue" />
                   </span>
                 </div>
               </div>
@@ -45,7 +60,7 @@ export default function DashBoard() {
                   </h5>
                   <span className="d-block">
                     {" "}
-                    17023 Users{" "}
+                   {activeCount} Users{" "}
                     <i className="fa text-light-green fa-line-chart" />
                   </span>
                 </div>
@@ -77,7 +92,7 @@ export default function DashBoard() {
               </div>
             </div>
           </div>
-          <div className="row" style={{marginTop:"35px"}}>
+          <div className="row" style={{ marginTop: "35px" }}>
             <div className="col-lg-12 col-md-12 col-sm-12 mb-30">
               <div className="card-box pd-30 height-100-p">
                 <div className="compChart">

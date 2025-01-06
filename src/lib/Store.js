@@ -1,5 +1,5 @@
 import axios from "axios";
-export const Url = "http://localhost:5243";
+export const Url = "http://localhost:5234";
 export const LoginApi = async (email, password) => {
   try {
     const response = await axios.post(
@@ -250,3 +250,19 @@ export const dashboardApi = async (req, res) => {
     return error;
   }
 };
+
+export const userDetailedData = async (id, token) => {
+  try {
+    const response = await axios.get(`${Url}/u163mjh02f/usrdlsp87a/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = response.data;
+    return data;
+  } catch (error) {
+    console.log(error, "error");
+    return error;
+  }
+};
+

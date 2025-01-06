@@ -35,7 +35,7 @@ import PartnerRelationships from './Pages/PartnerRelationships/PartnerRelationsh
 import ChildrenPage from './Pages/ChildrenPage/ChildrenPage';
 import CompatibilityPercentage from './Pages/CompatibilityPercentage/CompatibilityPercentage';
 import CompatibiltyDesc from './Pages/CompatibiltyDesc/CompatibiltyDesc';
-
+import UserDetailedData from './component/Users/UserDetailedData';
 function App() {
   return (
     <AppProvider>
@@ -73,6 +73,7 @@ function App() {
         <Route path="/usermessages" element={<PrivateRoute element={UserMessages} />} />
         <Route path="/general-settings" element={<PrivateRoute element={GeneralSettings} />} />
         <Route path="/payment" element={<PrivateRoute element={PaymentSetting} />} />
+        <Route path="/userDetailedData" element={<PrivateRoute element={UserDetailedData} />} />
         </Routes>
       </Router>
     </AppProvider>
