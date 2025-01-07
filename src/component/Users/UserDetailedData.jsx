@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Dashboard/Header";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { userDetailedData } from "../../lib/Store";
+import "./User.css";
 import Loader from "../Loader/Loader";
 export default function UserDetailedData() {
+  const location = useLocation();
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(false);
-  const location = useLocation();
+  const [error, setError] = useState(null);
   const [formattedDate, setFormattedDate] = useState(null);
-  console.log(formattedDate, "formatted date");
-  const id = location.state.id || {};
+
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp * 1000);
     const options = { day: "numeric", month: "short", year: "numeric" };
@@ -20,7 +21,8 @@ export default function UserDetailedData() {
     try {
       setLoading(true);
       const token = localStorage.getItem("UserToken");
-      const response = await userDetailedData(id, token);
+      const user_id = localStorage.getItem("user_detailed_id");
+      const response = await userDetailedData(user_id, token);
       console.log(response, "sjaidjeiofjhoushnaudnhsajcnjnjuSNAUSnahs");
       if (response?.userdetails?.created_at?._seconds) {
         const formatted = formatTimestamp(
@@ -28,7 +30,11 @@ export default function UserDetailedData() {
         );
         setFormattedDate(formatted);
       }
-      setUserDetails(response);
+      if (!response || !response.userdetails) {
+        setError("No user details found for this user");
+      } else {
+        setUserDetails(response);
+      }
     } catch (error) {
       console.log(error, "error");
     } finally {
@@ -36,11 +42,21 @@ export default function UserDetailedData() {
     }
   };
   useEffect(() => {
-    if (id) fetchUserDetailed();
-  }, [id]);
+    const user_ids = localStorage.getItem("user_Detailed_id");
+    if (user_ids) fetchUserDetailed();
+  }, []);
 
   if (loading) {
     return <Loader />;
+  }
+
+  if (error) {
+    return (
+      <h1 className="error-user">
+        {error}
+        <br></br> <Link to="/users"> Go Back</Link>
+      </h1>
+    );
   }
 
   if (!userDetails) {
@@ -57,7 +73,7 @@ export default function UserDetailedData() {
               <div className="row">
                 <div className="col-md-6">
                   <div className="">
-                    <h2>Name: {userDetails.userdetails.name}</h2>
+                    <h2>Name: {userDetails.userdetails.name || "N/A"}</h2>
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -82,37 +98,37 @@ export default function UserDetailedData() {
                     />
                   </div>
                   <h5 className="text-center h5 mb-0">
-                    {userDetails.userdetails.name}
+                    {userDetails.userdetails.name || "N/A"}
                   </h5>
                   <p className="text-center text-muted font-14">
-                    DOB: {userDetails.userdetails.dob}
+                    DOB: {userDetails.userdetails.dob || "N/A"}
                   </p>
                   <div className="profile-info">
                     <h5 className="mb-20 h5 text-blue">Personal Information</h5>
                     <ul>
                       <li>
                         <span>Gender:</span>
-                        {userDetails.userdetails.gender}
+                        {userDetails.userdetails.gender || "N/A"}
                       </li>
                       <li>
                         <span>Email Address:</span>
-                        {userDetails.userdetails.email}
+                        {userDetails.userdetails.email || "N/A"}
                       </li>
                       <li>
                         <span>Relationship:</span>
-                        {userDetails.userdetails.relationship}
+                        {userDetails.userdetails.relationship || "N/A"}
                       </li>
                       <li>
                         <span>Occupation:</span>
-                        {userDetails.userdetails.occupation}
+                        {userDetails.userdetails.occupation || "N/A"}
                       </li>
                       <li>
                         <span>Joining Date:</span>
-                        {formattedDate}
+                        {formattedDate || "N/A"}
                       </li>
                       <li>
                         <span>Subscription Status</span>
-                        {userDetails.userdetails.subscription_status}
+                        {userDetails.userdetails.subscription_status || "N/A"}
                       </li>
                     </ul>
                   </div>
@@ -140,18 +156,21 @@ export default function UserDetailedData() {
                                       <strong>Name Reading:</strong>
                                       <p>
                                         <b>Positive:</b>{" "}
-                                        {userDetails.otherdetails.positive}
+                                        {userDetails.otherdetails.positive ||
+                                          "N/A"}
                                       </p>
                                       <p>
                                         <b>Negative:</b>{" "}
-                                        {userDetails.otherdetails.negative}
+                                        {userDetails.otherdetails.negative ||
+                                          "N/A"}
                                       </p>
                                     </div>
                                   </div>
                                   <div className="col-xs-12 col-sm-12 col-md-12">
                                     <div className="form-group">
                                       <strong>Destiny Number:</strong>
-                                      {userDetails.otherdetails.destiny_no}
+                                      {userDetails.otherdetails.destiny_no ||
+                                        "N/A"}
                                     </div>
                                   </div>
                                   <div className="col-xs-12 col-sm-12 col-md-12">
@@ -159,14 +178,13 @@ export default function UserDetailedData() {
                                       <strong>Destiny Description:</strong>
                                       <p>
                                         <b>Learn To Be:</b>{" "}
-                                        {userDetails.otherdetails.Learn_to_be}
+                                        {userDetails.otherdetails.Learn_to_be ||
+                                          "N/A"}
                                       </p>
                                       <p>
                                         <b>Learn Not To Be:</b>{" "}
-                                        {
-                                          userDetails.otherdetails
-                                            .Learn_not_to_be
-                                        }
+                                        {userDetails.otherdetails
+                                          .Learn_not_to_be || "N/A"}
                                       </p>
                                     </div>
                                   </div>
@@ -175,49 +193,57 @@ export default function UserDetailedData() {
                                   <div className="col-xs-6 col-sm-6 col-md-6">
                                     <div className="form-group">
                                       <strong>Fav Numbers:</strong>
-                                      {userDetails.otherdetails.fav_number}
+                                      {userDetails.otherdetails.fav_number ||
+                                        "N/A"}
                                     </div>
                                   </div>
                                   <div className="col-xs-6 col-sm-6 col-md-6">
                                     <div className="form-group">
                                       <strong>Unfav Numbers:</strong>
-                                      {userDetails.otherdetails.unfav_number}
+                                      {userDetails.otherdetails.unfav_number ||
+                                        "N/A"}
                                     </div>
                                   </div>
                                   <div className="col-xs-6 col-sm-6 col-md-6">
                                     <div className="form-group">
                                       <strong>Fav Months:</strong>
-                                      {userDetails.otherdetails.fav_months}
+                                      {userDetails.otherdetails.fav_months ||
+                                        "N/A"}
                                     </div>
                                   </div>
                                   <div className="col-xs-6 col-sm-6 col-md-6">
                                     <div className="form-group">
                                       <strong>Unfav Months:</strong>
-                                      {userDetails.otherdetails.unfav_months}
+                                      {userDetails.otherdetails.unfav_months ||
+                                        "N/A"}
                                     </div>
                                   </div>
                                   <div className="col-xs-6 col-sm-6 col-md-6">
                                     <div className="form-group">
                                       <strong>Fav Days:</strong>
-                                      {userDetails.otherdetails.fav_days}
+                                      {userDetails.otherdetails.fav_days ||
+                                        "N/A"}
                                     </div>
                                   </div>
                                   <div className="col-xs-6 col-sm-6 col-md-6">
                                     <div className="form-group">
                                       <strong>Unfav Days:</strong>
-                                      {userDetails.otherdetails.unfav_days}
+                                      {userDetails.otherdetails.unfav_days ||
+                                        "N/A"}
                                     </div>
                                   </div>
                                   <div className="col-xs-6 col-sm-6 col-md-6">
                                     <div className="form-group">
                                       <strong>Lucky Colors: </strong>
-                                      {userDetails.otherdetails.lucky_colors}
+                                      {userDetails.otherdetails.lucky_colors ||
+                                        "N/A"}
                                     </div>
                                   </div>
                                   <div className="col-xs-6 col-sm-6 col-md-6">
                                     <div className="form-group">
                                       <strong>Lucky Metals: </strong>
-                                      {userDetails.otherdetails.lucky_metals}
+                                      {userDetails.otherdetails.lucky_metals ||
+                                        "N/A"}
                                     </div>
                                   </div>
                                 </div>
@@ -225,31 +251,29 @@ export default function UserDetailedData() {
                                   <div className="col-xs-6 col-sm-6 col-md-6">
                                     <div className="form-group">
                                       <strong>Zodiac sign:</strong>
-                                      {userDetails.otherdetails.zodiac_sign}
+                                      {userDetails.otherdetails.zodiac_sign ||
+                                        "N/A"}
                                     </div>
                                   </div>
                                   <div className="col-xs-6 col-sm-6 col-md-6">
                                     <div className="form-group">
                                       <strong>Planet Name:</strong>
-                                      {userDetails.otherdetails.Planet_name}
+                                      {userDetails.otherdetails.Planet_name ||
+                                        "N/A"}
                                     </div>
                                   </div>
                                   <div className="col-xs-12 col-sm-12 col-md-12">
                                     <div className="form-group">
                                       <strong>Planet Description:</strong>
-                                      {
-                                        userDetails.otherdetails
-                                          .Planet_description
-                                      }
+                                      {userDetails.otherdetails
+                                        .Planet_description || "N/A"}
                                     </div>
                                   </div>
                                   <div className="col-xs-12 col-sm-12 col-md-12">
                                     <div className="form-group">
                                       <strong>Parenting:</strong>
-                                      {
-                                        userDetails.otherdetails
-                                          .basic_parent_reading
-                                      }
+                                      {userDetails.otherdetails
+                                        .basic_parent_reading || "N/A"}
                                     </div>
                                   </div>
                                 </div>

@@ -1,5 +1,7 @@
 import axios from "axios";
 export const Url = "http://localhost:5234";
+
+//   admin login api
 export const LoginApi = async (email, password) => {
   try {
     const response = await axios.post(
@@ -21,6 +23,8 @@ export const LoginApi = async (email, password) => {
   }
 };
 
+//  get admin profile data
+
 export const GetUserData = async (email, token) => {
   try {
     const response = await axios.get(
@@ -38,6 +42,9 @@ export const GetUserData = async (email, token) => {
     return error;
   }
 };
+
+// reset password api
+
 export const ResetPasswordApi = async (
   email,
   oldpassword,
@@ -74,6 +81,9 @@ export const ResetPasswordApi = async (
     }
   }
 };
+
+// update profile api
+
 export const UpdateProfile = async (id, name, token) => {
   try {
     const response = await axios.put(
@@ -97,6 +107,9 @@ export const UpdateProfile = async (id, name, token) => {
     throw error;
   }
 };
+
+//  update image api
+
 export const updateImage = async (token, formdata) => {
   try {
     const response = await axios.put(
@@ -114,6 +127,9 @@ export const updateImage = async (token, formdata) => {
     return error;
   }
 };
+
+//  get all user api
+
 export const getAllUsers = async (token, status = null) => {
   try {
     let url = `${Url}/u1r5a03ki8/usr123erd6`;
@@ -133,21 +149,6 @@ export const getAllUsers = async (token, status = null) => {
     return { Users: [] };
   }
 };
-// export const filterUsers = async (token, filters = {}) => {
-//   try {
-//     const queryParams = new URLSearchParams(filters).toString();
-//     const response = await axios.get(`${Url}/users/usrfltr45t?${queryParams}`, {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//         "Content-Type": "application/json",
-//       },
-//     });
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error filtering users:", error);
-//     return { error: "Failed to filter users" };
-//   }
-// };
 
 export const getAdminUserMessages = async (finalData) => {
   try {
@@ -164,14 +165,16 @@ export const getAdminUserMessages = async (finalData) => {
 
 export const getUserChatMessages = async (finaldata) => {
   try {
-    const response = await axios.post(`${Url}/m1afg56903/zopdyhg57d`,finaldata)
+    const response = await axios.post(
+      `${Url}/m1afg56903/zopdyhg57d`,
+      finaldata
+    );
     const data = await response.data;
     return data;
   } catch (error) {
     return error;
   }
 };
-
 
 // message Seen Unseen
 export const setSeenMessages = async (data) => {
@@ -240,6 +243,7 @@ export const getForecastData = async (token, status) => {
 };
 
 // .admin dashboard api
+
 export const dashboardApi = async (req, res) => {
   try {
     const response = await axios.get(`${Url}/d8km1ch50/d37km1o0qf`);
@@ -251,9 +255,11 @@ export const dashboardApi = async (req, res) => {
   }
 };
 
-export const userDetailedData = async (id, token) => {
+// .. user details data click on eye in user page
+
+export const userDetailedData = async (user_id, token) => {
   try {
-    const response = await axios.get(`${Url}/u163mjh02f/usrdlsp87a/${id}`, {
+    const response = await axios.get(`${Url}/u163mjh02f/usrdlsp87a/${user_id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -266,3 +272,86 @@ export const userDetailedData = async (id, token) => {
   }
 };
 
+// 1- month subscription api
+
+export const subscription1Action = async (id, token) => {
+  try {
+    const response = await axios.post(
+      `${Url}/u1r5a03ki8/s510b4jkoz`,
+      { userId: id },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+export const subscription3Action = async (id, token) => {
+  try {
+    const response = await axios.post(
+      `${Url}/u1r5a03ki8/s3j81ka0ok`,
+      {
+        userId: id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+export const cancel1Action = async (id, token) => {
+  try {
+    const response = await axios.post(
+      `${Url}/u1r5a03ki8/c18r502mjk`,
+      {
+        userId: id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+export const cancel3Action = async (id, token) => {
+  try {
+    const response = await axios.post(
+      `${Url}/u1r5a03ki8/c328ty4mfg`,
+      {
+        userId: id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};

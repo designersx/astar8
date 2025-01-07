@@ -3,10 +3,11 @@ import "../../styles/Style.css";
 import Header from "../Dashboard/Header";
 import { getAllUsers } from "../../lib/Store";
 import UserData from "./UserData";
+import { toast, Toaster } from "react-hot-toast";
 export default function User() {
   const [user, setUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage, setUsersPerPage] = useState(2);
+  const [usersPerPage, setUsersPerPage] = useState(10);
   const [activeTab, setActiveTab] = useState("all");
   const [totalPages, setTotalPages] = useState(0);
   const [filterName, setFilterName] = useState("");
@@ -71,7 +72,9 @@ export default function User() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <>
+
       <Header />
+      <Toaster />
       <div className="main-container pb-5">
         <div className=" xs-pd-20-10">
           <div className="min-height-200px">
