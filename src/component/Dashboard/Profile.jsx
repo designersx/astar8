@@ -3,20 +3,18 @@ import "../../styles/Style.css";
 import Header from "./Header";
 import { MdModeEditOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
 import { GetUserData, updateImage, UpdateProfile } from "../../lib/Store";
 import AppContext from "../../ContextApi/userContext";
+import Loader from "../../component/Loader/Loader"
 export default function Profile() {
   const { data, setData } = useContext(AppContext);
   const [user, setUser] = useState({});
   const [formattedDate, setFormattedDate] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatedUsername, setUpdatedUsername] = useState("");
-  const [updatedEmail, setUpdatedEmail] = useState("");
   const [imageSrc, setImageSrc] = useState(null);
-  const [loading,setLoading]=useState(false);
-  const [isDisable,setIsdisable]=useState(false)
+  const [loading, setLoading] = useState(false);
+  const [isDisable, setIsdisable] = useState(false);
   const fileInputRef = useRef(null);
   const handleIconClick = () => {
     fileInputRef.current.click();
@@ -25,6 +23,7 @@ export default function Profile() {
     const email = localStorage.getItem("userEmail");
     const token = localStorage.getItem("UserToken");
     try {
+      setLoading(true);
       const response = await GetUserData(email, token);
       if (response) {
         setUser(response.user);
@@ -33,12 +32,14 @@ export default function Profile() {
         localStorage.setItem("profilePic", response.user.profile_pic);
         const { _seconds } = response.user.created_at;
         const dateObject = new Date(_seconds * 1000);
-        const formattedDate = dateObject.toISOString().split("T")[0]; 
+        const formattedDate = dateObject.toISOString().split("T")[0];
         console.log(formattedDate, "formattedDate");
         setFormattedDate(formattedDate);
       }
     } catch (error) {
       console.log(error, "error");
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function Profile() {
   };
   const onUpdateClick = () => {
     setIsModalOpen(true);
-    setUpdatedUsername(user.username);
+    setUpdatedUsername(user?.username);
     // setUpdatedEmail(user.username);
   };
   const onHandleChange = (e) => {
@@ -89,7 +90,7 @@ export default function Profile() {
     e.preventDefault();
     setLoading(true);
     setIsdisable(true);
-    console.log("Button disabled state:", isDisable)
+    console.log("Button disabled state:", isDisable);
     try {
       const id = localStorage.getItem("userId");
       const name = updatedUsername;
@@ -104,11 +105,14 @@ export default function Profile() {
       }
     } catch (error) {
       console.log(error, "error");
-    }finally{
-      setLoading(false)
-      setIsdisable(false)
+    } finally {
+      setLoading(false);
+      setIsdisable(false);
     }
   };
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <>
       <Header />
@@ -184,7 +188,11 @@ export default function Profile() {
                         </div>
                       </div>
                       <img
-                        src={imageSrc ? imageSrc : "https://be.astar8.com/img/default-profile-img.png"}
+                        src={
+                          imageSrc
+                            ? imageSrc
+                            : "https://be.astar8.com/img/default-profile-img.png"
+                        }
                         alt="Profile"
                         height="160px"
                         width="160px"
@@ -200,7 +208,7 @@ export default function Profile() {
                   className="text-center h5 mb-0 mt-5"
                   style={{ fontSize: "18px", fontWeight: 600 }}
                 >
-                  {user.username || "Unknown User"}
+                  {user?.username || "Unknown User"}
                 </h5>
               </div>
             </div>
@@ -243,7 +251,7 @@ export default function Profile() {
                                   </div>
                                   <div className="form-group">
                                     <strong>Role : </strong>
-                                    {user?.role}
+                                    {user?.role == 1 ? "Admin" : "Super Admin"}
                                   </div>
                                   <div className="form-group">
                                     <strong>Joining Date : </strong>
@@ -318,7 +326,7 @@ export default function Profile() {
                 Close
               </button>
               <button type="submit" className="btn btn-primary">
-                {loading ? 'Loading...' : 'Save Changes'}
+                {loading ? "Loading..." : "Save Changes"}
               </button>
             </div>
           </form>

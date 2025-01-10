@@ -1,21 +1,36 @@
-import {React,useEffect,useState} from "react";
+import { React, useEffect, useState } from "react";
 import Header from "../component/Dashboard/Header";
 import { dashboardApi } from "../lib/Store";
+import Loader from "../component/Loader/Loader";
 export default function DashBoard() {
   const [activeCount, setactiveCount] = useState([]);
-  const [totalCount,setTotalCount]=useState([])
+  const [totalCount, setTotalCount] = useState([]);
+  const [like, setlike] = useState([]);
+  const [dislike, setdislike] = useState([]);
+  const [loading, setLoading] = useState(false);
+  console.log(like,"like")
+  console.log(dislike,"dislike")
   const fetchDashboardData = async () => {
     try {
+      setLoading(true);
       const response = await dashboardApi();
-      setactiveCount(response.activeCount)
-      setTotalCount(response.totalCount)
+      setactiveCount(response.activeCount);
+      setTotalCount(response.totalCount);
+      setlike(response.likesCount);
+      setdislike(response.dislikesCount);
     } catch (err) {
       console.log(err, "error");
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
     fetchDashboardData();
-  }, [totalCount,activeCount]);
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <>
       <Header />
@@ -46,7 +61,8 @@ export default function DashBoard() {
                 <div className="progress-box text-center">
                   <h5 className="text-blue padding-top-10 h5"> Total User</h5>
                   <span className="d-block">
-                    {totalCount} Users <i className="fa fa-line-chart text-blue" />
+                    {totalCount} Users{" "}
+                    <i className="fa fa-line-chart text-blue" />
                   </span>
                 </div>
               </div>
@@ -60,7 +76,7 @@ export default function DashBoard() {
                   </h5>
                   <span className="d-block">
                     {" "}
-                   {activeCount} Users{" "}
+                    {activeCount} Users{" "}
                     <i className="fa text-light-green fa-line-chart" />
                   </span>
                 </div>
@@ -73,7 +89,8 @@ export default function DashBoard() {
                     Daily Prediction
                   </h5>
                   <span className="d-block">
-                    0 Like <i className="fa text-light-orange fa-line-chart" />
+                    {like} Like{" "}
+                    <i className="fa text-light-orange fa-line-chart" />
                   </span>
                 </div>
               </div>
@@ -85,7 +102,7 @@ export default function DashBoard() {
                     Daily Prediction
                   </h5>
                   <span className="d-block">
-                    0 Dislike{" "}
+                    {dislike} Dislike{" "}
                     <i className="fa text-light-orange fa-line-chart" />
                   </span>
                 </div>
