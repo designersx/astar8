@@ -1,43 +1,123 @@
-import React from "react";
+import React, { useState } from "react";
+import Swal from "sweetalert2"; // Import SweetAlert
 import Header from "../../component/Dashboard/Header";
+import { subscriptionsUpdateUser } from "../../lib/Store";
 
 const GeneralSettings = () => {
+  const [formData, setFormData] = useState({
+    number_of_user: null,
+    _token: localStorage.getItem("userId"),
+  });
+
+  // Handle changes in form inputs
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: name === "number_of_user" ? parseInt(value, 10) : value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+  
+    // Validation for the form
+    if (!formData.number_of_user || isNaN(formData.number_of_user)) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please select a valid number of users!",
+      });
+      return;
+    }
+  
+    // Show loading SweetAlert while API is executing
+    Swal.fire({
+      title: "Processing...",
+      text: "Please wait while we update the subscription.",
+      allowOutsideClick: false, // Prevent user from closing the alert
+      didOpen: () => {
+        Swal.showLoading(); // Show the loading spinner
+      },
+    });
+  
+    // Prepare final data for the API
+    const finalData = {
+      userId: formData._token,
+      number_of_users: formData.number_of_user,
+    };
+  
+    try {
+      // Simulate or execute the API call
+      const response = await subscriptionsUpdateUser(finalData);
+  
+      // Handle success
+      if (response.status === "success") {
+        Swal.fire({
+          icon: "success",
+          title: "Operation Successful",
+          text: `You have successfully selected ${formData.number_of_user} users.`,
+        }).then(() => {
+          setFormData((prevData) => ({
+            ...prevData,
+            number_of_user: null, // Reset form field
+          }));
+        });
+      } else {
+        // Handle failure response
+        Swal.fire({
+          icon: "error",
+          title: "Operation Failed",
+          text: response.message || "Something went wrong. Please try again.",
+        });
+      }
+    } catch (error) {
+      // Handle API errors
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Unable to process your request. Please try again later.",
+      });
+    }
+  };
+  
+
   return (
     <>
       <Header />
-      <div class="main-container">
-        <div class="pd-20 card-box mb-30">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="" >
-                <h2 style={{fontWeight:"600"}}>General Setting</h2>
+      <div className="main-container">
+        <div className="pd-20 card-box mb-30">
+          <div className="row">
+            <div className="col-md-6">
+              <div>
+                <h2 style={{ fontWeight: "600" }}>General Setting</h2>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="pd-20 card-box mb-30">
+        <div className="pd-20 card-box mb-30">
           <form
             method="POST"
             action=""
-            accept-charset="UTF-8"
+            acceptCharset="UTF-8"
             id="form1"
+            onSubmit={handleSubmit}
           >
-            <input
-              name="_token"
-              type="hidden"
-              value="xHBXYSgQMJuuN3SqvwDvNn0Ik8JZkq4Lc3IyPYdk"
-            />
-            <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                  <strong>Number of New users :</strong>
+            <input name="_token" type="hidden" value={formData._token} />
+            <div className="row">
+              <div className="col-xs-12 col-sm-12 col-md-12">
+                <div className="form-group">
+                  <strong>Number of New Users:</strong>
                   <select
                     name="number_of_user"
                     id="number_of_user"
-                    class="form-control"
-                    placeholder="Select..."
+                    className="form-control"
+                    value={formData.number_of_user || ""}
+                    onChange={handleInputChange}
                   >
+                    <option value="">Select...</option>{" "}
+                    <option value="2">2</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
                     <option value="150">150</option>
@@ -51,8 +131,11 @@ const GeneralSettings = () => {
                   </select>
                 </div>
               </div>
-              <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                <button type="submit" class="btn btn-primary free-subscribe">
+              <div className="col-xs-12 col-sm-12 col-md-12 text-center">
+                <button
+                  type="submit"
+                  className="btn btn-primary free-subscribe"
+                >
                   Submit
                 </button>
               </div>

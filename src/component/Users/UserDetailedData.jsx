@@ -21,7 +21,7 @@ export default function UserDetailedData() {
     try {
       setLoading(true);
       const token = localStorage.getItem("UserToken");
-      const user_id = localStorage.getItem("user_detailed_id");
+      const user_id = localStorage.getItem("user_Detailed_id");
       const response = await userDetailedData(user_id, token);
       console.log(response, "sjaidjeiofjhoushnaudnhsajcnjnjuSNAUSnahs");
       if (response?.userdetails?.created_at?._seconds) {

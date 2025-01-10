@@ -1,8 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/Style.css";
 import "font-awesome/css/font-awesome.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import {
   faFile,
@@ -72,6 +73,35 @@ export default function Dashboard() {
   const onSideClose = () => {
     setIsSidebarOpen(false);
   };
+
+  // // token check
+  useEffect(() => {
+    const token = localStorage.getItem("UserToken");
+
+    if (token) {
+      const decoded = JSON.parse(atob(token.split(".")[1])); // Decode JWT
+      const expTime = decoded.exp * 1000; // Expiry time in milliseconds
+
+      if (Date.now() > expTime) {
+        localStorage.removeItem("UserToken");
+        localStorage.removeItem("Role");
+        localStorage.removeItem("name");
+        localStorage.removeItem("profilePic");
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userId");
+
+        Swal.fire({
+          icon: "error",
+          title: "Session expired",
+          text: "Session expired. Please log in again.",
+          showConfirmButton: false, 
+          timer: 3000, 
+        }).then(() => {
+          navigate("/"); 
+        });
+      }
+    }
+  }, [navigate]);
 
   return (
     <>
@@ -181,7 +211,7 @@ export default function Dashboard() {
                   />
                 </span>
                 <span className="user-name">
-                  {Name.split(" ")
+                  {Name?.split(" ")
                     .map(
                       (word) =>
                         word.charAt(0).toUpperCase() +
@@ -218,7 +248,7 @@ export default function Dashboard() {
 
       <div className={`left-side-bar ${isSidebarOpen ? "open" : ""}`}>
         <div className="brand-logo" style={{ marginTop: "24px" }}>
-          <a >
+          <a>
             <img
               src="https://be.astar8.com/img/Logo.png"
               alt=""

@@ -90,9 +90,11 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
             <th>Action</th>
           </tr>
           {loading ? (
-            <div style={{ marginLeft: "30px" }}>
+            <tr>
+            <td colSpan="8" style={{ textAlign: "center", padding: "15px 0" }}>
               <Loader />
-            </div>
+            </td>
+          </tr>
           ) : user && user.length > 0 ? (
             user.map((data, index) => {
               const rowNumber = (currentPage - 1) * usersPerPage + index + 1;

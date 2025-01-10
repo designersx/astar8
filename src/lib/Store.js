@@ -258,6 +258,7 @@ export const dashboardApi = async (req, res) => {
 // .. user details data click on eye in user page
 
 export const userDetailedData = async (user_id, token) => {
+  console.log("dasasdd",user_id)
   try {
     const response = await axios.get(
       `${Url}/u163mjh02f/usrdlsp87a/${user_id}`,
@@ -350,6 +351,21 @@ export const cancel3Action = async (id, token) => {
           Authorization: `Bearer ${token}`,
         },
       }
+    );
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// General Setting Subscription update Api
+export const subscriptionsUpdateUser = async (finalData) => {
+  try {
+    const response = await axios.post(
+      `${Url}/48fghd63rg/jgit90ept8`,
+      (finalData)
     );
     const data = await response.data;
     return data;
