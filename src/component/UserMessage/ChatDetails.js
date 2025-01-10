@@ -15,6 +15,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
   const [loading, setLoading] = useState(true); // Add loading state
   const [adminId, setadminId] = useState(localStorage.getItem("userId" || ""));
   const [adminProfile, setadminProfile] = useState(localStorage.getItem("profilePic" || ""))
+  const [handleSocketError, sethandleSocketError] = useState()
 
   const messagesEndRef = useRef(null);
 
@@ -44,7 +45,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
 
   // Initialize socket connection
   useEffect(() => {
-    const newSocket = io("http://localhost:5000"); // Replace with your backend URL
+    const newSocket = io("http://localhost:5234"); // Replace with your backend URL
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
@@ -75,6 +76,11 @@ const ChatDetails = ({ user, onMessageSent }) => {
       }
       onMessageSent();
     });
+
+    newSocket.on("error-message",(data)=>{
+      console.log("Socket messsage error",data)
+      sethandleSocketError(data)
+    })
 
     return () => newSocket.disconnect();
   }, [user]);

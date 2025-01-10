@@ -6,6 +6,7 @@ const ChatList = ({ users, onSelectUser }) => {
   // console.log("userListdddddd",users)
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true); // Add loading state
+  console.log("asdasd", loading);
   useEffect(() => {
     if (users) {
       setLoading(false);
@@ -29,8 +30,10 @@ const ChatList = ({ users, onSelectUser }) => {
       </div>
       <div className="notification-list">
         {loading ? (
-          <div className="">
-            <Loader />
+          <Loader />
+        ) : users === undefined ? (
+          <div>
+            <p style={{textAlign:"center"}}>No user found</p>
           </div>
         ) : filteredUsers && filteredUsers.length > 0 ? (
           filteredUsers.map((user) => (

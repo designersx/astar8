@@ -19,7 +19,7 @@ const GeneralSettings = () => {
         <div class="pd-20 card-box mb-30">
           <form
             method="POST"
-            action="https://be.astar8.com/general-update-settings"
+            action=""
             accept-charset="UTF-8"
             id="form1"
           >

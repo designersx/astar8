@@ -5,6 +5,7 @@ import { addDailyForecast } from "../../lib/Store";
 export default function AddDailyForcast() {
   const [date, setDate] = useState("");
   const [prediction, setPrediction] = useState("");
+  const [user_id, setuserId] = useState(localStorage.getItem("userId"))
   const [token, setToken] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,9 @@ export default function AddDailyForcast() {
     setLoading(true);
     try {
       const formattedDate = new Date(date).toISOString().split("T")[0];
-      const response = await addDailyForecast(token, formattedDate, prediction);
+      const trimmedPrediction = prediction.trim().replace(/\n/g, ' '); // Optional: Replace newlines with space
+      const response = await addDailyForecast(token, formattedDate, trimmedPrediction,user_id);
+
       if (response.status === "success") {
         setPrediction("");
         setDate("");
@@ -82,8 +85,8 @@ export default function AddDailyForcast() {
                     className="form-control prediction mt-1"
                     style={{ height: "150px" }}
                     name="prediction"
-                    cols={50}
-                    rows={10}
+                    // cols={50}
+                    // rows={10}
                     value={prediction}
                     onChange={(e) => setPrediction(e.target.value)}
                   />

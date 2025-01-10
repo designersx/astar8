@@ -189,11 +189,11 @@ export const setSeenMessages = async (data) => {
 };
 
 // add daily forecast
-export const addDailyForecast = async (token, date, prediction) => {
+export const addDailyForecast = async (token, date, prediction, user_id) => {
   try {
     const response = await axios.post(
       `${Url}/p1g6s9ik3n/dly12g6ui8`,
-      { date, prediction },
+      {user_id, date, prediction },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -259,11 +259,14 @@ export const dashboardApi = async (req, res) => {
 
 export const userDetailedData = async (user_id, token) => {
   try {
-    const response = await axios.get(`${Url}/u163mjh02f/usrdlsp87a/${user_id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      `${Url}/u163mjh02f/usrdlsp87a/${user_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = response.data;
     return data;
   } catch (error) {

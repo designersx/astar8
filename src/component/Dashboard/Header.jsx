@@ -218,7 +218,7 @@ export default function Dashboard() {
 
       <div className={`left-side-bar ${isSidebarOpen ? "open" : ""}`}>
         <div className="brand-logo" style={{ marginTop: "24px" }}>
-          <a href="https://be.astar8.com/home">
+          <a >
             <img
               src="https://be.astar8.com/img/Logo.png"
               alt=""

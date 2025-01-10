@@ -8,7 +8,7 @@ export default function DailyForecartList() {
   const [displayCount, setDisplayCount] = useState(5);
   const [selectedTab, setSelectedTab] = useState("all");
   const [loading, setLoading] = useState(false);
-  console.log("foreCastData", ForecastData);
+  // console.log("foreCastData", ForecastData);
 
   const name = localStorage.getItem("name");
   const token = localStorage.getItem("UserToken");
@@ -278,7 +278,7 @@ export default function DailyForecartList() {
                                               textDecoration: "none",
                                             }}
                                           >
-                                            Reply Count: {forecast.replyCount}
+                                            Reply Count: 0 {forecast.replyCount}
                                           </a>
                                         </div>
                                       </div>
