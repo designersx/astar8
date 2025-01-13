@@ -14,10 +14,10 @@ export default function User() {
   const [filterEmail, setFilterEmail] = useState("");
   const [filterSubscription, setFilterSubscription] = useState("");
   const [filterPlatform, setFilterPlatform] = useState("");
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
   const fetchUsers = async (status = null) => {
     try {
-      setLoading(true)
+      setLoading(true);
       const token = localStorage.getItem("UserToken");
       if (!token) {
         throw new Error("User token not found");
@@ -31,8 +31,8 @@ export default function User() {
       }
     } catch (error) {
       console.error("Error fetching users:", error.message);
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,7 +72,6 @@ export default function User() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <>
-
       <Header />
       <Toaster />
       <div className="main-container pb-5">

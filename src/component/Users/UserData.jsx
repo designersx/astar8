@@ -164,11 +164,12 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                       className="btn btn-info btnButton"
                       style={{ padding: "2px 12px" }}
                       title="View"
+                      onClick={() => onHandleNextPage(data.id)}
                     >
                       <FontAwesomeIcon
                         icon={faEye}
                         style={{ fontSize: "11px" }}
-                        onClick={() => onHandleNextPage(data.id)}
+                        
                       />
                     </a>
                   </td>
