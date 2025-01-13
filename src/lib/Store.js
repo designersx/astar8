@@ -1,5 +1,5 @@
 import axios from "axios";
-export const Url ="dev.astar8.com";
+export const Url ="https://dev.astar8.com";
 // export const Url = "http://localhost:5234";
 
 //   admin login api
