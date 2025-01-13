@@ -374,3 +374,19 @@ export const subscriptionsUpdateUser = async (finalData) => {
     return err;
   }
 };
+
+// Payment setting change api
+export const paymentSettingChange = async (finalData) => {
+  console.log("asdasd0000000000",finalData)
+  try {
+    const response = await axios.post(
+      `${Url}/stripe/458fjiy5dt`,
+      (finalData)
+    );
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};

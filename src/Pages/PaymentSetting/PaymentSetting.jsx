@@ -1,33 +1,150 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2"; // Import SweetAlert2
 import Header from "../../component/Dashboard/Header";
+import { paymentSettingChange } from "../../lib/Store"; // Assuming this is your API function
 
 const PaymentSetting = () => {
-  // State to manage the active button for sandbox and production modes
-  const [sandboxMode, setSandboxMode] = useState("live"); // "test" or "live"
-  const [productionMode, setProductionMode] = useState("live"); // "test" or "live"
+  const [sandboxMode, setSandboxMode] = useState("live"); // Default to "live"
+  const [productionMode, setProductionMode] = useState("live"); // Default to "live"
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
-  // Handlers to toggle between "Test" and "Live" modes
-  const handleSandboxModeChange = (mode) => {
-    setSandboxMode(mode);
-    // Add API call or form submission logic here for Sandbox
-    console.log(`Sandbox Mode changed to: ${mode}`);
+  // Handler for changing Sandbox Mode
+  const handleSandboxModeChange = async (mode) => {
+    const modes_type = mode === "test" ? 1 : 2; // Set 1 for test, 2 for live
+
+    const confirmation = await Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to change the Sandbox Mode to ${mode}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, change it!",
+    });
+
+    if (!confirmation.isConfirmed) return;
+
+    setIsLoading(true);
+
+    Swal.fire({
+      title: "Processing...",
+      text: "Please wait while we update the mode.",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    try {
+      const response = await paymentSettingChange({
+        payment_setting: 1, // 1 = Sandbox
+        modes_type,
+      });
+
+      if (response.status === 1) {
+        setSandboxMode(mode);
+
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: `Sandbox Mode changed to ${mode}!`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        throw new Error("Failed to change Sandbox Mode. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error updating sandbox mode:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Failed to change Sandbox Mode.",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleProductionModeChange = (mode) => {
-    setProductionMode(mode);
-    // Add API call or form submission logic here for Production
-    console.log(`Production Mode changed to: ${mode}`);
+  // Handler for changing Production Mode
+  const handleProductionModeChange = async (mode) => {
+    const modes_type = mode === "test" ? 1 : 2; // Set 1 for test, 2 for live
+
+    const confirmation = await Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to change the Production Mode to ${mode}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, change it!",
+    });
+
+    if (!confirmation.isConfirmed) return;
+
+    setIsLoading(true);
+
+    Swal.fire({
+      title: "Processing...",
+      text: "Please wait while we update the mode.",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    try {
+      const response = await paymentSettingChange({
+        payment_setting: 2, // 2 = Production
+        modes_type,
+      });
+
+      if (response.status === 1) {
+        setProductionMode(mode);
+
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: `Production Mode changed to ${mode}!`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        throw new Error("Failed to change Production Mode. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error updating production mode:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Failed to change Production Mode.",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Dynamic styles for the active/inactive buttons
+  // Dynamic styles for buttons
   const getButtonStyle = (isActive) => ({
     backgroundColor: isActive ? "red" : "white", // Red for active, white for inactive
     color: isActive ? "white" : "black", // White text for active, black for inactive
     border: "1px solid #ccc",
     padding: "10px 20px",
-    cursor: "pointer",
+    cursor: isLoading ? "not-allowed" : "pointer", // Disable cursor when loading
     marginRight: "10px",
     borderRadius: "5px",
+    opacity: isLoading ? 0.6 : 1, // Dim buttons when loading
+    pointerEvents: isLoading ? "none" : "auto", // Prevent interaction when loading
   });
 
   return (
