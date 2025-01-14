@@ -6,6 +6,8 @@ import DailyForecartList from "./DailyForecartList";
 
 export default function DailyForecast() {
   const [activeTab, setActiveTab] = useState("preditionList");
+  const [userRole, setuserRole] = useState(localStorage.getItem("Role"))
+  console.log("userROle",userRole)
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -38,18 +40,20 @@ export default function DailyForecast() {
                 Daily Forecast List
               </a>
             </li>
-            <li className="nav-item">
-              <a
-                className={`nav-link text-blue ${
-                  activeTab === "predictionform" ? "active" : ""
-                }`}
-                data-toggle="tab"
-                role="tab"
-                onClick={() => handleTabClick("predictionform")}
-              >
-                Add Daily Forecast
-              </a>
-            </li>
+            {userRole !== "2" && (
+              <li className="nav-item">
+                <a
+                  className={`nav-link text-blue ${
+                    activeTab === "predictionform" ? "active" : ""
+                  }`}
+                  data-toggle="tab"
+                  role="tab"
+                  onClick={() => handleTabClick("predictionform")}
+                >
+                  Add Daily Forecast
+                </a>
+              </li>
+            )}
           </ul>
           {activeTab === "preditionList" && <DailyForecartList />}
           {activeTab === "predictionform" && <AddDailyForcast />}

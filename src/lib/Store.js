@@ -1,6 +1,5 @@
 import axios from "axios";
-export const Url = "http://localhost:5234";
-
+export const Url = "http://localhost:5234"; //   https://dev.astar8.com
 //   admin login api
 export const LoginApi = async (email, password) => {
   try {

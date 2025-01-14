@@ -94,10 +94,10 @@ export default function Dashboard() {
           icon: "error",
           title: "Session expired",
           text: "Session expired. Please log in again.",
-          showConfirmButton: false, 
-          timer: 3000, 
+          showConfirmButton: false,
+          timer: 3000,
         }).then(() => {
-          navigate("/"); 
+          navigate("/");
         });
       }
     }
@@ -236,7 +236,11 @@ export default function Dashboard() {
                 <Link className="dropdown-item" to="/reset">
                   <i className="fa fa-cogs mr-2" /> Reset Password
                 </Link>
-                <a className="dropdown-item" onClick={onHandleLogout}>
+                <a
+                  className="dropdown-item"
+                  style={{ cursor: "pointer" }}
+                  onClick={onHandleLogout}
+                >
                   <i className="fa fa-sign-out mr-2" />
                   Logout
                 </a>
@@ -352,7 +356,11 @@ export default function Dashboard() {
                         <span className="mtext">Roles</span>
                       </Link>
                     </li>
-                    <li className="dropdown">
+                    {/* dropdown */}
+                    <li
+                      className="dropdown"
+                      style={{ cursor: "pointer", transition: "all 0.3s ease" }}
+                    >
                       <a
                         className="dropdown-toggle"
                         data-option="off"
@@ -361,32 +369,67 @@ export default function Dashboard() {
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faDesktop} />
                         </span>
-                        <span className="mtext">Systems</span>
-                        <span className="ml-2">
-                          <FontAwesomeIcon
-                            icon={isOpen ? faChevronUp : faChevronDown}
-                          />
-                        </span>
+                        <div className="d-flex justify-content-between w-100">
+                          <span className="mtext">Systems</span>
+                          <span className="ml-2">
+                            <FontAwesomeIcon
+                              icon={isOpen ? faChevronUp : faChevronDown}
+                            />
+                          </span>
+                        </div>
                       </a>
-                      {isOpen && (
-                        <ul className="submenu" style={{ display: "block" }}>
-                          <li>
-                            <Link to="/systemtype">
-                              <span>
-                                <FontAwesomeIcon icon={faMinus} /> System Types
-                              </span>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/modules">
-                              <span>
-                                <FontAwesomeIcon icon={faMinus} /> Module Types
-                              </span>
-                            </Link>
-                          </li>
-                        </ul>
-                      )}
+                      <ul
+                        className="submenu"
+                        style={{
+                          maxHeight: isOpen ? "200px" : "0",
+                          overflow: "hidden",
+                          transition: "max-height 0.4s ease",
+                          display: "block",
+                        }}
+                      >
+                        <li>
+                          <Link
+                            to="/systemtype"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%"
+                                }}
+                              />{" "}
+                              System Types
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to="/modules"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%"
+                                }}
+                              />{" "}
+                              Module Types
+                            </span>
+                          </Link>
+                        </li>
+                      </ul>
                     </li>
+
                     <li className="dropdown">
                       <Link to="/Master" className="dropdown-toggle no-arrow">
                         <span className="sideBarIcon">

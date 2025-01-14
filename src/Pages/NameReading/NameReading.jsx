@@ -1,7 +1,8 @@
 import React from "react";
 import Header from "../../component/Dashboard/Header";
 import { IoIosEye } from "react-icons/io";
-import { FaEdit } from "react-icons/fa";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const NameReading = () => {
   return (
@@ -34,26 +35,28 @@ const NameReading = () => {
                     Ambitious, Daring, Active, Visionary,...
                   </td>
                   <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/namereading/10"
-                      title="View"
-                      target="_blank"
-                    >
-                      <span>
-                        <IoIosEye size={20} />
-                      </span>
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/namereading/10/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <span>
-                        <FaEdit size={17} />
-                      </span>
-                    </a>
+                    <div style={{ display: "flex", gap: "10px" }}>
+                      <a
+                        className="btn btn-info"
+                        href="https://be.astar8.com/namereading/10"
+                        title="View"
+                        target="_blank"
+                      >
+                        <span>
+                          <IoIosEye size={18} />
+                        </span>
+                      </a>
+                      <a
+                        className="btn btn-primary"
+                        href="https://be.astar8.com/namereading/10/edit"
+                        title="Edit"
+                        target="_blank"
+                      >
+                        <span>
+                          <FontAwesomeIcon icon={faPencilAlt} />
+                        </span>
+                      </a>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -74,181 +77,6 @@ const NameReading = () => {
                     <a
                       className="btn btn-primary"
                       href="https://be.astar8.com/namereading/11/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>
-                    Proud, Active, Optimistic, Joyful, Creative, Ambitious,
-                    Conscientious, Popular, Expressive...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/namereading/12"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/namereading/12/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>
-                    Practical, Methodical, Solid, Studious, Punctual, Organized,
-                    Structured, Visionary, Differ...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/namereading/13"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/namereading/13/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>
-                    Traveller, Clever, Adaptable, Freedom Loving, Intellectual,
-                    Quick to Learn, Crisis Oriente...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/namereading/14"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/namereading/14/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>6</td>
-                  <td>
-                    Compassionate, Magnetic, Dependable, Affectionate,
-                    Concerned, Loving, Artistic, Responsibl...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/namereading/15"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/namereading/15/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>7</td>
-                  <td>
-                    Analytical, Silent, Intuitive, Spiritual, Independent, Truth
-                    Seeking, Love of Nature, Know...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/namereading/16"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/namereading/16/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>8</td>
-                  <td>
-                    Determined, Powerful, Faithful, Consistent, Practical,
-                    Capable with Money and Finance, Aut...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/namereading/17"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/namereading/17/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>9</td>
-                  <td>
-                    Organizer, Energetic, Dynamic, Inspirational, Good Opinion
-                    of Self, Leadership Oriented, D...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/namereading/18"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/namereading/18/edit"
                       title="Edit"
                       target="_blank"
                     >

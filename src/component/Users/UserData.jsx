@@ -14,7 +14,6 @@ import { toast, Toaster } from "react-hot-toast";
 
 export default function UserData({ user, currentPage, usersPerPage, loading }) {
   const navigate = useNavigate();
-
   const onHandleNextPage = (id) => {
   localStorage.setItem("user_Detailed_id", id);
     navigate(`/userDetailedData`);
@@ -104,7 +103,7 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                   <td>{data.name}</td>
                   <td>{data.email || data.username}</td>
                   <td style={{ textAlign: "center" }}>
-                    {data.subscription_status == null ? "Free" : "Paid"}
+                    {data.subscription_status == 4 ? "Free" : "Paid"}
                   </td>
                   <td>{data.platform || "N/A"}</td>
                   <td style={{ textAlign: "center" }}>

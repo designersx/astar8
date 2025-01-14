@@ -1,5 +1,8 @@
 import React from "react";
 import Header from "../../component/Dashboard/Header";
+import { IoIosEye } from "react-icons/io";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const DestinyNumbers = () => {
   return (
@@ -31,13 +34,14 @@ const DestinyNumbers = () => {
                     Self-controlled, and Self-confi...
                   </td>
                   <td>
+                  <div style={{ display: "flex", gap: "10px" }}>
                     <a
                       className="btn btn-info"
                       href="https://be.astar8.com/destinyno/100"
                       title="View"
                       target="_blank"
                     >
-                      <i className="icon-copy ion-eye" />
+                      <IoIosEye size={18} />
                     </a>
                     <a
                       className="btn btn-primary"
@@ -45,8 +49,9 @@ const DestinyNumbers = () => {
                       title="Edit"
                       target="_blank"
                     >
-                      <i className="icon-copy ti-pencil-alt" />
+                      <FontAwesomeIcon icon={faPencilAlt} />
                     </a>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -67,181 +72,6 @@ const DestinyNumbers = () => {
                     <a
                       className="btn btn-primary"
                       href="https://be.astar8.com/destinyno/101/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>
-                    Cheerful and Optimistic, Sociable, Confident, Conscientious,
-                    Proud, Creative, and Articula...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/destinyno/102"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/destinyno/102/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>
-                    Practical, Methodical, Studious, Serious, Down to Earth,
-                    Disciplined, Honest, Loyal, Punct...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/destinyno/103"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/destinyno/103/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>
-                    Enthusiastic, Clever, Adaptable, An Adventurer, Expressive
-                    in writing and speech, Curious,...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/destinyno/104"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/destinyno/104/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>6</td>
-                  <td>
-                    Responsible, Magnetic, Dependable, Kind, Affectionate,
-                    Artistic, Friendly, A helper to tho...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/destinyno/105"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/destinyno/105/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>7</td>
-                  <td>
-                    Spiritual, Analytical, Intuitive, Faithful, Original,
-                    Independent, Professional, Silent, K...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/destinyno/106"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/destinyno/106/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>8</td>
-                  <td>
-                    Authoritative, Determined, In Control, Successful,
-                    Persevering, Thorough, Philosophical, A...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/destinyno/107"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/destinyno/107/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>9</td>
-                  <td>
-                    Inspirational, Energetic, An Organizer, Strong-willed,
-                    Forceful, Artistic, Humane, and Gen...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/destinyno/108"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/destinyno/108/edit"
                       title="Edit"
                       target="_blank"
                     >
