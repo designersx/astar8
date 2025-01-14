@@ -1,5 +1,7 @@
 import axios from "axios";
-export const Url = "http://localhost:5234"; //   https://dev.astar8.com
+export const Url = "https://dev.astar8.com";
+// export const Url = "https://dev.astar8.com"
+
 //   admin login api
 export const LoginApi = async (email, password) => {
   try {
@@ -192,7 +194,7 @@ export const addDailyForecast = async (token, date, prediction, user_id) => {
   try {
     const response = await axios.post(
       `${Url}/p1g6s9ik3n/dly12g6ui8`,
-      {user_id, date, prediction },
+      { user_id, date, prediction },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -257,7 +259,7 @@ export const dashboardApi = async (req, res) => {
 // .. user details data click on eye in user page
 
 export const userDetailedData = async (user_id, token) => {
-  console.log("dasasdd",user_id)
+  console.log("dasasdd", user_id);
   try {
     const response = await axios.get(
       `${Url}/u163mjh02f/usrdlsp87a/${user_id}`,
@@ -364,7 +366,7 @@ export const subscriptionsUpdateUser = async (finalData) => {
   try {
     const response = await axios.post(
       `${Url}/48fghd63rg/jgit90ept8`,
-      (finalData)
+      finalData
     );
     const data = await response.data;
     return data;
@@ -376,12 +378,9 @@ export const subscriptionsUpdateUser = async (finalData) => {
 
 // Payment setting change api
 export const paymentSettingChange = async (finalData) => {
-  console.log("asdasd0000000000",finalData)
+  console.log("asdasd0000000000", finalData);
   try {
-    const response = await axios.post(
-      `${Url}/stripe/458fjiy5dt`,
-      (finalData)
-    );
+    const response = await axios.post(`${Url}/stripe/458fjiy5dt`, finalData);
     const data = await response.data;
     return data;
   } catch (err) {
