@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/Style.css";
 import { addDailyForecast } from "../../lib/Store";
+import Swal from "sweetalert2"; // Import SweetAlert2
 
 export default function AddDailyForcast() {
   const [date, setDate] = useState("");
   const [prediction, setPrediction] = useState("");
-  const [user_id, setuserId] = useState(localStorage.getItem("userId"))
+  const [user_id, setuserId] = useState(localStorage.getItem("userId"));
   const [token, setToken] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,15 +20,37 @@ export default function AddDailyForcast() {
 
   const onHandleSubmit = async (e) => {
     e.preventDefault();
+
+    const wordCount = prediction.trim().split(/\s+/).length; // Calculate word count
+
+    if (!prediction.trim()) {
+      Swal.fire("Oops!", "Prediction can't be empty!", "warning");
+      return;
+    }
+    if (wordCount < 10) {
+      Swal.fire("Oops!", "Prediction must have at least 10 words!", "warning");
+      return;
+    }
+    if (wordCount > 3000) {
+      Swal.fire("Oops!", "Prediction can't exceed 3000 words!", "warning");
+      return;
+    }
+
     setLoading(true);
+
     try {
       const formattedDate = new Date(date).toISOString().split("T")[0];
-      const trimmedPrediction = prediction.trim().replace(/\n/g, ' '); // Optional: Replace newlines with space
-      const response = await addDailyForecast(token, formattedDate, trimmedPrediction,user_id);
+      const trimmedPrediction = prediction.trim().replace(/\n/g, " "); // Replace newlines with spaces
+      const response = await addDailyForecast(
+        token,
+        formattedDate,
+        trimmedPrediction,
+        user_id
+      );
 
       if (response.status === "success") {
         setPrediction("");
-        setDate("");
+        setDate(new Date().toISOString().split("T")[0]); // Reset date to the current date
         setMessage(response.message);
       } else {
         setMessage(response.error);
@@ -68,11 +91,11 @@ export default function AddDailyForcast() {
                   <strong>Date:</strong>
                   <input
                     placeholder="Date"
-                    min="2024-12-09"
                     className="form-control mt-1 pred_Date"
                     name="prediction_date"
                     type="date"
                     value={date}
+                    min={new Date().toISOString().split("T")[0]} // Restrict to the current date
                     onChange={(e) => setDate(e.target.value)}
                   />
                 </div>
@@ -93,8 +116,18 @@ export default function AddDailyForcast() {
                 </div>
               </div>
               <div className="col-xs-12 col-sm-12 col-md-12 text-center submitBtn mt-2">
-                <button type="submit" className="btn btn-primary alert-publish">
-                  {loading ? "Loading..." : "Publish"}
+                <button
+                  type="submit"
+                  className="btn btn-primary alert-publish"
+                  onClick={() =>
+                    setDate(new Date().toISOString().split("T")[0])
+                  }
+                >
+                  {loading
+                    ? "Loading..."
+                    : date === new Date().toISOString().split("T")[0]
+                    ? "Publish"
+                    : "Schedule"}
                 </button>
               </div>
             </div>

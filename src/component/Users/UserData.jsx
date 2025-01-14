@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 
 export default function UserData({ user, currentPage, usersPerPage, loading }) {
+  console.log("dasdasdda",user)
   const navigate = useNavigate();
   const onHandleNextPage = (id) => {
   localStorage.setItem("user_Detailed_id", id);
@@ -103,7 +104,7 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                   <td>{data.name}</td>
                   <td>{data.email || data.username}</td>
                   <td style={{ textAlign: "center" }}>
-                    {data.subscription_status == 4 ? "Free" : "Paid"}
+                    {data.subscription_status === 4 ? "Free" : "Paid"}
                   </td>
                   <td>{data.platform || "N/A"}</td>
                   <td style={{ textAlign: "center" }}>

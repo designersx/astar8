@@ -5,7 +5,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { GetUserData, updateImage, UpdateProfile } from "../../lib/Store";
 import AppContext from "../../ContextApi/userContext";
-import Loader from "../../component/Loader/Loader"
+import Loader from "../../component/Loader/Loader";
 export default function Profile() {
   const { data, setData } = useContext(AppContext);
   const [user, setUser] = useState({});
@@ -15,6 +15,8 @@ export default function Profile() {
   const [imageSrc, setImageSrc] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isDisable, setIsdisable] = useState(false);
+  const [nameError, setNameError] = useState(""); // State to store error message
+
   const fileInputRef = useRef(null);
   const handleIconClick = () => {
     fileInputRef.current.click();
@@ -47,6 +49,7 @@ export default function Profile() {
   }, []);
   const onModalClose = () => {
     setIsModalOpen(false);
+    setNameError("");
   };
   const onUpdateClick = () => {
     setIsModalOpen(true);
@@ -55,8 +58,18 @@ export default function Profile() {
   };
   const onHandleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "name") setUpdatedUsername(value);
-    // if (name === "username") setUpdatedEmail(value);
+    if (name === "name") {
+      setUpdatedUsername(value);
+
+      // Validation for name length
+      if (value.length < 3) {
+        setNameError("Name must be at least 3 characters long.");
+      } else if (value.length > 25) {
+        setNameError("Name must not exceed 25 characters.");
+      } else {
+        setNameError(""); // Clear error if validation passes
+      }
+    }
   };
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -100,6 +113,8 @@ export default function Profile() {
       if (response && response.status === true) {
         setIsModalOpen(false);
         getUserDetails();
+        console.log("nameeee", name);
+        localStorage.setItem("name", name);
       } else {
         console.error("Profile update failed:", response);
       }
@@ -113,6 +128,7 @@ export default function Profile() {
   if (loading) {
     return <Loader />;
   }
+
   return (
     <>
       <Header />
@@ -282,55 +298,74 @@ export default function Profile() {
         </div>
       </div>
       {isModalOpen && (
-        <div className="modal-content">
-          <div className="modal-header">
-            <h4 className="modal-title" id="exampleModalLabel">
-              Edit Profile
-            </h4>
-            <button type="button" className="close" onClick={onModalClose}>
-              <span aria-hidden="true">×</span>
-            </button>
+        <>
+          <div
+            className={`modal-overlay ${isModalOpen ? "" : "fade-out"}`}
+            onClick={onModalClose}
+          ></div>
+          <div className={`modal-content ${isModalOpen ? "" : "fade-out"}`}>
+            <div className="modal-header">
+              <h4 className="modal-title" id="exampleModalLabel">
+                Edit Profile
+              </h4>
+              <button type="button" className="close" onClick={onModalClose}>
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div className="modal-body">
+                <div className="form-group">
+                  <strong>Name: </strong>
+                  <input
+                    placeholder="Name"
+                    className="form-control"
+                    name="name"
+                    type="text"
+                    value={updatedUsername || ""}
+                    onChange={onHandleChange}
+                  />
+                  {nameError && (
+                    <small style={{ color: "red", fontSize: "12px" }}>
+                      {nameError}
+                    </small>
+                  )}
+                </div>
+                <div className="form-group">
+                  <strong>Email: </strong>
+                  <input
+                    placeholder="Email"
+                    className="form-control"
+                    name="username"
+                    type="text"
+                    value={user.email || ""}
+                    onChange={onHandleChange}
+                    disabled
+                  />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={onModalClose}
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={
+                    nameError ||
+                    updatedUsername.length < 3 ||
+                    updatedUsername.length > 14
+                  }
+                >
+                  {loading ? "Loading..." : "Save Changes"}
+                </button>
+              </div>
+            </form>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="modal-body">
-              <div className="form-group">
-                <strong>Name: </strong>
-                <input
-                  placeholder="Name"
-                  className="form-control"
-                  name="name"
-                  type="text"
-                  value={updatedUsername || ""}
-                  onChange={onHandleChange}
-                />
-              </div>
-              <div className="form-group">
-                <strong>Email: </strong>
-                <input
-                  placeholder="Email"
-                  className="form-control"
-                  name="username"
-                  type="text"
-                  value={user.email || ""}
-                  onChange={onHandleChange}
-                  disabled
-                />
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={onModalClose}
-              >
-                Close
-              </button>
-              <button type="submit" className="btn btn-primary">
-                {loading ? "Loading..." : "Save Changes"}
-              </button>
-            </div>
-          </form>
-        </div>
+        </>
       )}
     </>
   );

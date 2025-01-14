@@ -9,7 +9,7 @@ import Loader from "../Loader/Loader";
 const ChatDetails = ({ user, onMessageSent }) => {
   // console.log("userrr", user);
   const [userChatMessages, setUserChatMessages] = useState([]);
-  // console.log("userMEssss", userChatMessages);
+  console.log("userMEssss", userChatMessages);
   const [messageInput, setMessageInput] = useState("");
   const [socket, setSocket] = useState(null);
   const [loading, setLoading] = useState(true); // Add loading state
@@ -210,69 +210,69 @@ const ChatDetails = ({ user, onMessageSent }) => {
                 </div> // Loading indicator
               ) : (
                 <div>
-                  {userChatMessages?.map((message) => (
-                    <div
-                      key={message.messageId}
-                      style={{ gap: "15px" }}
-                      className={`d-flex mb-3  ${
-                        message.senderId === user?.user_id
-                          ? "justify-content-start"
-                          : "justify-content-end"
-                      }`}
-                    >
-                      {message.senderId === user?.user_id && (
-                        <img
-                          src={
-                            user.user_profile_pic ||
-                            "https://be.astar8.com/images/dummy.jpg"
-                          }
-                          alt="User profile"
-                          className="rounded-circle me-2"
-                          style={{
-                            width: "40px",
-                            height: "40px",
-                            objectFit: "cover",
-                          }}
-                        />
-                      )}
-                      <div
-                        className="p-3 rounded"
-                        style={{
-                          background:
-                            message.senderId === user?.user_id
-                              ? "#ecf0f4"
-                              : "#d1e7dd",
-                          wordWrap: "break-word",
-                          maxWidth: "70%",
-                        }}
-                      >
-                        {message.message}
-                        <p
-                          className="small mb-0 mt-1"
-                          style={{ color: "#a4a4a4", textAlign: "right" }}
-                        >
-                          {formatDate(message.updated || message.timestamp)} at{" "}
-                          {formatTime(message.updated || message.timestamp)}
-                        </p>
-                      </div>
-                      {message.senderId !== user?.user_id && (
-                        <img
-                          src={
-                            adminProfile ||
-                            "https://be.astar8.com/images/dummy.jpg"
-                          }
-                          alt="User profile"
-                          className="rounded-circle ms-2"
-                          style={{
-                            width: "40px",
-                            height: "40px",
-                            objectFit: "cover",
-                          }}
-                        />
-                      )}
-                    </div>
-                  ))}
-                </div>
+  {userChatMessages
+    ?.filter((message) => message.dailyprediction_id === null)
+    .map((message) => (
+      <div
+        key={message.messageId}
+        style={{ gap: "15px" }}
+        className={`d-flex mb-3 ${
+          message.senderId === user?.user_id
+            ? "justify-content-start"
+            : "justify-content-end"
+        }`}
+      >
+        {message.senderId === user?.user_id && (
+          <img
+            src={
+              user.user_profile_pic ||
+              "https://be.astar8.com/images/dummy.jpg"
+            }
+            alt="User profile"
+            className="rounded-circle me-2"
+            style={{
+              width: "40px",
+              height: "40px",
+              objectFit: "cover",
+            }}
+          />
+        )}
+        <div
+          className="p-3 rounded"
+          style={{
+            background:
+              message.senderId === user?.user_id ? "#ecf0f4" : "#d1e7dd",
+            wordWrap: "break-word",
+            maxWidth: "70%",
+          }}
+        >
+          {message.message}
+          <p
+            className="small mb-0 mt-1"
+            style={{ color: "#a4a4a4", textAlign: "right" }}
+          >
+            {formatDate(message.updated || message.timestamp)} at{" "}
+            {formatTime(message.updated || message.timestamp)}
+          </p>
+        </div>
+        {message.senderId !== user?.user_id && (
+          <img
+            src={
+              adminProfile || "https://be.astar8.com/images/dummy.jpg"
+            }
+            alt="User profile"
+            className="rounded-circle ms-2"
+            style={{
+              width: "40px",
+              height: "40px",
+              objectFit: "cover",
+            }}
+          />
+        )}
+      </div>
+    ))}
+</div>
+
               )}
               <div ref={messagesEndRef} />
             </div>

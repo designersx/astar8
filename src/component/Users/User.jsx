@@ -47,7 +47,7 @@ export default function User() {
           u.username.toLowerCase().includes(filterEmail.toLowerCase()))) &&
       (filterSubscription === "" ||
         u.subscription_status == filterSubscription ||
-        (u.subscription_status === 4 && filterSubscription == 4)) && // Handle null == 0 case
+        (u.subscription_status === null && filterSubscription == 0)) && // Handle null == 0 case
       (filterPlatform === "" ||
         (u.platform &&
           u.platform.toLowerCase().includes(filterPlatform.toLowerCase())))
