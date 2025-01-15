@@ -9,15 +9,12 @@ import {
   subscription3Action,
   getAllUsers,
 } from "../../lib/Store";
-import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 
 export default function UserData({ user, currentPage, usersPerPage, loading }) {
-  console.log("dasdasdda",user)
-  const navigate = useNavigate();
   const onHandleNextPage = (id) => {
   localStorage.setItem("user_Detailed_id", id);
-    navigate(`/userDetailedData`);
+  window.open(`/userDetailedData`, '_blank');
   };
 
   const subscription1Month = async (id) => {

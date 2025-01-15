@@ -74,13 +74,12 @@ export default function Dashboard() {
     setIsSidebarOpen(false);
   };
 
-  // // token check
   useEffect(() => {
     const token = localStorage.getItem("UserToken");
 
     if (token) {
-      const decoded = JSON.parse(atob(token.split(".")[1])); // Decode JWT
-      const expTime = decoded.exp * 1000; // Expiry time in milliseconds
+      const decoded = JSON.parse(atob(token.split(".")[1]));
+      const expTime = decoded.exp * 1000; 
 
       if (Date.now() > expTime) {
         localStorage.removeItem("UserToken");
@@ -207,6 +206,10 @@ export default function Dashboard() {
                         ? img
                         : "https://be.astar8.com/img/default-profile-img.png"
                     }
+                    onError={(e) => {
+                      e.target.onerror = null; 
+                      e.target.src = "https://be.astar8.com/img/default-profile-img.png";
+                    }}
                     alt=""
                   />
                 </span>

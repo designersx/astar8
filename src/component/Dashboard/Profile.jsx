@@ -15,7 +15,7 @@ export default function Profile() {
   const [imageSrc, setImageSrc] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isDisable, setIsdisable] = useState(false);
-  const [nameError, setNameError] = useState(""); // State to store error message
+  const [nameError, setNameError] = useState(""); 
 
   const fileInputRef = useRef(null);
   const handleIconClick = () => {
@@ -29,13 +29,11 @@ export default function Profile() {
       const response = await GetUserData(email, token);
       if (response) {
         setUser(response.user);
-        console.log(response.user, "huhkj");
         setImageSrc(response.user.profile_pic);
         localStorage.setItem("profilePic", response.user.profile_pic);
         const { _seconds } = response.user.created_at;
         const dateObject = new Date(_seconds * 1000);
         const formattedDate = dateObject.toISOString().split("T")[0];
-        console.log(formattedDate, "formattedDate");
         setFormattedDate(formattedDate);
       }
     } catch (error) {
@@ -54,20 +52,17 @@ export default function Profile() {
   const onUpdateClick = () => {
     setIsModalOpen(true);
     setUpdatedUsername(user?.username);
-    // setUpdatedEmail(user.username);
   };
   const onHandleChange = (e) => {
     const { name, value } = e.target;
     if (name === "name") {
       setUpdatedUsername(value);
-
-      // Validation for name length
       if (value.length < 3) {
         setNameError("Name must be at least 3 characters long.");
       } else if (value.length > 25) {
         setNameError("Name must not exceed 25 characters.");
       } else {
-        setNameError(""); // Clear error if validation passes
+        setNameError("");
       }
     }
   };
@@ -107,13 +102,11 @@ export default function Profile() {
     try {
       const id = localStorage.getItem("userId");
       const name = updatedUsername;
-      // const username = updatedEmail;
       const token = localStorage.getItem("UserToken");
       const response = await UpdateProfile(id, name, token);
       if (response && response.status === true) {
         setIsModalOpen(false);
         getUserDetails();
-        console.log("nameeee", name);
         localStorage.setItem("name", name);
       } else {
         console.error("Profile update failed:", response);
@@ -183,7 +176,6 @@ export default function Profile() {
                             display: "none",
                           }}
                         />
-                        {/* Edit Icon with Circular Background */}
                         <div
                           style={{
                             position: "absolute",
@@ -209,11 +201,14 @@ export default function Profile() {
                             ? imageSrc
                             : "https://be.astar8.com/img/default-profile-img.png"
                         }
+                        onError={(e) => {
+                          e.target.onerror = null; 
+                          e.target.src = "https://be.astar8.com/img/default-profile-img.png";
+                        }}
                         alt="Profile"
                         height="160px"
                         width="160px"
                         style={{
-                          // borderRadius: "10px", // Slightly rounded corners
                           objectFit: "cover",
                         }}
                       />
