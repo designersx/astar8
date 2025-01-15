@@ -357,7 +357,7 @@ export default function Profile() {
                   disabled={
                     nameError ||
                     updatedUsername.length < 3 ||
-                    updatedUsername.length > 14
+                    updatedUsername.length > 25
                   }
                 >
                   {loading ? "Loading..." : "Save Changes"}

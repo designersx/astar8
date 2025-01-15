@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/Style.css";
 import { addDailyForecast } from "../../lib/Store";
-import Swal from "sweetalert2"; // Import SweetAlert2
-
+import Swal from "sweetalert2"; 
 export default function AddDailyForcast() {
   const [date, setDate] = useState("");
   const [prediction, setPrediction] = useState("");
