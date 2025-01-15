@@ -408,7 +408,6 @@ export const publishButtonScheduled = async (e) => {
 
 // Daily prediction Cancel Button for Scheduled
 export const cancelButtonScheduled = async (e) => {
-  console.log("dataa",e)
   const finalData = {
     predictionId:e
   }

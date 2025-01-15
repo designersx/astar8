@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
-import { cancelButtonScheduled, getDailyLikeDislike, getForecastData, publishButtonScheduled } from "../../lib/Store";
+import {
+  cancelButtonScheduled,
+  getDailyLikeDislike,
+  getForecastData,
+  publishButtonScheduled,
+} from "../../lib/Store";
 import { FaUpload } from "react-icons/fa";
 import { IoCloseCircle } from "react-icons/io5";
 import Loader from "../Loader/Loader";
+import Swal from "sweetalert2";
 
 export default function DailyForecartList() {
   const [ForecastData, setForecastData] = useState([]);
   const [displayCount, setDisplayCount] = useState(5);
   const [selectedTab, setSelectedTab] = useState("all");
   const [loading, setLoading] = useState(false);
+  const [refreshData, setrefreshData] = useState(false);
   const [userPhoto, setuserPhoto] = useState(
     localStorage.getItem("profilePic")
   );
@@ -33,8 +40,20 @@ export default function DailyForecartList() {
   };
 
   useEffect(() => {
-    fetchForecastData();
-  }, []);
+    // Fetch forecast data whenever refreshData is toggled
+    if (refreshData) {
+      fetchForecastData(
+        selectedTab === "published"
+          ? 1
+          : selectedTab === "scheduled"
+          ? 0
+          : "all"
+      );
+      setrefreshData(false); // Reset refreshData to avoid unnecessary reloads
+    } else {
+      fetchForecastData();
+    }
+  }, [refreshData]);
 
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
@@ -68,27 +87,125 @@ export default function DailyForecartList() {
     return `${year}-${month}-${day}`;
   }
 
-  // Cancel and publish 
+  // Cancel and publish
   const publishButton = async (e) => {
-    console.log("publushh",e)
-    try {
-      const response = await publishButtonScheduled(e);
-      console.log(response.response.data.message, "ressponse publish---");
-    } catch (error) {
-      console.error("Error fetching forecast data:", error);
+    // Step 1: Confirmation Alert
+    const confirmResult = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to publish this prediction?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, publish it!",
+      cancelButtonText: "No, cancel",
+    });
+
+    if (!confirmResult.isConfirmed) {
+      return; // Exit if user cancels the confirmation
     }
-  };
-  const cancelButton = async (e) => {
-    console.log("cancel",e)
+
+    // Step 2: Show Loading Alert
+    Swal.fire({
+      title: "Publishing...",
+      text: "Please wait while the prediction is being published.",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
     try {
-      const response = await cancelButtonScheduled(e);
-      console.log(response.response.data.message, "ressponse cancel---");
+      // Step 3: API Call
+      const response = await publishButtonScheduled(e);
+
+      if (response.status === 200) {
+        // Step 4: Success Alert
+
+        Swal.fire({
+          title: "Published!",
+          text: response.message,
+          icon: "success",
+        });
+        setrefreshData(true);
+      } else {
+        Swal.fire({
+          title: "Published Failed!",
+          text: response?.response.data.message,
+          icon: "error",
+        });
+      }
     } catch (error) {
-      console.error("Error fetching forecast data:", error);
+      // Step 5: Error Alert
+      Swal.fire({
+        title: "Error!",
+        text: "An error occurred while publishing the prediction.",
+        icon: "error",
+      });
+      console.error("Error publishing data:", error);
     }
   };
 
-  
+  const cancelButton = async (e) => {
+    // Step 1: Confirmation Alert
+    const confirmResult = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to cancel this prediction?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, cancel it!",
+      cancelButtonText: "No, keep it",
+    });
+
+    if (!confirmResult.isConfirmed) {
+      return;
+    }
+
+    // Step 2: Show Loading Alert
+    Swal.fire({
+      title: "Cancelling...",
+      text: "Please wait while the prediction is being cancelled.",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    try {
+      // Step 3: API Call
+      const response = await cancelButtonScheduled(e);
+      console.log("ressssss", response);
+      if (response.status === 200) {
+        // Step 4: Success Alert
+
+        Swal.fire({
+          title: "Cancelled!",
+          text: response.message,
+          icon: "success",
+        });
+        setrefreshData(true);
+      } else {
+        Swal.fire({
+          title: "Cancelled Failed!",
+          text: response?.response.data.message,
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      // Step 5: Error Alert
+      Swal.fire({
+        title: "Error!",
+        text: "An error occurred while cancelling the prediction.",
+      });
+      console.error("Error cancelling data:", error);
+    }
+  };
+
+  const isFutureDate = (date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to the start of the day
+    return date > today;
+  };
 
   return (
     <>
@@ -261,34 +378,40 @@ export default function DailyForecartList() {
 
                                         {/* Button Section */}
                                         {selectedTab === "scheduled" ? (
-                                          <>
+                                          isFutureDate(
+                                            new Date(forecast.prediction_date)
+                                          ) ? (
                                             <div
                                               style={{
                                                 display: "flex",
-                                                justifyContent:"end",
+                                                justifyContent: "end",
                                                 gap: "35px",
-                                                marginTop:"5px",
+                                                marginTop: "5px",
                                                 marginBottom: "16px",
                                               }}
                                             >
                                               <div
+                                                style={{
+                                                  cursor: "pointer",
+                                                }}
                                                 onClick={() =>
                                                   publishButton(forecast?.id)
                                                 }
                                               >
-                                                <FaUpload size={14}/>
+                                                <FaUpload size={14} />
                                               </div>
                                               <div
+                                                style={{
+                                                  cursor: "pointer",
+                                                }}
                                                 onClick={() =>
                                                   cancelButton(forecast?.id)
                                                 }
                                               >
-                                                <IoCloseCircle size={16}/>
+                                                <IoCloseCircle size={16} />
                                               </div>
-
-                                              
                                             </div>
-                                          </>
+                                          ) : null
                                         ) : (
                                           <div
                                             style={{
@@ -322,7 +445,7 @@ export default function DailyForecartList() {
                                                   gap: "4px",
                                                 }}
                                               >
-                                                <AiFillDislike color="red" />
+                                                <AiFillDislike color="red" />{" "}
                                                 {forecast.dislikes}
                                               </div>
                                             </div>
