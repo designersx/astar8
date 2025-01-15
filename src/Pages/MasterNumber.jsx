@@ -1,12 +1,13 @@
 import React from "react";
-import Header from "../component/Dashboard/Header"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
-import "../styles/Style.css"
+import Header from "../component/Dashboard/Header";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { IoIosEye } from "react-icons/io";
+import "../styles/Style.css";
 export default function MasterNumber() {
   return (
     <>
-    <Header/>
+      <Header />
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
           <div className="row">
@@ -36,22 +37,24 @@ export default function MasterNumber() {
                   a...
                 </td>
                 <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/master_numbers/2"
-                    title="View"
-                    target="_blank"
-                  >
-          <FontAwesomeIcon icon={faEye} />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/master_numbers/2/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                   <FontAwesomeIcon icon={faPencilAlt} />
-                  </a>
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    <a
+                      className="btn btn-info"
+                      href="https://be.astar8.com/master_numbers/2"
+                      title="View"
+                      target="_blank"
+                    >
+                      <IoIosEye size={18} />
+                    </a>
+                    <a
+                      className="btn btn-primary"
+                      href="https://be.astar8.com/master_numbers/2/edit"
+                      title="Edit"
+                      target="_blank"
+                    >
+                      <FontAwesomeIcon icon={faPencilAlt} />
+                    </a>
+                  </div>
                 </td>
               </tr>
             </tbody>

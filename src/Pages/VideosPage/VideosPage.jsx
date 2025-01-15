@@ -1,5 +1,8 @@
 import React from "react";
 import Header from "../../component/Dashboard/Header";
+import { IoIosEye } from "react-icons/io";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const VideosPage = () => {
   return (
@@ -48,13 +51,14 @@ const VideosPage = () => {
                 </td>
                 <td>https://youtu.be/P0kWtme93YY</td>
                 <td>
+                <div style={{ display: "flex", gap: "10px" }}>
                   <a
                     className="btn btn-info"
                     href="https://be.astar8.com/videos/1"
                     title="View"
                     target="_blank"
                   >
-                    <i className="icon-copy ion-eye" />
+                    <IoIosEye size={18} />
                   </a>
                   <a
                     className="btn btn-primary"
@@ -62,8 +66,9 @@ const VideosPage = () => {
                     title="Edit"
                     target="_blank"
                   >
-                    <i className="icon-copy ti-pencil-alt" />
+                    <FontAwesomeIcon icon={faPencilAlt} />
                   </a>
+                  </div>
                 </td>
               </tr>
               <tr>
@@ -90,130 +95,6 @@ const VideosPage = () => {
                   <a
                     className="btn btn-primary"
                     href="https://be.astar8.com/videos/2/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>The Tarot Ladies</td>
-                <td>
-                  <img
-                    src="https://be.astar8.com/thumbnail/default_thumbnail.png"
-                    alt="Video Thumbnail"
-                    width="100%"
-                    height="100%"
-                  />
-                </td>
-                <td>https://youtu.be/uV0KjwGYxjo</td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/videos/3"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/videos/3/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>Guest: Eugene Braxton</td>
-                <td>
-                  <img
-                    src="https://be.astar8.com/thumbnail/default_thumbnail.png"
-                    alt="Video Thumbnail"
-                    width="100%"
-                    height="100%"
-                  />
-                </td>
-                <td>https://youtu.be/S4OSHNOV46Q</td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/videos/4"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/videos/4/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>Guest: Audrey Rumbers</td>
-                <td>
-                  <img
-                    src="https://be.astar8.com/thumbnail/default_thumbnail.png"
-                    alt="Video Thumbnail"
-                    width="100%"
-                    height="100%"
-                  />
-                </td>
-                <td>https://youtu.be/m78FUR9iD3w</td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/videos/5"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/videos/5/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>Doug E. Fresh</td>
-                <td>
-                  <img
-                    src="https://be.astar8.com/thumbnail/default_thumbnail.png"
-                    alt="Video Thumbnail"
-                    width="100%"
-                    height="100%"
-                  />
-                </td>
-                <td>https://youtu.be/zQ4AOzQ1Upk</td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/videos/6"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/videos/6/edit"
                     title="Edit"
                     target="_blank"
                   >

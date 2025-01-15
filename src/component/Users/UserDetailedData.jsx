@@ -7,6 +7,7 @@ import Loader from "../Loader/Loader";
 export default function UserDetailedData() {
   const location = useLocation();
   const [userDetails, setUserDetails] = useState(null);
+  console.log("userDetailss",userDetails)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [formattedDate, setFormattedDate] = useState(null);

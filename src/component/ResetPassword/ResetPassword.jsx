@@ -3,6 +3,10 @@ import "../../styles/Style.css";
 import Header from "../Dashboard/Header";
 import { Link } from "react-router-dom";
 import { ResetPasswordApi } from "../../lib/Store";
+import { IoEye } from "react-icons/io5";
+import { IoEyeOffSharp } from "react-icons/io5";
+
+
 export default function ResetPassword() {
   const [formData, setFormData] = useState({
     email: localStorage.getItem("userEmail") || "",
@@ -131,7 +135,7 @@ export default function ResetPassword() {
                     className="eye-icon"
                     onClick={() => togglePasswordVisibility("old")}
                   >
-                    {showOldPassword ? "👁️" : "🙈"}
+                    {showOldPassword ? <IoEye size={20}/>  : <IoEyeOffSharp size={20}/>}
                   </span>
                 )}
               </div>
@@ -155,10 +159,10 @@ export default function ResetPassword() {
                 />
                 {isNewPasswordTyping && (
                   <span
-                    className="eye-icon"
+                    className="eye-icon" 
                     onClick={() => togglePasswordVisibility("new")}
                   >
-                    {showNewPassword ? "👁️" : "🙈"}
+                    {showNewPassword ? <IoEye size={20}/> : <IoEyeOffSharp size={20}/>}
                   </span>
                 )}
               </div>
@@ -185,7 +189,7 @@ export default function ResetPassword() {
                     className="eye-icon"
                     onClick={() => togglePasswordVisibility("confirm")}
                   >
-                    {showConfirmPassword ? "👁️" : "🙈"}
+                    {showConfirmPassword ? <IoEye size={20}/> : <IoEyeOffSharp size={20}/>}
                   </span>
                 )}
               </div>

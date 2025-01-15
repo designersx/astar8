@@ -1,5 +1,8 @@
 import React from "react";
 import Header from "../../component/Dashboard/Header";
+import { IoIosEye } from "react-icons/io";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const ElementalNumber = () => {
   return (
@@ -30,13 +33,14 @@ const ElementalNumber = () => {
                     Fire is your natural element, representing energy and force.
                   </td>
                   <td>
+                  <div style={{ display: "flex", gap: "10px" }}>
                     <a
                       className="btn btn-info"
                       href="https://be.astar8.com/elementalno/19"
                       title="View"
                       target="_blank"
                     >
-                      <i className="icon-copy ion-eye" />
+                      <IoIosEye size={18} />
                     </a>
                     <a
                       className="btn btn-primary"
@@ -44,8 +48,9 @@ const ElementalNumber = () => {
                       title="Edit"
                       target="_blank"
                     >
-                      <i className="icon-copy ti-pencil-alt" />
+                      <FontAwesomeIcon icon={faPencilAlt} />
                     </a>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -66,178 +71,6 @@ const ElementalNumber = () => {
                     <a
                       className="btn btn-primary"
                       href="https://be.astar8.com/elementalno/20/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Fire is your element ruling force and energy.</td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/elementalno/21"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/elementalno/21/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>
-                    Air is your element, representing mental and intellectual
-                    qualities.
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/elementalno/22"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/elementalno/22/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>
-                    Air is your natural element, ruling thinking, and mental
-                    activities.
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/elementalno/23"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/elementalno/23/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>6</td>
-                  <td>
-                    Earth is your element, governing practical and down-to-earth
-                    ways of dealing with things.
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/elementalno/24"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/elementalno/24/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>7</td>
-                  <td>
-                    Water is your element, representing deep thoughts and inner
-                    feelings.
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/elementalno/25"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/elementalno/25/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>8</td>
-                  <td>
-                    Earth is your element, ruling over methodical and practical
-                    ways.
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/elementalno/26"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/elementalno/26/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>9</td>
-                  <td>
-                    Fire is your element, denoting intuition, spirit, and
-                    energy.
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/elementalno/27"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/elementalno/27/edit"
                       title="Edit"
                       target="_blank"
                     >

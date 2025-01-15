@@ -5,7 +5,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { GetUserData, updateImage, UpdateProfile } from "../../lib/Store";
 import AppContext from "../../ContextApi/userContext";
-import Loader from "../../component/Loader/Loader"
+import Loader from "../../component/Loader/Loader";
 export default function Profile() {
   const { data, setData } = useContext(AppContext);
   const [user, setUser] = useState({});
@@ -15,6 +15,8 @@ export default function Profile() {
   const [imageSrc, setImageSrc] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isDisable, setIsdisable] = useState(false);
+  const [nameError, setNameError] = useState(""); 
+
   const fileInputRef = useRef(null);
   const handleIconClick = () => {
     fileInputRef.current.click();
@@ -27,13 +29,11 @@ export default function Profile() {
       const response = await GetUserData(email, token);
       if (response) {
         setUser(response.user);
-        console.log(response.user, "huhkj");
         setImageSrc(response.user.profile_pic);
         localStorage.setItem("profilePic", response.user.profile_pic);
         const { _seconds } = response.user.created_at;
         const dateObject = new Date(_seconds * 1000);
         const formattedDate = dateObject.toISOString().split("T")[0];
-        console.log(formattedDate, "formattedDate");
         setFormattedDate(formattedDate);
       }
     } catch (error) {
@@ -47,16 +47,24 @@ export default function Profile() {
   }, []);
   const onModalClose = () => {
     setIsModalOpen(false);
+    setNameError("");
   };
   const onUpdateClick = () => {
     setIsModalOpen(true);
     setUpdatedUsername(user?.username);
-    // setUpdatedEmail(user.username);
   };
   const onHandleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "name") setUpdatedUsername(value);
-    // if (name === "username") setUpdatedEmail(value);
+    if (name === "name") {
+      setUpdatedUsername(value);
+      if (value.length < 3) {
+        setNameError("Name must be at least 3 characters long.");
+      } else if (value.length > 25) {
+        setNameError("Name must not exceed 25 characters.");
+      } else {
+        setNameError("");
+      }
+    }
   };
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -94,12 +102,12 @@ export default function Profile() {
     try {
       const id = localStorage.getItem("userId");
       const name = updatedUsername;
-      // const username = updatedEmail;
       const token = localStorage.getItem("UserToken");
       const response = await UpdateProfile(id, name, token);
       if (response && response.status === true) {
         setIsModalOpen(false);
         getUserDetails();
+        localStorage.setItem("name", name);
       } else {
         console.error("Profile update failed:", response);
       }
@@ -113,6 +121,7 @@ export default function Profile() {
   if (loading) {
     return <Loader />;
   }
+
   return (
     <>
       <Header />
@@ -167,7 +176,6 @@ export default function Profile() {
                             display: "none",
                           }}
                         />
-                        {/* Edit Icon with Circular Background */}
                         <div
                           style={{
                             position: "absolute",
@@ -193,11 +201,14 @@ export default function Profile() {
                             ? imageSrc
                             : "https://be.astar8.com/img/default-profile-img.png"
                         }
+                        onError={(e) => {
+                          e.target.onerror = null; 
+                          e.target.src = "https://be.astar8.com/img/default-profile-img.png";
+                        }}
                         alt="Profile"
                         height="160px"
                         width="160px"
                         style={{
-                          // borderRadius: "10px", // Slightly rounded corners
                           objectFit: "cover",
                         }}
                       />
@@ -282,55 +293,74 @@ export default function Profile() {
         </div>
       </div>
       {isModalOpen && (
-        <div className="modal-content">
-          <div className="modal-header">
-            <h4 className="modal-title" id="exampleModalLabel">
-              Edit Profile
-            </h4>
-            <button type="button" className="close" onClick={onModalClose}>
-              <span aria-hidden="true">×</span>
-            </button>
+        <>
+          <div
+            className={`modal-overlay ${isModalOpen ? "" : "fade-out"}`}
+            onClick={onModalClose}
+          ></div>
+          <div className={`modal-content ${isModalOpen ? "" : "fade-out"}`}>
+            <div className="modal-header">
+              <h4 className="modal-title" id="exampleModalLabel">
+                Edit Profile
+              </h4>
+              <button type="button" className="close" onClick={onModalClose}>
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div className="modal-body">
+                <div className="form-group">
+                  <strong>Name: </strong>
+                  <input
+                    placeholder="Name"
+                    className="form-control"
+                    name="name"
+                    type="text"
+                    value={updatedUsername || ""}
+                    onChange={onHandleChange}
+                  />
+                  {nameError && (
+                    <small style={{ color: "red", fontSize: "12px" }}>
+                      {nameError}
+                    </small>
+                  )}
+                </div>
+                <div className="form-group">
+                  <strong>Email: </strong>
+                  <input
+                    placeholder="Email"
+                    className="form-control"
+                    name="username"
+                    type="text"
+                    value={user.email || ""}
+                    onChange={onHandleChange}
+                    disabled
+                  />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={onModalClose}
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={
+                    nameError ||
+                    updatedUsername.length < 3 ||
+                    updatedUsername.length > 25
+                  }
+                >
+                  {loading ? "Loading..." : "Save Changes"}
+                </button>
+              </div>
+            </form>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="modal-body">
-              <div className="form-group">
-                <strong>Name: </strong>
-                <input
-                  placeholder="Name"
-                  className="form-control"
-                  name="name"
-                  type="text"
-                  value={updatedUsername || ""}
-                  onChange={onHandleChange}
-                />
-              </div>
-              <div className="form-group">
-                <strong>Email: </strong>
-                <input
-                  placeholder="Email"
-                  className="form-control"
-                  name="username"
-                  type="text"
-                  value={user.email || ""}
-                  onChange={onHandleChange}
-                  disabled
-                />
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={onModalClose}
-              >
-                Close
-              </button>
-              <button type="submit" className="btn btn-primary">
-                {loading ? "Loading..." : "Save Changes"}
-              </button>
-            </div>
-          </form>
-        </div>
+        </>
       )}
     </>
   );

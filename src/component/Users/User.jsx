@@ -6,6 +6,7 @@ import UserData from "./UserData";
 import { toast, Toaster } from "react-hot-toast";
 export default function User() {
   const [user, setUser] = useState([]);
+  console.log("userrrr",user)
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
   const [activeTab, setActiveTab] = useState("all");
@@ -13,6 +14,7 @@ export default function User() {
   const [filterName, setFilterName] = useState("");
   const [filterEmail, setFilterEmail] = useState("");
   const [filterSubscription, setFilterSubscription] = useState("");
+  console.log("filterr",filterSubscription)
   const [filterPlatform, setFilterPlatform] = useState("");
   const [loading, setLoading] = useState(false);
   const fetchUsers = async (status = null) => {
@@ -44,11 +46,14 @@ export default function User() {
         (u.username &&
           u.username.toLowerCase().includes(filterEmail.toLowerCase()))) &&
       (filterSubscription === "" ||
-        u.subscription_status == filterSubscription) &&
+        u.subscription_status == filterSubscription ||
+        (u.subscription_status === null && filterSubscription == 0)) && // Handle null == 0 case
       (filterPlatform === "" ||
         (u.platform &&
           u.platform.toLowerCase().includes(filterPlatform.toLowerCase())))
   );
+  
+  console.log("dasd",filteredUsers)
 
   useEffect(() => {
     if (activeTab === "all") {
