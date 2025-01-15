@@ -6,7 +6,7 @@ const ChatList = ({ users, onSelectUser }) => {
   // console.log("userListdddddd",users)
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true); // Add loading state
-  console.log("asdasd", loading);
+  // console.log("asdasd", loading);
   useEffect(() => {
     if (users) {
       setLoading(false);

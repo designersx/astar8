@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
-import { getDailyLikeDislike, getForecastData } from "../../lib/Store";
+import { cancelButtonScheduled, getDailyLikeDislike, getForecastData, publishButtonScheduled } from "../../lib/Store";
+import { FaUpload } from "react-icons/fa";
+import { IoCloseCircle } from "react-icons/io5";
 import Loader from "../Loader/Loader";
 
 export default function DailyForecartList() {
@@ -8,6 +10,9 @@ export default function DailyForecartList() {
   const [displayCount, setDisplayCount] = useState(5);
   const [selectedTab, setSelectedTab] = useState("all");
   const [loading, setLoading] = useState(false);
+  const [userPhoto, setuserPhoto] = useState(
+    localStorage.getItem("profilePic")
+  );
   // console.log("foreCastData", ForecastData);
 
   const name = localStorage.getItem("name");
@@ -62,6 +67,28 @@ export default function DailyForecartList() {
 
     return `${year}-${month}-${day}`;
   }
+
+  // Cancel and publish 
+  const publishButton = async (e) => {
+    console.log("publushh",e)
+    try {
+      const response = await publishButtonScheduled(e);
+      console.log(response.response.data.message, "ressponse publish---");
+    } catch (error) {
+      console.error("Error fetching forecast data:", error);
+    }
+  };
+  const cancelButton = async (e) => {
+    console.log("cancel",e)
+    try {
+      const response = await cancelButtonScheduled(e);
+      console.log(response.response.data.message, "ressponse cancel---");
+    } catch (error) {
+      console.error("Error fetching forecast data:", error);
+    }
+  };
+
+  
 
   return (
     <>
@@ -153,9 +180,7 @@ export default function DailyForecartList() {
                                       {/* Left Side Image */}
                                       <div style={{ flex: "0 0 80px" }}>
                                         <img
-                                          src={
-                                            "https://be.astar8.com/profile_pic/XNT7h6WVHVtj1675429683.png"
-                                          } // change from local storage
+                                          src={userPhoto} // change from local storage
                                           alt="Profile"
                                           style={{
                                             width: "90%",
@@ -235,52 +260,84 @@ export default function DailyForecartList() {
                                         </p>
 
                                         {/* Button Section */}
-                                        <div
-                                          style={{
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                            alignItems: "center",
-                                            marginTop: "16px",
-                                          }}
-                                        >
+                                        {selectedTab === "scheduled" ? (
+                                          <>
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                justifyContent:"end",
+                                                gap: "35px",
+                                                marginTop:"5px",
+                                                marginBottom: "16px",
+                                              }}
+                                            >
+                                              <div
+                                                onClick={() =>
+                                                  publishButton(forecast?.id)
+                                                }
+                                              >
+                                                <FaUpload size={14}/>
+                                              </div>
+                                              <div
+                                                onClick={() =>
+                                                  cancelButton(forecast?.id)
+                                                }
+                                              >
+                                                <IoCloseCircle size={16}/>
+                                              </div>
+
+                                              
+                                            </div>
+                                          </>
+                                        ) : (
                                           <div
                                             style={{
                                               display: "flex",
+                                              justifyContent: "space-between",
+                                              alignItems: "center",
+                                              marginTop: "16px",
                                             }}
                                           >
                                             <div
                                               style={{
-                                                padding: "4px 8px",
                                                 display: "flex",
-                                                alignItems: "center",
-                                                gap: "4px",
                                               }}
                                             >
-                                              <AiFillLike color="green" />{" "}
-                                              {forecast.likes}
+                                              <div
+                                                style={{
+                                                  padding: "4px 8px",
+                                                  display: "flex",
+                                                  alignItems: "center",
+                                                  gap: "4px",
+                                                }}
+                                              >
+                                                <AiFillLike color="green" />{" "}
+                                                {forecast.likes}
+                                              </div>
+                                              <div
+                                                style={{
+                                                  padding: "4px 8px",
+                                                  display: "flex",
+                                                  alignItems: "center",
+                                                  gap: "4px",
+                                                }}
+                                              >
+                                                <AiFillDislike color="red" />
+                                                {forecast.dislikes}
+                                              </div>
                                             </div>
-                                            <div
+                                            <a
                                               style={{
-                                                padding: "4px 8px",
-                                                display: "flex",
-                                                alignItems: "center",
-                                                gap: "4px",
+                                                fontSize: "15px",
+                                                color: "#666",
+                                                textDecoration: "none",
                                               }}
                                             >
-                                              <AiFillDislike color="red" />
-                                              {forecast.dislikes}
-                                            </div>
+                                              Reply Count: 0{" "}
+                                              {forecast.replyCount}
+                                            </a>
                                           </div>
-                                          <a
-                                            style={{
-                                              fontSize: "15px",
-                                              color: "#666",
-                                              textDecoration: "none",
-                                            }}
-                                          >
-                                            Reply Count: 0 {forecast.replyCount}
-                                          </a>
-                                        </div>
+                                        )}
                                       </div>
                                     </div>
                                   )
