@@ -112,7 +112,7 @@ export default function Dashboard() {
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false); // Close dropdown if clicked outside
+        setDropdownOpen(false); 
       }
     };
     document.addEventListener("mousedown", handleOutsideClick);

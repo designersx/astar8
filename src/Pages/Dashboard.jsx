@@ -9,6 +9,20 @@ export default function DashBoard() {
   const [like, setlike] = useState([]);
   const [dislike, setdislike] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    window.history.pushState(null, null, window.location.href);
+    const handlePopState = () => {
+      window.history.pushState(null, null, window.location.href);
+    };
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
+
   const fetchDashboardData = async () => {
     try {
       setLoading(true);

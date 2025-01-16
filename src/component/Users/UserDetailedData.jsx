@@ -189,21 +189,21 @@ export default function UserDetailedData() {
                                       </div>
                                       <div className="col-xs-12 col-sm-12 col-md-12">
                                         <div className="form-group">
-                                          <strong>Destiny Number:</strong>
+                                          <strong>Destiny Number: </strong>
                                           {userDetails.otherdetails
                                             .destiny_no || "N/A"}
                                         </div>
                                       </div>
                                       <div className="col-xs-12 col-sm-12 col-md-12">
                                         <div className="form-group">
-                                          <strong>Destiny Description:</strong>
+                                          <strong>Destiny Description: </strong>
                                           <p>
-                                            <b>Learn To Be:</b>{" "}
+                                            <b>Learn To Be: </b>{" "}
                                             {userDetails.otherdetails
                                               .Learn_to_be || "N/A"}
                                           </p>
                                           <p>
-                                            <b>Learn Not To Be:</b>{" "}
+                                            <b>Learn Not To Be: </b>{" "}
                                             {userDetails.otherdetails
                                               .Learn_not_to_be || "N/A"}
                                           </p>
@@ -213,42 +213,42 @@ export default function UserDetailedData() {
                                     <div className="row">
                                       <div className="col-xs-6 col-sm-6 col-md-6">
                                         <div className="form-group">
-                                          <strong>Fav Numbers:</strong>
+                                          <strong>Fav Numbers: </strong>
                                           {userDetails.otherdetails
                                             .fav_number || "N/A"}
                                         </div>
                                       </div>
                                       <div className="col-xs-6 col-sm-6 col-md-6">
                                         <div className="form-group">
-                                          <strong>Unfav Numbers:</strong>
+                                          <strong>Unfav Numbers: </strong>
                                           {userDetails.otherdetails
                                             .unfav_number || "N/A"}
                                         </div>
                                       </div>
                                       <div className="col-xs-6 col-sm-6 col-md-6">
                                         <div className="form-group">
-                                          <strong>Fav Months:</strong>
+                                          <strong>Fav Months: </strong>
                                           {userDetails.otherdetails
                                             .fav_months || "N/A"}
                                         </div>
                                       </div>
                                       <div className="col-xs-6 col-sm-6 col-md-6">
                                         <div className="form-group">
-                                          <strong>Unfav Months:</strong>
+                                          <strong>Unfav Months: </strong>
                                           {userDetails.otherdetails
                                             .unfav_months || "N/A"}
                                         </div>
                                       </div>
                                       <div className="col-xs-6 col-sm-6 col-md-6">
                                         <div className="form-group">
-                                          <strong>Fav Days:</strong>
+                                          <strong>Fav Days: </strong>
                                           {userDetails.otherdetails.fav_days ||
                                             "N/A"}
                                         </div>
                                       </div>
                                       <div className="col-xs-6 col-sm-6 col-md-6">
                                         <div className="form-group">
-                                          <strong>Unfav Days:</strong>
+                                          <strong>Unfav Days: </strong>
                                           {userDetails.otherdetails
                                             .unfav_days || "N/A"}
                                         </div>
@@ -271,28 +271,28 @@ export default function UserDetailedData() {
                                     <div className="row">
                                       <div className="col-xs-6 col-sm-6 col-md-6">
                                         <div className="form-group">
-                                          <strong>Zodiac sign:</strong>
+                                          <strong>Zodiac sign: </strong>
                                           {userDetails.otherdetails
                                             .zodiac_sign || "N/A"}
                                         </div>
                                       </div>
                                       <div className="col-xs-6 col-sm-6 col-md-6">
                                         <div className="form-group">
-                                          <strong>Planet Name:</strong>
+                                          <strong>Planet Name: </strong>
                                           {userDetails.otherdetails
                                             .Planet_name || "N/A"}
                                         </div>
                                       </div>
                                       <div className="col-xs-12 col-sm-12 col-md-12">
                                         <div className="form-group">
-                                          <strong>Planet Description:</strong>
+                                          <strong>Planet Description: </strong>
                                           {userDetails.otherdetails
                                             .Planet_description || "N/A"}
                                         </div>
                                       </div>
                                       <div className="col-xs-12 col-sm-12 col-md-12">
                                         <div className="form-group">
-                                          <strong>Parenting:</strong>
+                                          <strong>Parenting: </strong>
                                           {userDetails.otherdetails
                                             .basic_parent_reading || "N/A"}
                                         </div>
