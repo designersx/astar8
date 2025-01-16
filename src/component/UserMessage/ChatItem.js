@@ -47,10 +47,16 @@ const ChatItem = ({ user, onSelectUser }) => {
         <div className="me-3 pr-3" style={{ width: "60px", height: "60px" }}>
           <img
             src={
-              user.user_profile_pic || "https://be.astar8.com/images/dummy.jpg"
+              user.user_profile_pic
+                ? user.user_profile_pic
+                : "https://be.astar8.com/img/default-profile-img.png"
             }
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src =
+                "https://be.astar8.com/img/default-profile-img.png";
+            }}
             className="rounded-circle"
-            alt={`Loading`}
             style={{ width: "50px", height: "50px", objectFit: "cover" }}
           />
         </div>

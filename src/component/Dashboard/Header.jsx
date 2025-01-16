@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "../../styles/Style.css";
 import "font-awesome/css/font-awesome.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -56,9 +56,9 @@ export default function Dashboard() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setDropdownOpen(!isDropdownOpen);
+  // };
 
   const onHandleLogout = () => {
     localStorage.removeItem("Role");
@@ -79,7 +79,7 @@ export default function Dashboard() {
 
     if (token) {
       const decoded = JSON.parse(atob(token.split(".")[1]));
-      const expTime = decoded.exp * 1000; 
+      const expTime = decoded.exp * 1000;
 
       if (Date.now() > expTime) {
         localStorage.removeItem("UserToken");
@@ -101,6 +101,25 @@ export default function Dashboard() {
       }
     }
   }, [navigate]);
+
+  //
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false); 
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   return (
     <>
@@ -188,13 +207,11 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          <div className="user-info-dropdown">
+          <div className="user-info-dropdown" ref={dropdownRef}>
             <div className="dropdown">
               <a
                 className="dropdown-toggle"
-                href="#"
                 role="button"
-                data-toggle="dropdown"
                 aria-expanded={isDropdownOpen ? "true" : "false"}
                 onClick={toggleDropdown}
               >
@@ -202,15 +219,9 @@ export default function Dashboard() {
                   <img
                     style={{ height: "44px" }}
                     src={
-                      img
-                        ? img
-                        : "https://be.astar8.com/img/default-profile-img.png"
+                      img || "https://be.astar8.com/img/default-profile-img.png"
                     }
-                    onError={(e) => {
-                      e.target.onerror = null; 
-                      e.target.src = "https://be.astar8.com/img/default-profile-img.png";
-                    }}
-                    alt=""
+                    alt="User"
                   />
                 </span>
                 <span className="user-name">
@@ -230,7 +241,7 @@ export default function Dashboard() {
               </a>
               <div
                 className={`dropdown-menu dropdown-menu-right dropdown-menu-icon-list ${
-                  isDropdownOpen ? "show" : ""
+                  isDropdownOpen ? "show animated-dropdown" : "hide"
                 }`}
               >
                 <Link className="dropdown-item" to="/profile">
@@ -403,7 +414,7 @@ export default function Dashboard() {
                                 style={{
                                   position: "absolute",
                                   left: "28px",
-                                  top: "38%"
+                                  top: "38%",
                                 }}
                               />{" "}
                               System Types
@@ -423,7 +434,7 @@ export default function Dashboard() {
                                 style={{
                                   position: "absolute",
                                   left: "28px",
-                                  top: "38%"
+                                  top: "38%",
                                 }}
                               />{" "}
                               Module Types

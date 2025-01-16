@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
+
 import Loader from "../Loader/Loader";
 import {
   subscription1Action,
@@ -12,63 +14,192 @@ import {
 import { toast, Toaster } from "react-hot-toast";
 
 export default function UserData({ user, currentPage, usersPerPage, loading }) {
+  // console.log("UserList---",user)
   const onHandleNextPage = (id) => {
-  localStorage.setItem("user_Detailed_id", id);
-  window.open(`/userDetailedData`, '_blank');
+    localStorage.setItem("user_Detailed_id", id);
+    window.open(`/userDetailedData`, "_blank");
   };
 
   const subscription1Month = async (id) => {
-    try {
-      const token = localStorage.getItem("UserToken");
-      const data = await subscription1Action(id, token);
-      window.location.reload();
-      // getUserData();
-      toast.success("1 Month Subscription Activated");
-    } catch (error) {
-      toast.error("Error Activating 1 Month Subscription");
-      console.log(error, "error");
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to activate a 1-month subscription!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#0199FE",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Activate!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          Swal.fire({
+            title: "Processing...",
+            text: "Please wait while we activate your subscription.",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            willOpen: () => {
+              Swal.showLoading();
+            },
+          });
+          const token = localStorage.getItem("UserToken");
+          const response = await subscription1Action(id, token);
+
+          Swal.close();
+          Swal.fire({
+            title: "Activated!",
+            text: "1 Month Subscription has been activated successfully.",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          }).then(() => {
+            setTimeout(() => {
+              window.location.reload();
+            }, 0);
+          });
+        } catch (error) {
+          Swal.close();
+          Swal.fire("Error!", "Failed to activate subscription.", "error");
+          console.error("Error activating 1-month subscription:", error);
+        }
+      }
+    });
   };
 
   const subscription3Month = async (id) => {
-    try {
-      const token = localStorage.getItem("UserToken");
-      const data = await subscription3Action(id, token);
-      window.location.reload();
-      // getUserData();
-      toast.success("3 Month Subscription Activated");
-    } catch (error) {
-      toast.error("Error Activating 3 Month Subscription");
-      console.log(error, "error");
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to activate a 3-month subscription?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#0199FE",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Activate!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          Swal.fire({
+            title: "Processing...",
+            text: "Please wait while we activate your subscription.",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            willOpen: () => {
+              Swal.showLoading();
+            },
+          });
+          const token = localStorage.getItem("UserToken");
+          const response = await subscription3Action(id, token);
+
+          Swal.close();
+          Swal.fire({
+            title: "Activated!",
+            text: "3 Month Subscription has been activated successfully.",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          }).then(() => {
+            setTimeout(() => {
+              window.location.reload();
+            }, 0);
+          });
+        } catch (error) {
+          Swal.close();
+          Swal.fire("Error!", "Failed to activate subscription.", "error");
+          console.error("Error activating 3-month subscription:", error);
+        }
+      }
+    });
   };
 
   const Cancelsubscription1Month = async (id) => {
-    try {
-      const token = localStorage.getItem("UserToken");
-      const data = await cancel1Action(id, token);
-      window.location.reload();
-      // getUserData();
-      toast.success("1 Month Subscription Canceled");
-      console.log(data, "data");
-    } catch (error) {
-      toast.error("Error Cancelling 1 Month Subscription");
-      console.log(error, "error");
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to cancel the 1-month subscription?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#0199FE",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Cancel!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          Swal.fire({
+            title: "Processing...",
+            text: "Please wait while we cancel your subscription.",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            willOpen: () => {
+              Swal.showLoading();
+            },
+          });
+          const token = localStorage.getItem("UserToken");
+          const response = await cancel1Action(id, token);
+          Swal.close();
+          Swal.fire({
+            title: "Canceled!",
+            text: "1 Month Subscription has been canceled successfully.",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          }).then(() => {
+            setTimeout(() => {
+              window.location.reload();
+            }, 0);
+          });
+        } catch (error) {
+          Swal.close();
+          Swal.fire("Error!", "Failed to cancel subscription.", "error");
+          console.error("Error canceling 1-month subscription:", error);
+        }
+      }
+    });
   };
 
   const cancel3Actions = async (id) => {
-    try {
-      const token = localStorage.getItem("UserToken");
-      const data = await cancel3Action(id, token);
-      window.location.reload();
-      // getUserData();
-      toast.success("3 Month Subscription Canceled");
-      console.log(data, "data");
-    } catch (error) {
-      toast.error("Error Cancelling 3 Month Subscription");
-      console.log(error, "error");
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to cancel the 3-month subscription?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#0199FE",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Cancel!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          Swal.fire({
+            title: "Processing...",
+            text: "Please wait while we cancel your subscription.",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            willOpen: () => {
+              Swal.showLoading();
+            },
+          });
+          const token = localStorage.getItem("UserToken");
+          const response = await cancel3Action(id, token);
+          Swal.close();
+          Swal.fire({
+            title: "Canceled!",
+            text: "3 Month Subscription has been canceled successfully.",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          }).then(() => {
+            setTimeout(() => {
+              window.location.reload();
+            }, 0);
+          });
+        } catch (error) {
+          Swal.close();
+          Swal.fire("Error!", "Failed to cancel subscription.", "error");
+          console.error("Error canceling 3-month subscription:", error);
+        }
+      }
+    });
   };
 
   return (
@@ -88,10 +219,13 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
           </tr>
           {loading ? (
             <tr>
-            <td colSpan="8" style={{ textAlign: "center", padding: "15px 0" }}>
-              <Loader />
-            </td>
-          </tr>
+              <td
+                colSpan="8"
+                style={{ textAlign: "center", padding: "15px 0" }}
+              >
+                <Loader />
+              </td>
+            </tr>
           ) : user && user.length > 0 ? (
             user.map((data, index) => {
               const rowNumber = (currentPage - 1) * usersPerPage + index + 1;
@@ -135,7 +269,7 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                       <button
                         type="submit"
                         name="subscribe"
-                         className="btn btn-danger alert-subscribe"
+                        className="btn btn-danger alert-subscribe"
                         title="Click to InActivate subscription"
                         onClick={() => cancel3Actions(data.id)}
                       >
@@ -166,7 +300,6 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                       <FontAwesomeIcon
                         icon={faEye}
                         style={{ fontSize: "11px" }}
-                        
                       />
                     </a>
                   </td>

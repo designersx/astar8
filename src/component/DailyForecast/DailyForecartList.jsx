@@ -297,7 +297,16 @@ export default function DailyForecartList() {
                                       {/* Left Side Image */}
                                       <div style={{ flex: "0 0 80px" }}>
                                         <img
-                                          src={userPhoto} // change from local storage
+                                          src={
+                                            userPhoto
+                                              ? userPhoto
+                                              : "https://be.astar8.com/img/default-profile-img.png"
+                                          }
+                                          onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src =
+                                              "https://be.astar8.com/img/default-profile-img.png";
+                                          }} // change from local storage
                                           alt="Profile"
                                           style={{
                                             width: "90%",

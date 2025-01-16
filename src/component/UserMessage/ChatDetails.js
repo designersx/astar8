@@ -8,7 +8,7 @@ import Loader from "../Loader/Loader";
 
 const ChatDetails = ({ user, onMessageSent }) => {
   const [userChatMessages, setUserChatMessages] = useState([]);
-  // console.log("userrr", userChatMessages);
+  console.log("userrr", user);
   const [messageInput, setMessageInput] = useState("");
   const [socket, setSocket] = useState(null);
   const [loading, setLoading] = useState(true); // Add loading state
@@ -141,6 +141,11 @@ const ChatDetails = ({ user, onMessageSent }) => {
     setSeenMessage();
   }, [userChatMessages]);
 
+  const onHandleNextPage = (id) => {
+    localStorage.setItem("user_Detailed_id", id);
+    window.open(`/userDetailedData`, "_blank");
+  };
+
   return (
     <div className="" style={{ flex: 2, height: "72vh" }}>
       {user ? (
@@ -170,10 +175,16 @@ const ChatDetails = ({ user, onMessageSent }) => {
                 >
                   <img
                     src={
-                      user.user_profile_pic ||
-                      "https://be.astar8.com/images/dummy.jpg"
+                      user.user_profile_pic
+                        ? user.user_profile_pic
+                        : "https://be.astar8.com/img/default-profile-img.png"
                     }
-                    alt="Loading"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src =
+                        "https://be.astar8.com/img/default-profile-img.png";
+                    }}
+                    alt=""
                     className="rounded-circle"
                     style={{
                       width: "100%",
@@ -182,7 +193,11 @@ const ChatDetails = ({ user, onMessageSent }) => {
                     }}
                   />
                 </div>
-                <h5 className="mb-1 mt-1" style={{ color: "#44aeff" }}>
+                <h5
+                  className="mb-1 mt-1"
+                  style={{ color: "#44aeff" }}
+                  onClick={() => onHandleNextPage(user.user_id)}
+                >
                   {user.user_name}
                 </h5>
                 <p className="mb-0 small" style={{ color: "#a4a4a4" }}>
@@ -227,9 +242,15 @@ const ChatDetails = ({ user, onMessageSent }) => {
                         {message.senderId === user?.user_id && (
                           <img
                             src={
-                              user.user_profile_pic ||
-                              "https://be.astar8.com/images/dummy.jpg"
+                              user.user_profile_pic
+                                ? user.user_profile_pic
+                                : "https://be.astar8.com/img/default-profile-img.png"
                             }
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src =
+                                "https://be.astar8.com/img/default-profile-img.png";
+                            }}
                             alt="User profile"
                             className="rounded-circle me-2"
                             style={{
@@ -263,10 +284,16 @@ const ChatDetails = ({ user, onMessageSent }) => {
                         {message.senderId !== user?.user_id && (
                           <img
                             src={
-                              adminProfile ||
-                              "https://be.astar8.com/images/dummy.jpg"
+                              adminProfile
+                                ? adminProfile
+                                : "https://be.astar8.com/img/default-profile-img.png"
                             }
-                            alt="User profile"
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src =
+                                "https://be.astar8.com/img/default-profile-img.png";
+                            }}
+                            alt=""
                             className="rounded-circle ms-2"
                             style={{
                               width: "40px",
