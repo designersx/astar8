@@ -67,7 +67,7 @@ export default function UserDetailedData() {
   return (
     <>
       <Header />
-      <div className="main-container">
+      <div className="main-container" style={{paddingBottom:"40px"}}>
         <div className="pd-ltr-20 xs-pd-20-10">
           <div className="min-height-200px">
             <div className="pd-20 card-box mb-30">

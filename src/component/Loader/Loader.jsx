@@ -9,7 +9,7 @@ export default function Loader() {
           <div class="square"></div>
         </div>
       </div>
-      <h6 className="text-h6">Please wait while we are Fetching details...</h6>
+      <h6 className="text-h6">Please wait...</h6>
     </>
   );
 }

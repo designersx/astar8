@@ -170,10 +170,16 @@ const ChatDetails = ({ user, onMessageSent }) => {
                 >
                   <img
                     src={
-                      user.user_profile_pic ||
-                      "https://be.astar8.com/images/dummy.jpg"
+                      user.user_profile_pic
+                        ? user.user_profile_pic
+                        : "https://be.astar8.com/img/default-profile-img.png"
                     }
-                    alt="Loading"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src =
+                        "https://be.astar8.com/img/default-profile-img.png";
+                    }}
+                    alt=""
                     className="rounded-circle"
                     style={{
                       width: "100%",
@@ -227,9 +233,15 @@ const ChatDetails = ({ user, onMessageSent }) => {
                         {message.senderId === user?.user_id && (
                           <img
                             src={
-                              user.user_profile_pic ||
-                              "https://be.astar8.com/images/dummy.jpg"
+                              user.user_profile_pic
+                                ? user.user_profile_pic
+                                : "https://be.astar8.com/img/default-profile-img.png"
                             }
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src =
+                                "https://be.astar8.com/img/default-profile-img.png";
+                            }}
                             alt="User profile"
                             className="rounded-circle me-2"
                             style={{
@@ -263,10 +275,16 @@ const ChatDetails = ({ user, onMessageSent }) => {
                         {message.senderId !== user?.user_id && (
                           <img
                             src={
-                              adminProfile ||
-                              "https://be.astar8.com/images/dummy.jpg"
+                              adminProfile
+                                ? adminProfile
+                                : "https://be.astar8.com/img/default-profile-img.png"
                             }
-                            alt="User profile"
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src =
+                                "https://be.astar8.com/img/default-profile-img.png";
+                            }}
+                            alt=""
                             className="rounded-circle ms-2"
                             style={{
                               width: "40px",

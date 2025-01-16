@@ -19,7 +19,7 @@ export default function DashBoard() {
     } catch (err) {
       console.log(err, "error");
     } finally {
-      setLoading(false);
+      setLoading(true);
     }
   };
   useEffect(() => {
@@ -31,7 +31,9 @@ export default function DashBoard() {
       <Header />
       {loading ? (
         <>
-          <Loader />
+          <div>
+            <Loader />
+          </div>
         </>
       ) : (
         <>
