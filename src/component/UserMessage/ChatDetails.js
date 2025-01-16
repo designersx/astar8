@@ -46,7 +46,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
 
   // Initialize socket connection
   useEffect(() => {
-    const newSocket = io("http://localhost:5234"); // Replace with your backend URL
+    const newSocket = io("https://dev.astar8.com"); // Replace with your backend URL
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
