@@ -6,7 +6,7 @@ import UserData from "./UserData";
 import { toast, Toaster } from "react-hot-toast";
 export default function User() {
   const [user, setUser] = useState([]);
-  console.log("userrrr",user)
+  console.log("userrrr111", user);
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
   const [activeTab, setActiveTab] = useState("all");
@@ -14,9 +14,10 @@ export default function User() {
   const [filterName, setFilterName] = useState("");
   const [filterEmail, setFilterEmail] = useState("");
   const [filterSubscription, setFilterSubscription] = useState("");
-  console.log("filterr",filterSubscription)
+  console.log("filterr", filterSubscription);
   const [filterPlatform, setFilterPlatform] = useState("");
   const [loading, setLoading] = useState(false);
+
   const fetchUsers = async (status = null) => {
     try {
       setLoading(true);
@@ -25,6 +26,7 @@ export default function User() {
         throw new Error("User token not found");
       }
       const response = await getAllUsers(token, status);
+      // console.log("resss.........", response);
       if (response && response.Users) {
         setUser(response.Users);
         setTotalPages(Math.ceil(response.Users.length / usersPerPage));
@@ -47,13 +49,11 @@ export default function User() {
           u.username.toLowerCase().includes(filterEmail.toLowerCase()))) &&
       (filterSubscription === "" ||
         u.subscription_status == filterSubscription ||
-        (u.subscription_status === null && filterSubscription == 0)) && // Handle null == 0 case
+        (u.subscription_status === 4 && filterSubscription == 0)) && // Handle null == 0 case
       (filterPlatform === "" ||
         (u.platform &&
           u.platform.toLowerCase().includes(filterPlatform.toLowerCase())))
   );
-  
-  console.log("dasd",filteredUsers)
 
   useEffect(() => {
     if (activeTab === "all") {
@@ -74,11 +74,13 @@ export default function User() {
     setTotalPages(Math.ceil(filteredUsers.length / usersPerPage));
   }, [filteredUsers, usersPerPage]);
 
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <>
       <Header />
       <Toaster />
+
       <div className="main-container pb-5">
         <div className=" xs-pd-20-10">
           <div className="min-height-200px">
@@ -96,6 +98,9 @@ export default function User() {
                 <div className="col-md-6"></div>
               </div>
             </div>
+
+          
+
             <div className="row clearfix">
               <div className="col-lg-12 col-md-12 col-sm-12 mb-30">
                 <div className="pd-20 card-box">

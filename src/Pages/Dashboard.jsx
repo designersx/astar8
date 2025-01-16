@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import Header from "../component/Dashboard/Header";
 import { dashboardApi } from "../lib/Store";
 import Loader from "../component/Loader/Loader";
+import DashBoardLoader from "./../component/Loader/DashBoardLoader";
 export default function DashBoard() {
   const [activeCount, setactiveCount] = useState([]);
   const [totalCount, setTotalCount] = useState([]);
@@ -19,7 +20,7 @@ export default function DashBoard() {
     } catch (err) {
       console.log(err, "error");
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -31,14 +32,14 @@ export default function DashBoard() {
       <Header />
       {loading ? (
         <>
-          <div>
-            <Loader />
+          <div className="main-container">
+            <DashBoardLoader />
           </div>
         </>
       ) : (
         <>
           <div className="main-container">
-            <div className="">
+            <div className="pb-4">
               <div className="page-header">
                 <div className="row ">
                   <div className="col-md-6 col-sm-12">
@@ -1237,7 +1238,7 @@ export default function DashBoard() {
                   </div>
                 </div>
               </div>
-              <div className="footer-wrap pd-20 mb-20 card-box">
+              <div className="footer-wrap pd-20 card-box mt-4">
                 ASTAR8 - Designed By{" "}
                 <a href="https://www.designersx.us/" target="_blank">
                   DesignersX

@@ -8,7 +8,7 @@ import Loader from "../Loader/Loader";
 
 const ChatDetails = ({ user, onMessageSent }) => {
   const [userChatMessages, setUserChatMessages] = useState([]);
-  // console.log("userrr", userChatMessages);
+  console.log("userrr", user);
   const [messageInput, setMessageInput] = useState("");
   const [socket, setSocket] = useState(null);
   const [loading, setLoading] = useState(true); // Add loading state
@@ -141,6 +141,11 @@ const ChatDetails = ({ user, onMessageSent }) => {
     setSeenMessage();
   }, [userChatMessages]);
 
+  const onHandleNextPage = (id) => {
+    localStorage.setItem("user_Detailed_id", id);
+    window.open(`/userDetailedData`, "_blank");
+  };
+
   return (
     <div className="" style={{ flex: 2, height: "72vh" }}>
       {user ? (
@@ -188,7 +193,11 @@ const ChatDetails = ({ user, onMessageSent }) => {
                     }}
                   />
                 </div>
-                <h5 className="mb-1 mt-1" style={{ color: "#44aeff" }}>
+                <h5
+                  className="mb-1 mt-1"
+                  style={{ color: "#44aeff" }}
+                  onClick={() => onHandleNextPage(user.user_id)}
+                >
                   {user.user_name}
                 </h5>
                 <p className="mb-0 small" style={{ color: "#a4a4a4" }}>
