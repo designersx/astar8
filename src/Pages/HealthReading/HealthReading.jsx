@@ -1,19 +1,19 @@
 import React from "react";
-import Header from "../../component/Dashboard/Header";
 import { IoIosEye } from "react-icons/io";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import Header from "../../component/Dashboard/Header";
 
-const DobReading = () => {
+const HealthReading = () => {
   return (
-    <div>
+    <>
       <Header />
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-12">
               <div className="">
-                <h2>DOB Reading</h2>
+                <h2>Health Reading</h2>
               </div>
             </div>
           </div>
@@ -31,8 +31,8 @@ const DobReading = () => {
                 <tr>
                   <td>1</td>
                   <td>
-                    By nature, you are determined, forceful, and daring, with a
-                    strong desire to be at the hea...
+                    These people are likely to suffer from stomach and digestive
+                    troubles of all kin...
                   </td>
                   <td>
                     <div style={{ display: "flex", gap: "10px" }}>
@@ -58,13 +58,13 @@ const DobReading = () => {
                 <tr>
                   <td>2</td>
                   <td>
-                    You're counterpart-gentle, imaginative, considerate,
-                    persuasive, and romantic. Because you...
+                    You're likely to suffer from stomach and digestive troubles
+                    of all kinds. Watch...
                   </td>
                   <td>
                     <a
                       className="btn btn-info"
-                      href="https://be.astar8.com/dobreading/74"
+                      href="https://be.astar8.com/healthreading/56"
                       title="View"
                       target="_blank"
                     >
@@ -72,7 +72,7 @@ const DobReading = () => {
                     </a>
                     <a
                       className="btn btn-primary"
-                      href="https://be.astar8.com/dobreading/74/edit"
+                      href="https://be.astar8.com/healthreading/56/edit"
                       title="Edit"
                       target="_blank"
                     >
@@ -85,8 +85,8 @@ const DobReading = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default DobReading;
+export default HealthReading;

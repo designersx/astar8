@@ -36,6 +36,15 @@ import ChildrenPage from './Pages/ChildrenPage/ChildrenPage';
 import CompatibilityPercentage from './Pages/CompatibilityPercentage/CompatibilityPercentage';
 import CompatibiltyDesc from './Pages/CompatibiltyDesc/CompatibiltyDesc';
 import UserDetailedData from './component/Users/UserDetailedData';
+import HealthReading from './Pages/HealthReading/HealthReading';
+import HealthPrecaution from './Pages/HealthPrecaution/HealthPrecaution';
+import HealthSuggestion from './Pages/HealthSuggestion/HealthSuggestion';
+import HealthCycle from './Pages/HealthCycle/HealthCycle';
+import PersonalYear from './Pages/PersonalYear/PersonalYear';
+import PersonalMonth from './Pages/PersonalMonth/PersonalMonth';
+import PersonalWeek from './Pages/PersonalWeek/PersonalWeek';
+import PersonalDay from './Pages/PersonalDay/PersonalDay';
+import UniversalYear from './Pages/UniversalYear/UniversalYear';
 function App() {
   return (
     <AppProvider>
@@ -59,6 +68,15 @@ function App() {
         <Route path="/videos" element={<PrivateRoute element={VideosPage} />} />
         <Route path="/lifecoach_descriptions" element={<PrivateRoute element={LifeCoachDesc} />} />
         <Route path="/subscription_price" element={<PrivateRoute element={SubscriptionPirce} />} />
+        <Route path="/healthreading" element={<PrivateRoute element={HealthReading} />} />
+        <Route path="/healthprecaution" element={<PrivateRoute element={HealthPrecaution} />} />
+        <Route path="/healthsuggestion" element={<PrivateRoute element={HealthSuggestion} />} />
+        <Route path="/healthcycle" element={<PrivateRoute element={HealthCycle} />} />
+        <Route path="/personalyear" element={<PrivateRoute element={PersonalYear} />} />
+        <Route path="/personalmonth" element={<PrivateRoute element={PersonalMonth} />} />
+        <Route path="/personalweek" element={<PrivateRoute element={PersonalWeek} />} />
+        <Route path="/personalday" element={<PrivateRoute element={PersonalDay} />} />
+        <Route path="/universalyear" element={<PrivateRoute element={UniversalYear} />} />
         <Route path="/zodic_signs" element={<PrivateRoute element={ZodiacSign} />} />
         <Route path="/planet_numbers" element={<PrivateRoute element={PlanetNumbers} />} />
         <Route path="/life_cycles" element={<PrivateRoute element={LifeCycle} />} />

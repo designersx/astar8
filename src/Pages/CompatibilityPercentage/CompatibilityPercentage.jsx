@@ -1,5 +1,8 @@
 import React from "react";
 import Header from "../../component/Dashboard/Header";
+import { IoIosEye } from "react-icons/io";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const CompatibilityPercentage = () => {
   return (
@@ -27,22 +30,24 @@ const CompatibilityPercentage = () => {
                 <td>1</td>
                 <td>1</td>
                 <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/compatibility_percentage/1"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/compatibility_percentage/1/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    <a
+                      className="btn btn-info"
+                      href="https://be.astar8.com/dobreading/73"
+                      title="View"
+                      target="_blank"
+                    >
+                      <IoIosEye size={18} />
+                    </a>
+                    <a
+                      className="btn btn-primary"
+                      href="https://be.astar8.com/dobreading/73/edit"
+                      title="Edit"
+                      target="_blank"
+                    >
+                      <FontAwesomeIcon icon={faPencilAlt} />
+                    </a>
+                  </div>
                 </td>
               </tr>
               <tr>
@@ -60,160 +65,6 @@ const CompatibilityPercentage = () => {
                   <a
                     className="btn btn-primary"
                     href="https://be.astar8.com/compatibility_percentage/2/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>3</td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/compatibility_percentage/3"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/compatibility_percentage/3/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>4</td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/compatibility_percentage/4"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/compatibility_percentage/4/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>5</td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/compatibility_percentage/5"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/compatibility_percentage/5/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>6</td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/compatibility_percentage/6"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/compatibility_percentage/6/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>7</td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/compatibility_percentage/7"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/compatibility_percentage/7/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>8</td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/compatibility_percentage/8"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/compatibility_percentage/8/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>9</td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/compatibility_percentage/9"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/compatibility_percentage/9/edit"
                     title="Edit"
                     target="_blank"
                   >

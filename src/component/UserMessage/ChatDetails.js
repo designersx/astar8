@@ -7,8 +7,8 @@ import { BeatLoader } from "react-spinners";
 import Loader from "../Loader/Loader";
 
 const ChatDetails = ({ user, onMessageSent }) => {
-  const liveUrl = "https://dev.astar8.com" 
-  const testUrl = "http://localhost:5234" 
+  // const url = "https://dev.astar8.com" 
+  const url = "http://localhost:5234" 
   const [userChatMessages, setUserChatMessages] = useState([]);
   console.log("userrr", user);
   const [messageInput, setMessageInput] = useState("");
@@ -48,7 +48,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
 
   // Initialize socket connection
   useEffect(() => {
-    const newSocket = io(liveUrl); // Replace with your backend URL
+    const newSocket = io(url); // Replace with your backend URL
     setSocket(newSocket);
 
     newSocket.on("connect", () => {

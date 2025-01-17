@@ -1,9 +1,10 @@
 import React from "react";
 import Header from "../../component/Dashboard/Header";
+import { IoIosEye } from "react-icons/io";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
-const SystemModules = () => {
+const PersonalWeek = () => {
   return (
     <>
       <Header />
@@ -12,31 +13,35 @@ const SystemModules = () => {
           <div className="row">
             <div className="col-md-6">
               <div className="">
-                <h2>Module Types</h2>
+                <h2>Personal week</h2>
               </div>
-            </div>
-            <div className="col-md-6">
-              <div className="text-right"></div>
             </div>
           </div>
         </div>
-        {/* Tab panes */}
         <div className="pd-20 card-box mb-30">
           <table className="table table-striped">
             <tbody>
               <tr>
-                <th>S.No</th>
-                <th>Name</th>
+                <th>Numbers</th>
                 <th>Description</th>
                 <th width="280px">Action</th>
               </tr>
               <tr>
                 <td>1</td>
-                <td>Name Reading</td>
-                <td>Name Reading description is here</td>
+                <td>
+                  In publishing and graphic design, Lorem ipsum is a placeholder
+                  text commonly use...
+                </td>
                 <td>
                   <div style={{ display: "flex", gap: "10px" }}>
-                    
+                    <a
+                      className="btn btn-info"
+                      href="https://be.astar8.com/dobreading/73"
+                      title="View"
+                      target="_blank"
+                    >
+                      <IoIosEye size={18} />
+                    </a>
                     <a
                       className="btn btn-primary"
                       href="https://be.astar8.com/dobreading/73/edit"
@@ -50,13 +55,22 @@ const SystemModules = () => {
               </tr>
               <tr>
                 <td>2</td>
-                <td>DOB Reading</td>
-                <td>DOB Reading description is here</td>
                 <td>
-                  {/* <a class="btn btn-info" href="https://be.astar8.com/modules/2"><i class="icon-copy ion-eye"></i></a> */}
+                  In publishing and graphic design, Lorem ipsum is a placeholder
+                  text commonly use...
+                </td>
+                <td>
+                  <a
+                    className="btn btn-info"
+                    href="https://be.astar8.com/personalweek/22"
+                    title="View"
+                    target="_blank"
+                  >
+                    <i className="icon-copy ion-eye" />
+                  </a>
                   <a
                     className="btn btn-primary"
-                    href="https://be.astar8.com/modules/2/edit"
+                    href="https://be.astar8.com/personalweek/22/edit"
                     title="Edit"
                     target="_blank"
                   >
@@ -72,4 +86,4 @@ const SystemModules = () => {
   );
 };
 
-export default SystemModules;
+export default PersonalWeek;

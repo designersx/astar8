@@ -224,15 +224,22 @@ export default function Dashboard() {
                 role="button"
                 aria-expanded={isDropdownOpen ? "true" : "false"}
                 onClick={toggleDropdown}
-                style={{cursor:"pointer"}}
+                style={{ cursor: "pointer" }}
               >
                 <span className="user-icon">
                   <img
                     style={{ height: "44px" }}
                     src={
-                      img || "https://be.astar8.com/img/default-profile-img.png"
+                      img
+                        ? img
+                        : "https://be.astar8.com/img/default-profile-img.png"
                     }
-                    alt="User"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src =
+                        "https://be.astar8.com/img/default-profile-img.png";
+                    }}
+                    alt=""
                   />
                 </span>
                 <span className="user-name">
@@ -632,7 +639,7 @@ export default function Dashboard() {
                       >
                         <li>
                           <Link
-                            to="/systemtype"
+                            to="/healthreading"
                             style={{
                               textDecoration: "none",
                             }}
@@ -652,7 +659,7 @@ export default function Dashboard() {
                         </li>
                         <li>
                           <Link
-                            to="/modules"
+                            to="/healthprecaution"
                             style={{
                               textDecoration: "none",
                             }}
@@ -672,7 +679,7 @@ export default function Dashboard() {
                         </li>
                         <li>
                           <Link
-                            to="/modules"
+                            to="/healthsuggestion"
                             style={{
                               textDecoration: "none",
                             }}
@@ -692,7 +699,7 @@ export default function Dashboard() {
                         </li>
                         <li>
                           <Link
-                            to="/modules"
+                            to="/healthcycle"
                             style={{
                               textDecoration: "none",
                             }}
@@ -751,7 +758,7 @@ export default function Dashboard() {
                       >
                         <li>
                           <Link
-                            to="/systemtype"
+                            to="/personalyear"
                             style={{
                               textDecoration: "none",
                             }}
@@ -771,7 +778,7 @@ export default function Dashboard() {
                         </li>
                         <li>
                           <Link
-                            to="/modules"
+                            to="/personalmonth"
                             style={{
                               textDecoration: "none",
                             }}
@@ -791,7 +798,7 @@ export default function Dashboard() {
                         </li>
                         <li>
                           <Link
-                            to="/modules"
+                            to="/personalweek"
                             style={{
                               textDecoration: "none",
                             }}
@@ -811,7 +818,7 @@ export default function Dashboard() {
                         </li>
                         <li>
                           <Link
-                            to="/modules"
+                            to="/personalday"
                             style={{
                               textDecoration: "none",
                             }}
@@ -870,7 +877,7 @@ export default function Dashboard() {
                       >
                         <li>
                           <Link
-                            to="/systemtype"
+                            to="/universalyear"
                             style={{
                               textDecoration: "none",
                             }}
@@ -1008,7 +1015,6 @@ export default function Dashboard() {
                       </ul>
                     </li>
 
-                  
                     <li className="dropdown">
                       <Link
                         to="/zodic_signs"
@@ -1106,7 +1112,9 @@ export default function Dashboard() {
                           <span className="ml-2">
                             <FontAwesomeIcon
                               icon={
-                                dropdownStates.parenting ? faChevronUp : faChevronDown
+                                dropdownStates.parenting
+                                  ? faChevronUp
+                                  : faChevronDown
                               }
                             />
                           </span>
@@ -1183,7 +1191,9 @@ export default function Dashboard() {
                           <span className="ml-2">
                             <FontAwesomeIcon
                               icon={
-                                dropdownStates.money ? faChevronUp : faChevronDown
+                                dropdownStates.money
+                                  ? faChevronUp
+                                  : faChevronDown
                               }
                             />
                           </span>
@@ -1240,9 +1250,6 @@ export default function Dashboard() {
                         </li>
                       </ul>
                     </li>
-
-                  
-
 
                     <li className="dropdown">
                       <Link
