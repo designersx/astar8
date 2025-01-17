@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { LoginApi } from "../../lib/Store";
 import { useNavigate } from "react-router-dom";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import AppContext from "../../ContextApi/userContext";
 export default function AdminLogin() {
   const { data, setData } = useContext(AppContext);
@@ -12,10 +13,15 @@ export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  console.log("adssa", error);
   const [isButtonDisabled, setButtonDisabled] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const [isEmailInvalid, setEmailInvalid] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isPasswordInvalid, setPasswordInvalid] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(""); // For email-related error messages
+  const [errorPassword, setErrorPassword] = useState(""); // For password-related error messages
+
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -24,6 +30,8 @@ export default function AdminLogin() {
     setEmailInvalid(false);
     setPasswordInvalid(false);
     setError("");
+    setErrorEmail("");
+    setErrorPassword("");
 
     if (validateEmail(email) && password.trim() !== "") {
       setButtonDisabled(false);
@@ -34,31 +42,37 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    let hasError = false;
+    setError(""); // Reset errors
+    setEmailInvalid(false);
+    setPasswordInvalid(false);
 
     if (!validateEmail(email)) {
-      setError("Please include an '@' in the email address.");
+      setErrorEmail("Please include an '@' in the email address.");
       setEmailInvalid(true);
-      hasError = true;
+      setLoading(false);
+      return;
     }
 
     if (password.trim() === "") {
-      setError("Password cannot be empty.");
+      setErrorPassword("Password cannot be empty.");
       setPasswordInvalid(true);
-      hasError = true;
+      setLoading(false);
+      return;
     }
-
-    if (hasError) return;
 
     try {
       const response = await LoginApi(email, password);
+
       if (response.status === true) {
+        // Save user details in localStorage
         localStorage.setItem("UserToken", response.token);
         localStorage.setItem("userId", response.user_id);
         localStorage.setItem("Role", response.role);
         localStorage.setItem("userEmail", response.email);
         localStorage.setItem("profilePic", response.profile_pic);
         localStorage.setItem("name", response.name);
+
+        // Save data to context
         const savedData = {
           role: response.role,
           userToken: response.token,
@@ -68,15 +82,20 @@ export default function AdminLogin() {
           userId: response.user_id,
         };
         setData(savedData);
+
         Navigate("/dashboard");
+      } else if (response.status === 1) {
+        setErrorEmail(response.error || "Invalid email address.");
+        setEmailInvalid(true);
+      } else if (response.status === 2) {
+        setErrorPassword(response.error || "Incorrect password.");
+        setPasswordInvalid(true);
       } else {
         setError(response.error || "An error occurred. Please try again.");
-        setEmailInvalid(true);
-        setPasswordInvalid(true);
       }
     } catch (apiError) {
       console.error("Login API Error:", apiError.message);
-      setError(apiError.message);
+      setError("A server error occurred. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -120,13 +139,21 @@ export default function AdminLogin() {
                     </div>
                   )}
                 </div>
-                {error && (
-                  <div className="error-message text-danger mb-3">{error}</div>
+                {errorEmail && (
+                  <div className="error-message text-danger mb-3">
+                    {errorEmail}
+                  </div>
                 )}
-                <div className={`input-group custom ${isPasswordInvalid}`}>
+
+                <div
+                  className={`input-group custom ${
+                    isPasswordInvalid ? "error-border" : ""
+                  }`}
+                  style={{ position: "relative" }}
+                >
                   <input
                     id="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="**********"
                     className="form-control form-control-lg"
                     value={password}
@@ -135,8 +162,35 @@ export default function AdminLogin() {
                       handleInputChange();
                     }}
                     required
+                    style={{ paddingRight: "35px" }} // Add space for the eye icon
                   />
+                  {password && (
+                    <span
+                      onClick={() => setShowPassword(!showPassword)}
+                      style={{
+                        position: "absolute",
+                        right: "10px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        backgroundColor: "transparent",
+                        border: "none",
+                        cursor: "pointer",
+                        zIndex: "10",
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        icon={showPassword ? faEyeSlash : faEye}
+                      />
+                    </span>
+                  )}
                 </div>
+
+                {errorPassword && (
+                  <div className="error-message text-danger mb-3">
+                    {errorPassword}
+                  </div>
+                )}
+
                 <div className="row">
                   <div className="col-sm-12">
                     <div className="input-group mb-0">

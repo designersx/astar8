@@ -50,8 +50,9 @@ export default function AddDailyForcast() {
 
       if (response.status === "success") {
         setPrediction("");
-        setDate(new Date().toISOString().split("T")[0]);
+        // setDate(new Date().toISOString().split("T")[0]);
         setMessage(response.message);
+        setDate("")
       } else {
         setMessage(response.error);
         Swal.fire("Already Exist!", response.response.data.message, "warning");

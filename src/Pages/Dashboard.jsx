@@ -136,8 +136,8 @@ export default function DashBoard() {
               <div className="row" style={{ marginTop: "35px" }}>
                 <div className="col-lg-12 col-md-12 col-sm-12 mb-30">
                   <div className="card-box pd-30 height-100-p">
-                    <div className="compChart">
-                      <h4 className="mb-30 h4">Compatibility User Record</h4>
+                    <div className="compChart d-flex justify-content-between mb-3">
+                      <h4 className="mb-30 h5 font-weight-bold">Compatibility User Record</h4>
                       <div className="col-sm-2 col-md-2">
                         <select
                           className="custom-select col-12"
@@ -160,7 +160,7 @@ export default function DashBoard() {
                         style={{
                           position: "relative",
                           overflow: "hidden",
-                          width: 1163,
+                          // width: 1163,
                           height: 400,
                           textAlign: "left",
                           lineHeight: "normal",
