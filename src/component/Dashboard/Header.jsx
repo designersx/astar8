@@ -44,12 +44,22 @@ export default function Dashboard() {
   const img = localStorage.getItem("profilePic");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownStates, setDropdownStates] = useState({
+    health: false,
+    personal: false,
+    systems: false,
+    universal: false,
+    fav: false,
+    parenting: false,
+  });
 
   const [userRole, setUserRole] = useState(localStorage.getItem("Role") || "");
 
-  const toggleDropdowns = () => {
-    console.log("Toggling dropdown", isOpen);
-    setIsOpen(!isOpen);
+  const toggleDropdowns = (dropdownName) => {
+    setDropdownStates((prevState) => ({
+      ...prevState,
+      [dropdownName]: !prevState[dropdownName],
+    }));
   };
 
   const toggleSidebar = () => {
@@ -112,7 +122,7 @@ export default function Dashboard() {
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false); 
+        setDropdownOpen(false);
       }
     };
     document.addEventListener("mousedown", handleOutsideClick);
@@ -214,6 +224,7 @@ export default function Dashboard() {
                 role="button"
                 aria-expanded={isDropdownOpen ? "true" : "false"}
                 onClick={toggleDropdown}
+                style={{cursor:"pointer"}}
               >
                 <span className="user-icon">
                   <img
@@ -378,7 +389,7 @@ export default function Dashboard() {
                       <a
                         className="dropdown-toggle"
                         data-option="off"
-                        onClick={toggleDropdowns}
+                        onClick={() => toggleDropdowns("systems")}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faDesktop} />
@@ -387,7 +398,11 @@ export default function Dashboard() {
                           <span className="mtext">Systems</span>
                           <span className="ml-2">
                             <FontAwesomeIcon
-                              icon={isOpen ? faChevronUp : faChevronDown}
+                              icon={
+                                dropdownStates.systems
+                                  ? faChevronUp
+                                  : faChevronDown
+                              }
                             />
                           </span>
                         </div>
@@ -395,7 +410,7 @@ export default function Dashboard() {
                       <ul
                         className="submenu"
                         style={{
-                          maxHeight: isOpen ? "200px" : "0",
+                          maxHeight: dropdownStates.systems ? "200px" : "0",
                           overflow: "hidden",
                           transition: "max-height 0.4s ease",
                           display: "block",
@@ -579,128 +594,421 @@ export default function Dashboard() {
                         <span className="mtext">Subscription Prices</span>
                       </Link>
                     </li>
-                    <li className="dropdown">
+                    {/* Helath */}
+
+                    <li
+                      className="dropdown"
+                      style={{ cursor: "pointer", transition: "all 0.3s ease" }}
+                    >
                       <a
-                        href="javascript:;"
                         className="dropdown-toggle"
                         data-option="off"
+                        onClick={() => toggleDropdowns("health")}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faStethoscope} />
                         </span>
-                        <span className="mtext">Health</span>
+                        <div className="d-flex justify-content-between w-100">
+                          <span className="mtext">Health</span>
+                          <span className="ml-2">
+                            <FontAwesomeIcon
+                              icon={
+                                dropdownStates.health
+                                  ? faChevronUp
+                                  : faChevronDown
+                              }
+                            />
+                          </span>
+                        </div>
                       </a>
-                      <ul className="submenu">
+                      <ul
+                        className="submenu"
+                        style={{
+                          maxHeight: dropdownStates.health ? "250px" : "0",
+                          overflow: "hidden",
+                          transition: "max-height 0.4s ease",
+                          display: "block",
+                        }}
+                      >
                         <li>
-                          <a href="https://be.astar8.com/healthreading">
-                            Health Reading
-                          </a>
+                          <Link
+                            to="/systemtype"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Health Reading
+                            </span>
+                          </Link>
                         </li>
                         <li>
-                          <a href="https://be.astar8.com/healthprecaution">
-                            Health Precautions
-                          </a>
+                          <Link
+                            to="/modules"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Health Precautions
+                            </span>
+                          </Link>
                         </li>
                         <li>
-                          <a href="https://be.astar8.com/healthsuggestion">
-                            Health Suggestion
-                          </a>
+                          <Link
+                            to="/modules"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Health Suggestion
+                            </span>
+                          </Link>
                         </li>
                         <li>
-                          <a href="https://be.astar8.com/healthcycle">
-                            Health Cycle
-                          </a>
+                          <Link
+                            to="/modules"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Health Cycle
+                            </span>
+                          </Link>
                         </li>
                       </ul>
                     </li>
-                    <li className="dropdown">
+
+                    {/* Personal */}
+
+                    <li
+                      className="dropdown"
+                      style={{ cursor: "pointer", transition: "all 0.3s ease" }}
+                    >
                       <a
-                        href="javascript:;"
                         className="dropdown-toggle"
                         data-option="off"
+                        onClick={() => toggleDropdowns("personal")}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faFileAlt} />
                         </span>
-
-                        <span className="mtext">Personal</span>
+                        <div className="d-flex justify-content-between w-100">
+                          <span className="mtext">Personal</span>
+                          <span className="ml-2">
+                            <FontAwesomeIcon
+                              icon={
+                                dropdownStates.personal
+                                  ? faChevronUp
+                                  : faChevronDown
+                              }
+                            />
+                          </span>
+                        </div>
                       </a>
-                      <ul className="submenu">
+                      <ul
+                        className="submenu"
+                        style={{
+                          maxHeight: dropdownStates.personal ? "250px" : "0",
+                          overflow: "hidden",
+                          transition: "max-height 0.4s ease",
+                          display: "block",
+                        }}
+                      >
                         <li>
-                          <a href="https://be.astar8.com/personalyear">
-                            Personal Year
-                          </a>
+                          <Link
+                            to="/systemtype"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Personal Year
+                            </span>
+                          </Link>
                         </li>
                         <li>
-                          <a href="https://be.astar8.com/personalmonth">
-                            Personal Month
-                          </a>
+                          <Link
+                            to="/modules"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Personal Month
+                            </span>
+                          </Link>
                         </li>
                         <li>
-                          <a href="https://be.astar8.com/personalweek">
-                            Personal Week
-                          </a>
+                          <Link
+                            to="/modules"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Personal Week
+                            </span>
+                          </Link>
                         </li>
                         <li>
-                          <a href="https://be.astar8.com/personalday">
-                            Personal Day
-                          </a>
+                          <Link
+                            to="/modules"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Personal Day
+                            </span>
+                          </Link>
                         </li>
                       </ul>
                     </li>
-                    <li className="dropdown">
+
+                    {/* Universal */}
+
+                    <li
+                      className="dropdown"
+                      style={{ cursor: "pointer", transition: "all 0.3s ease" }}
+                    >
                       <a
-                        href="javascript:;"
                         className="dropdown-toggle"
                         data-option="off"
+                        onClick={() => toggleDropdowns("universal")}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faGlobe} />
                         </span>
-                        <span className="mtext">Universal</span>
+                        <div className="d-flex justify-content-between w-100">
+                          <span className="mtext">Universal</span>
+                          <span className="ml-2">
+                            <FontAwesomeIcon
+                              icon={
+                                dropdownStates.universal
+                                  ? faChevronUp
+                                  : faChevronDown
+                              }
+                            />
+                          </span>
+                        </div>
                       </a>
-                      <ul className="submenu">
+                      <ul
+                        className="submenu"
+                        style={{
+                          maxHeight: dropdownStates.universal ? "250px" : "0",
+                          overflow: "hidden",
+                          transition: "max-height 0.4s ease",
+                          display: "block",
+                        }}
+                      >
                         <li>
-                          <a href="https://be.astar8.com/universalyear">
-                            Universal Year
-                          </a>
+                          <Link
+                            to="/systemtype"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Universal Year
+                            </span>
+                          </Link>
                         </li>
                         <li>
-                          <a href="https://be.astar8.com/universalmonth">
-                            Universal Month
-                          </a>
+                          <Link
+                            to="/modules"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Universal Month
+                            </span>
+                          </Link>
                         </li>
                         <li>
-                          <a href="https://be.astar8.com/universalday">
-                            Universal Day
-                          </a>
+                          <Link
+                            to="/modules"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Universal Day
+                            </span>
+                          </Link>
                         </li>
                       </ul>
                     </li>
-                    <li className="dropdown">
+
+                    {/* Fav unfav */}
+
+                    <li
+                      className="dropdown"
+                      style={{ cursor: "pointer", transition: "all 0.3s ease" }}
+                    >
                       <a
-                        href="javascript:;"
                         className="dropdown-toggle"
                         data-option="off"
+                        onClick={() => toggleDropdowns("fav")}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faDesktop} />
                         </span>
-                        <span className="mtext">Fav Unfav</span>
+                        <div className="d-flex justify-content-between w-100">
+                          <span className="mtext">Fav Unfav</span>
+                          <span className="ml-2">
+                            <FontAwesomeIcon
+                              icon={
+                                dropdownStates.fav ? faChevronUp : faChevronDown
+                              }
+                            />
+                          </span>
+                        </div>
                       </a>
-                      <ul className="submenu">
+                      <ul
+                        className="submenu"
+                        style={{
+                          maxHeight: dropdownStates.fav ? "250px" : "0",
+                          overflow: "hidden",
+                          transition: "max-height 0.5s ease",
+                          display: "block",
+                        }}
+                      >
                         <li>
-                          <a href="https://be.astar8.com/fav_parameters">
-                            Fav Parameters
-                          </a>
+                          <Link
+                            to="/systemtype"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Fav Parameters
+                            </span>
+                          </Link>
                         </li>
                         <li>
-                          <a href="https://be.astar8.com/unfav_parameters">
-                            Unfav Parameters
-                          </a>
+                          <Link
+                            to="/modules"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Unfav Parameters
+                            </span>
+                          </Link>
                         </li>
                       </ul>
                     </li>
+
+                  
                     <li className="dropdown">
                       <Link
                         to="/zodic_signs"
@@ -779,54 +1087,163 @@ export default function Dashboard() {
                         <span className="mtext">Children</span>
                       </Link>
                     </li>
-                    <li className="dropdown">
+                    {/* Parenting */}
+
+                    <li
+                      className="dropdown"
+                      style={{ cursor: "pointer", transition: "all 0.3s ease" }}
+                    >
                       <a
-                        href="javascript:;"
                         className="dropdown-toggle"
                         data-option="off"
+                        onClick={() => toggleDropdowns("parenting")}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faHandshake} />
                         </span>
-                        <span className="mtext">Parenting</span>
+                        <div className="d-flex justify-content-between w-100">
+                          <span className="mtext">Parenting</span>
+                          <span className="ml-2">
+                            <FontAwesomeIcon
+                              icon={
+                                dropdownStates.parenting ? faChevronUp : faChevronDown
+                              }
+                            />
+                          </span>
+                        </div>
                       </a>
-                      <ul className="submenu">
+                      <ul
+                        className="submenu"
+                        style={{
+                          maxHeight: dropdownStates.parenting ? "250px" : "0",
+                          overflow: "hidden",
+                          transition: "max-height 0.5s ease",
+                          display: "block",
+                        }}
+                      >
                         <li>
-                          <a href="https://be.astar8.com/basicparenting">
-                            Basic Parenting
-                          </a>
+                          <Link
+                            to="/systemtype"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Basic Parenting
+                            </span>
+                          </Link>
                         </li>
                         <li>
-                          <a href="https://be.astar8.com/detailparenting">
-                            Detailed Parenting
-                          </a>
+                          <Link
+                            to="/modules"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Detailed Parenting
+                            </span>
+                          </Link>
                         </li>
                       </ul>
                     </li>
-                    <li className="dropdown">
+
+                    {/* Money Matters */}
+
+                    <li
+                      className="dropdown"
+                      style={{ cursor: "pointer", transition: "all 0.3s ease" }}
+                    >
                       <a
-                        href="javascript:;"
                         className="dropdown-toggle"
                         data-option="off"
+                        onClick={() => toggleDropdowns("money")}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faMoneyBill} />
                         </span>
-                        <span className="mtext">Money Matters</span>
+                        <div className="d-flex justify-content-between w-100">
+                          <span className="mtext">Money Matters</span>
+                          <span className="ml-2">
+                            <FontAwesomeIcon
+                              icon={
+                                dropdownStates.money ? faChevronUp : faChevronDown
+                              }
+                            />
+                          </span>
+                        </div>
                       </a>
-                      <ul className="submenu">
+                      <ul
+                        className="submenu"
+                        style={{
+                          maxHeight: dropdownStates.money ? "250px" : "0",
+                          overflow: "hidden",
+                          transition: "max-height 0.5s ease",
+                          display: "block",
+                        }}
+                      >
                         <li>
-                          <a href="https://be.astar8.com/basicmoney">
-                            Basic Money Matters
-                          </a>
+                          <Link
+                            to="/systemtype"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Basic Money Matters
+                            </span>
+                          </Link>
                         </li>
                         <li>
-                          <a href="https://be.astar8.com/detailedmoney">
-                            Detailed Money Matters
-                          </a>
+                          <Link
+                            to="/modules"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                style={{
+                                  position: "absolute",
+                                  left: "28px",
+                                  top: "38%",
+                                }}
+                              />{" "}
+                              Detailed Money Matters
+                            </span>
+                          </Link>
                         </li>
                       </ul>
                     </li>
+
+                  
+
+
                     <li className="dropdown">
                       <Link
                         to="/compatibility_percentage"

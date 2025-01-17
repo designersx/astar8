@@ -13,10 +13,12 @@ import Swal from "sweetalert2";
 
 export default function DailyForecartList() {
   const [ForecastData, setForecastData] = useState([]);
+  console.log("ForecastData", ForecastData);
   const [displayCount, setDisplayCount] = useState(5);
   const [selectedTab, setSelectedTab] = useState("all");
   const [loading, setLoading] = useState(false);
   const [refreshData, setrefreshData] = useState(false);
+  console.log("refreshData", refreshData);
   const [userPhoto, setuserPhoto] = useState(
     localStorage.getItem("profilePic")
   );
@@ -28,6 +30,7 @@ export default function DailyForecartList() {
   const fetchForecastData = async (status = "all") => {
     try {
       setLoading(true);
+      setForecastData([]);
       const response = await getForecastData(token, status);
       console.log(response, "ASDFGHJ");
       setForecastData(response?.predictions || []);
@@ -40,22 +43,12 @@ export default function DailyForecartList() {
   };
 
   useEffect(() => {
-    // Fetch forecast data whenever refreshData is toggled
-    if (refreshData) {
-      fetchForecastData(
-        selectedTab === "published"
-          ? 1
-          : selectedTab === "scheduled"
-          ? 0
-          : "all"
-      );
-      setrefreshData(false); // Reset refreshData to avoid unnecessary reloads
-    } else {
-      fetchForecastData();
-    }
+    fetchForecastData();
+    setrefreshData(false);
   }, [refreshData]);
 
   const handleTabChange = (tab) => {
+    // console.log("handleTabbb", tab);
     setSelectedTab(tab);
 
     if (tab === "published") {
@@ -63,7 +56,7 @@ export default function DailyForecartList() {
     } else if (tab === "scheduled") {
       fetchForecastData(0);
     } else {
-      fetchForecastData();
+      fetchForecastData("all");
     }
   };
 
@@ -125,8 +118,12 @@ export default function DailyForecartList() {
           title: "Published!",
           text: response.message,
           icon: "success",
+          timer: 1000,
         });
         setrefreshData(true);
+        setTimeout(() => {
+          setrefreshData(false);
+        }, 500);
       } else {
         Swal.fire({
           title: "Published Failed!",
@@ -182,6 +179,8 @@ export default function DailyForecartList() {
           title: "Cancelled!",
           text: response.message,
           icon: "success",
+          showConfirmButton: false,
+          timer: 2000,
         });
         setrefreshData(true);
       } else {
@@ -281,214 +280,264 @@ export default function DailyForecartList() {
                               </>
                             ) : (
                               <div className="pd-20">
-                                {ForecastData.slice(0, displayCount).map(
-                                  (forecast) => (
-                                    <div
-                                      key={forecast?.id}
-                                      style={{
-                                        display: "flex",
-                                        gap: "12px",
-                                        padding: "16px",
-                                        marginBottom: "16px",
-                                        alignItems: "flex-start",
-                                        borderBottom: "1px solid darkgrey",
-                                      }}
-                                    >
-                                      {/* Left Side Image */}
-                                      <div style={{ flex: "0 0 80px" }}>
-                                        <img
-                                          src={
-                                            userPhoto
-                                              ? userPhoto
-                                              : "https://be.astar8.com/img/default-profile-img.png"
-                                          }
-                                          onError={(e) => {
-                                            e.target.onerror = null;
-                                            e.target.src =
-                                              "https://be.astar8.com/img/default-profile-img.png";
-                                          }} // change from local storage
-                                          alt="Profile"
-                                          style={{
-                                            width: "90%",
-                                            borderRadius: "50%",
-                                            objectFit: "cover",
-                                          }}
-                                        />
-                                      </div>
-
-                                      {/* Right Side Content */}
-                                      <div
-                                        style={{
-                                          flex: "1",
-                                          display: "flex",
-                                          flexDirection: "column",
-                                        }}
-                                      >
-                                        {/* Top Section: Name and Date */}
+                                {ForecastData.filter((forecast) => {
+                                  if (selectedTab === "all") return true;
+                                  if (selectedTab === "published")
+                                    return forecast.publish_status === 1;
+                                  if (selectedTab === "scheduled")
+                                    return forecast.publish_status === 0;
+                                  return false;
+                                }).length === 0 ? (
+                                  <div
+                                    style={{
+                                      textAlign: "center",
+                                      padding: "40px 20px",
+                                      color: "#666",
+                                      fontSize: "16px",
+                                      fontFamily: "sans-serif",
+                                      backgroundColor: "#f8f9fa",
+                                      borderRadius: "8px",
+                                      margin: "20px 0",
+                                    }}
+                                  >
+                                    No forecasts found
+                                  </div>
+                                ) : (
+                                  <>
+                                    {ForecastData.filter((forecast) => {
+                                      if (selectedTab === "all") return true;
+                                      if (selectedTab === "published")
+                                        return forecast.publish_status === 1;
+                                      if (selectedTab === "scheduled")
+                                        return forecast.publish_status === 0;
+                                      return false;
+                                    })
+                                      .slice(0, displayCount)
+                                      .map((forecast) => (
                                         <div
+                                          key={forecast?.id}
                                           style={{
                                             display: "flex",
-                                            justifyContent: "space-between",
-                                            alignItems: "center",
-                                            marginBottom: "8px",
+                                            gap: "12px",
+                                            padding: "16px",
+                                            marginBottom: "16px",
+                                            alignItems: "flex-start",
+                                            borderBottom: "1px solid darkgrey",
                                           }}
                                         >
-                                          <h5
-                                            style={{
-                                              margin: 0,
-                                              fontSize: "16px",
-                                              fontWeight: "bold",
-                                              color: "#44aeff",
-                                            }}
-                                          >
-                                            {name
-                                              .split(" ")
-                                              .map(
-                                                (word) =>
-                                                  word.charAt(0).toUpperCase() +
-                                                  word.slice(1).toLowerCase()
-                                              )
-                                              .join(" ")}
-                                          </h5>
-                                          <span
-                                            style={{
-                                              fontSize: "15px",
-                                              color: "#888",
-                                            }}
-                                          >
-                                            {typeof forecast.prediction_date ===
-                                              "object" &&
-                                            "_seconds" in
-                                              forecast.prediction_date &&
-                                            "_nanoseconds" in
-                                              forecast.prediction_date
-                                              ? formatDate(
-                                                  convertFirestoreTimestampToDate(
-                                                    forecast.prediction_date
-                                                  )
-                                                )
-                                              : formatDate(
-                                                  forecast.prediction_date
-                                                )}
-                                          </span>
-                                        </div>
-
-                                        {/* Paragraph Content */}
-                                        <p
-                                          style={{
-                                            margin: 0,
-                                            fontSize: "16px",
-                                            color: "black",
-                                            fontFamily: "sans-serif",
-                                          }}
-                                        >
-                                          {forecast.prediction}
-                                        </p>
-
-                                        {/* Button Section */}
-                                        {selectedTab === "scheduled" ? (
-                                          isFutureDate(
-                                            new Date(forecast.prediction_date)
-                                          ) ? (
-                                            <div
-                                              style={{
-                                                display: "flex",
-                                                justifyContent: "end",
-                                                gap: "35px",
-                                                marginTop: "5px",
-                                                marginBottom: "16px",
+                                          {/* Left Side Image */}
+                                          <div style={{ flex: "0 0 80px" }}>
+                                            <img
+                                              src={
+                                                userPhoto
+                                                  ? userPhoto
+                                                  : "https://be.astar8.com/img/default-profile-img.png"
+                                              }
+                                              onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src =
+                                                  "https://be.astar8.com/img/default-profile-img.png";
                                               }}
-                                            >
-                                              <div
-                                                style={{
-                                                  cursor: "pointer",
-                                                }}
-                                                onClick={() =>
-                                                  publishButton(forecast?.id)
-                                                }
-                                              >
-                                                <FaUpload size={14} />
-                                              </div>
-                                              <div
-                                                style={{
-                                                  cursor: "pointer",
-                                                }}
-                                                onClick={() =>
-                                                  cancelButton(forecast?.id)
-                                                }
-                                              >
-                                                <IoCloseCircle size={16} />
-                                              </div>
-                                            </div>
-                                          ) : null
-                                        ) : (
+                                              alt="Profile"
+                                              style={{
+                                                width: "90%",
+                                                borderRadius: "50%",
+                                                objectFit: "cover",
+                                              }}
+                                            />
+                                          </div>
+
+                                          {/* Right Side Content */}
                                           <div
                                             style={{
+                                              flex: "1",
                                               display: "flex",
-                                              justifyContent: "space-between",
-                                              alignItems: "center",
-                                              marginTop: "16px",
+                                              flexDirection: "column",
                                             }}
                                           >
+                                            {/* Top Section: Name and Date */}
                                             <div
                                               style={{
                                                 display: "flex",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                                marginBottom: "8px",
                                               }}
                                             >
-                                              <div
+                                              <h5
                                                 style={{
-                                                  padding: "4px 8px",
-                                                  display: "flex",
-                                                  alignItems: "center",
-                                                  gap: "4px",
+                                                  margin: 0,
+                                                  fontSize: "16px",
+                                                  fontWeight: "bold",
+                                                  color: "#44aeff",
                                                 }}
                                               >
-                                                <AiFillLike color="green" />{" "}
-                                                {forecast.likes}
-                                              </div>
-                                              <div
+                                                {name
+                                                  .split(" ")
+                                                  .map(
+                                                    (word) =>
+                                                      word
+                                                        .charAt(0)
+                                                        .toUpperCase() +
+                                                      word
+                                                        .slice(1)
+                                                        .toLowerCase()
+                                                  )
+                                                  .join(" ")}
+                                              </h5>
+                                              <span
                                                 style={{
-                                                  padding: "4px 8px",
-                                                  display: "flex",
-                                                  alignItems: "center",
-                                                  gap: "4px",
+                                                  fontSize: "15px",
+                                                  color: "#888",
                                                 }}
                                               >
-                                                <AiFillDislike color="red" />{" "}
-                                                {forecast.dislikes}
-                                              </div>
+                                                {typeof forecast.prediction_date ===
+                                                  "object" &&
+                                                "_seconds" in
+                                                  forecast.prediction_date &&
+                                                "_nanoseconds" in
+                                                  forecast.prediction_date
+                                                  ? formatDate(
+                                                      convertFirestoreTimestampToDate(
+                                                        forecast.prediction_date
+                                                      )
+                                                    )
+                                                  : formatDate(
+                                                      forecast.prediction_date
+                                                    )}
+                                              </span>
                                             </div>
-                                            <a
+
+                                            {/* Paragraph Content */}
+                                            <p
                                               style={{
-                                                fontSize: "15px",
-                                                color: "#666",
-                                                textDecoration: "none",
+                                                margin: 0,
+                                                fontSize: "16px",
+                                                color: "black",
+                                                fontFamily: "sans-serif",
                                               }}
                                             >
-                                              Reply Count: 0{" "}
-                                              {forecast.replyCount}
-                                            </a>
+                                              {forecast.prediction}
+                                            </p>
+
+                                            {/* Button Section */}
+                                            {selectedTab === "scheduled" ? (
+                                              isFutureDate(
+                                                new Date(
+                                                  forecast.prediction_date
+                                                )
+                                              ) ? (
+                                                <div
+                                                  style={{
+                                                    display: "flex",
+                                                    justifyContent: "end",
+                                                    gap: "35px",
+                                                    marginTop: "5px",
+                                                    marginBottom: "16px",
+                                                  }}
+                                                >
+                                                  <div
+                                                    style={{
+                                                      cursor: "pointer",
+                                                    }}
+                                                    onClick={() =>
+                                                      publishButton(
+                                                        forecast?.id
+                                                      )
+                                                    }
+                                                  >
+                                                    <FaUpload size={14} />
+                                                  </div>
+                                                  <div
+                                                    style={{
+                                                      cursor: "pointer",
+                                                    }}
+                                                    onClick={() =>
+                                                      cancelButton(forecast?.id)
+                                                    }
+                                                  >
+                                                    <IoCloseCircle size={16} />
+                                                  </div>
+                                                </div>
+                                              ) : null
+                                            ) : (
+                                              <div
+                                                style={{
+                                                  display: "flex",
+                                                  justifyContent:
+                                                    "space-between",
+                                                  alignItems: "center",
+                                                  marginTop: "16px",
+                                                }}
+                                              >
+                                                <div
+                                                  style={{
+                                                    display: "flex",
+                                                  }}
+                                                >
+                                                  <div
+                                                    style={{
+                                                      padding: "4px 8px",
+                                                      display: "flex",
+                                                      alignItems: "center",
+                                                      gap: "4px",
+                                                    }}
+                                                  >
+                                                    <AiFillLike color="green" />{" "}
+                                                    {forecast.likes}
+                                                  </div>
+                                                  <div
+                                                    style={{
+                                                      padding: "4px 8px",
+                                                      display: "flex",
+                                                      alignItems: "center",
+                                                      gap: "4px",
+                                                    }}
+                                                  >
+                                                    <AiFillDislike color="red" />{" "}
+                                                    {forecast.dislikes}
+                                                  </div>
+                                                </div>
+                                                <a
+                                                  style={{
+                                                    fontSize: "15px",
+                                                    color: "#666",
+                                                    textDecoration: "none",
+                                                  }}
+                                                >
+                                                  Reply Count: 0{" "}
+                                                  {forecast.replyCount}
+                                                </a>
+                                              </div>
+                                            )}
                                           </div>
-                                        )}
-                                      </div>
-                                    </div>
-                                  )
-                                )}
-                                {displayCount < ForecastData.length && (
-                                  <button
-                                    style={{
-                                      padding: "10px 20px",
-                                      marginTop: "20px",
-                                      cursor: "pointer",
-                                      backgroundColor: "#44aeff",
-                                      color: "#fff",
-                                      border: "none",
-                                      borderRadius: "4px",
-                                    }}
-                                    onClick={handleLoadMore}
-                                  >
-                                    Load More
-                                  </button>
+                                        </div>
+                                      ))}
+                                    {displayCount <
+                                      ForecastData.filter((forecast) => {
+                                        if (selectedTab === "all") return true;
+                                        if (selectedTab === "published")
+                                          return forecast.publish_status === 1;
+                                        if (selectedTab === "scheduled")
+                                          return forecast.publish_status === 0;
+                                        return false;
+                                      }).length && (
+                                      <button
+                                        style={{
+                                          padding: "10px 20px",
+                                          marginTop: "20px",
+                                          cursor: "pointer",
+                                          backgroundColor: "#44aeff",
+                                          color: "#fff",
+                                          border: "none",
+                                          borderRadius: "4px",
+                                        }}
+                                        onClick={handleLoadMore}
+                                      >
+                                        Load More
+                                      </button>
+                                    )}
+                                  </>
                                 )}
                               </div>
                             )}
