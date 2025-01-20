@@ -7,8 +7,8 @@ import { BeatLoader } from "react-spinners";
 import Loader from "../Loader/Loader";
 
 const ChatDetails = ({ user, onMessageSent }) => {
-  // const url = "https://dev.astar8.com" 
-  const url = "http://localhost:5234" 
+  // const url = "https://dev.astar8.com"
+  const url = "http://localhost:5234";
   const [userChatMessages, setUserChatMessages] = useState([]);
   console.log("userrr", user);
   const [messageInput, setMessageInput] = useState("");
@@ -18,14 +18,19 @@ const ChatDetails = ({ user, onMessageSent }) => {
   const [adminProfile, setadminProfile] = useState(
     localStorage.getItem("profilePic" || "")
   );
+  const [userRole, setuserRole] = useState(localStorage.getItem("Role") || "");
+  console.log("userROleee", userRole);
+  const llyadId = "5mywqbuSYUPveHLmD0Df";
+  const llyodProfilePic = "https://dev.astar8.com/uploads/1737091948321.png";
   const [handleSocketError, sethandleSocketError] = useState();
 
   const messagesEndRef = useRef(null);
 
   const fetchUserChats = async () => {
     setLoading(true);
+    const senderrid = userRole === "1" ? adminId : llyadId;
     const finalData = {
-      senderId: adminId,
+      senderId: senderrid,
       receiverId: user?.user_id,
     };
     const response = await getUserChatMessages(finalData);
@@ -286,8 +291,10 @@ const ChatDetails = ({ user, onMessageSent }) => {
                         {message.senderId !== user?.user_id && (
                           <img
                             src={
-                              adminProfile
-                                ? adminProfile
+                              userRole === "2"
+                                ? llyodProfilePic
+                                : user.user_profile_pic
+                                ? user.user_profile_pic
                                 : "https://be.astar8.com/img/default-profile-img.png"
                             }
                             onError={(e) => {
@@ -295,8 +302,8 @@ const ChatDetails = ({ user, onMessageSent }) => {
                               e.target.src =
                                 "https://be.astar8.com/img/default-profile-img.png";
                             }}
-                            alt=""
-                            className="rounded-circle ms-2"
+                            alt="User profile"
+                            className="rounded-circle me-2"
                             style={{
                               width: "40px",
                               height: "40px",
@@ -312,44 +319,46 @@ const ChatDetails = ({ user, onMessageSent }) => {
             </div>
 
             {/* Input Field Section */}
-            <div
-              className="p-3 border-top"
-              style={{
-                background: "#fff",
-              }}
-            >
-              <div className="d-flex align-items-center">
-                <div className="pr-2">
-                  <TfiEmail size={25} />
-                </div>
+            {userRole !== "2" && (
+              <div
+                className="p-3 border-top"
+                style={{
+                  background: "#fff",
+                }}
+              >
+                <div className="d-flex align-items-center">
+                  <div className="pr-2">
+                    <TfiEmail size={25} />
+                  </div>
 
-                <input
-                  type="text"
-                  value={messageInput}
-                  onChange={(e) => setMessageInput(e.target.value)}
-                  className="w-100 border-0 me-2"
-                  placeholder="Type your message..."
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      handleSendMessage(); // Trigger message send on Enter key press
-                    }
-                  }}
-                  style={{
-                    outline: "none",
-                    background: "#f7f8fa",
-                    borderRadius: "4px",
-                    padding: "8px",
-                  }}
-                />
-                <div
-                  className="pl-1"
-                  style={{ cursor: "pointer" }}
-                  onClick={handleSendMessage}
-                >
-                  <SiMinutemailer size={25} />
+                  <input
+                    type="text"
+                    value={messageInput}
+                    onChange={(e) => setMessageInput(e.target.value)}
+                    className="w-100 border-0 me-2"
+                    placeholder="Type your message..."
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleSendMessage(); // Trigger message send on Enter key press
+                      }
+                    }}
+                    style={{
+                      outline: "none",
+                      background: "#f7f8fa",
+                      borderRadius: "4px",
+                      padding: "8px",
+                    }}
+                  />
+                  <div
+                    className="pl-1"
+                    style={{ cursor: "pointer" }}
+                    onClick={handleSendMessage}
+                  >
+                    <SiMinutemailer size={25} />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </>
       ) : (

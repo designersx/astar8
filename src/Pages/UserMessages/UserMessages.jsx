@@ -13,6 +13,10 @@ const UserMessages = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [sample, setsample] = useState(0)
   const [userId, setuserId] = useState(localStorage.getItem("userId") || "")
+  const [userRole, setuserRole] = useState(localStorage.getItem("Role") || "")
+  // console.log("userRolee",userRole)
+  const llyadId = "5mywqbuSYUPveHLmD0Df"
+
 
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -28,8 +32,9 @@ const UserMessages = () => {
   }, []);
 
   const fetchUserList = async () => {
+    const receiverId = userRole === "1" ? userId : llyadId;
     const finalDate = {
-      receiver_id:userId,
+      receiver_id:receiverId,
       from:fromDate,
       to:toDate
     }

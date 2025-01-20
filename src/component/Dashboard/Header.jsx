@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import "../../styles/Style.css";
 import "font-awesome/css/font-awesome.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import {
@@ -77,6 +77,7 @@ export default function Dashboard() {
     localStorage.removeItem("profilePic");
     localStorage.removeItem("userEmail");
     localStorage.removeItem("userId");
+    localStorage.removeItem("user_Detailed_id");
 
     navigate("/");
   };
@@ -262,12 +263,12 @@ export default function Dashboard() {
                   isDropdownOpen ? "show animated-dropdown" : "hide"
                 }`}
               >
-                <Link className="dropdown-item" to="/profile">
+                <NavLink className="dropdown-item" to="/profile">
                   <i className="fa fa-user-circle mr-2" /> Profile
-                </Link>
-                <Link className="dropdown-item" to="/reset">
+                </NavLink>
+                <NavLink className="dropdown-item" to="/reset">
                   <i className="fa fa-cogs mr-2" /> Reset Password
-                </Link>
+                </NavLink>
                 <a
                   className="dropdown-item"
                   style={{ cursor: "pointer" }}
@@ -311,16 +312,16 @@ export default function Dashboard() {
               <div className="sidebar-menu">
                 {userRole === "1" ? (
                   <ul id="accordion-menu">
-                    <Link to="/dashboard" className="dropdown-toggle no-arrow">
+                    <NavLink to="/dashboard" className="dropdown-toggle no-arrow">
                       <span>
                         {" "}
                         <FontAwesomeIcon icon={faHouse} />
                       </span>
                       <span className="mtext">Home</span>
-                    </Link>
+                    </NavLink>
 
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/usermessages"
                         className="dropdown-toggle no-arrow"
                       >
@@ -328,10 +329,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faComment} />
                         </span>
                         <span className="mtext">User Messages</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/DailyForecast"
                         className="dropdown-toggle no-arrow"
                       >
@@ -339,11 +340,11 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faBook} />
                         </span>
                         <span className="mtext">Daily Forecast</span>
-                      </Link>
+                      </NavLink>
                     </li>
 
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/general-settings"
                         className="dropdown-toggle no-arrow"
                       >
@@ -351,42 +352,42 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faCog} />
                         </span>
                         <span className="mtext">General Setting</span>
-                      </Link>
+                      </NavLink>
                     </li>
 
                     <li className="dropdown">
-                      <Link to="/payment" className="dropdown-toggle no-arrow">
+                      <NavLink to="/payment" className="dropdown-toggle no-arrow">
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faDollarSign} />
                         </span>
                         <span className="mtext">Payment Setting</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link to="/users" className="dropdown-toggle no-arrow">
+                      <NavLink to="/users" className="dropdown-toggle no-arrow">
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faUser} />
                         </span>
                         <span className="mtext">Users</span>
-                      </Link>
+                      </NavLink>
                     </li>
                   </ul>
                 ) : (
                   <ul id="accordion-menu">
-                    <Link to="/dashboard" className="dropdown-toggle no-arrow">
+                    <NavLink to="/dashboard" className="dropdown-toggle no-arrow">
                       <span>
                         {" "}
                         <FontAwesomeIcon icon={faHouse} />
                       </span>
                       <span className="mtext">Home</span>
-                    </Link>
+                    </NavLink>
                     <li className="dropdown">
-                      <Link to="/roles" className="dropdown-toggle no-arrow">
+                      <NavLink to="/roles" className="dropdown-toggle no-arrow">
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faPencilAlt} />
                         </span>
                         <span className="mtext">Roles</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     {/* dropdown */}
                     <li
@@ -415,7 +416,7 @@ export default function Dashboard() {
                         </div>
                       </a>
                       <ul
-                        className="submenu"
+                        className="submenu "
                         style={{
                           maxHeight: dropdownStates.systems ? "200px" : "0",
                           overflow: "hidden",
@@ -423,8 +424,8 @@ export default function Dashboard() {
                           display: "block",
                         }}
                       >
-                        <li>
-                          <Link
+                        <li className="header-dropdown">
+                          <NavLink
                             to="/systemtype"
                             style={{
                               textDecoration: "none",
@@ -432,6 +433,7 @@ export default function Dashboard() {
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -441,10 +443,11 @@ export default function Dashboard() {
                               />{" "}
                               System Types
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
                         <li>
-                          <Link
+                          <NavLink
+                            className="header-dropdown"
                             to="/modules"
                             style={{
                               textDecoration: "none",
@@ -452,6 +455,7 @@ export default function Dashboard() {
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -461,21 +465,21 @@ export default function Dashboard() {
                               />{" "}
                               Module Types
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
                       </ul>
                     </li>
 
                     <li className="dropdown">
-                      <Link to="/Master" className="dropdown-toggle no-arrow">
+                      <NavLink to="/Master" className="dropdown-toggle no-arrow">
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faList} />
                         </span>
                         <span className="mtext">Master Numbers</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/namereading"
                         className="dropdown-toggle no-arrow"
                       >
@@ -483,10 +487,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faUser} />
                         </span>
                         <span className="mtext">Name Reading</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/dobreading"
                         className="dropdown-toggle no-arrow"
                       >
@@ -495,10 +499,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faBook} />
                         </span>
                         <span className="mtext">DOB Reading</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/luckiest_parameters"
                         className="dropdown-toggle no-arrow"
                       >
@@ -506,10 +510,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faDesktop} />
                         </span>
                         <span className="mtext">Luckiest Parameter</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/primaryno_types"
                         className="dropdown-toggle no-arrow"
                       >
@@ -517,18 +521,18 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faList} />
                         </span>
                         <span className="mtext">Primary Number</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link to="/magicbox" className="dropdown-toggle no-arrow">
+                      <NavLink to="/magicbox" className="dropdown-toggle no-arrow">
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faBox} />
                         </span>
                         <span className="mtext">Magic Box</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/usermessages"
                         className="dropdown-toggle no-arrow"
                       >
@@ -536,10 +540,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faComment} />
                         </span>
                         <span className="mtext">User Messages</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/DailyForecast"
                         className="dropdown-toggle no-arrow"
                       >
@@ -547,10 +551,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faBook} />
                         </span>
                         <span className="mtext">Daily Forecast</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/elementalno"
                         className="dropdown-toggle no-arrow"
                       >
@@ -558,10 +562,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faClock} />
                         </span>
                         <span className="mtext">Elemental Numbers</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/destinyno"
                         className="dropdown-toggle no-arrow"
                       >
@@ -569,18 +573,18 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faSitemap} />
                         </span>
                         <span className="mtext">Destiny Numbers</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link to="/videos" className="dropdown-toggle no-arrow">
+                      <NavLink to="/videos" className="dropdown-toggle no-arrow">
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faVideo} />
                         </span>
                         <span className="mtext">Videos</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/lifecoach_descriptions"
                         className="dropdown-toggle no-arrow"
                       >
@@ -588,10 +592,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faFile} />
                         </span>
                         <span className="mtext">Lifecoach Descriptions</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/subscription_price"
                         className="dropdown-toggle no-arrow"
                       >
@@ -599,7 +603,7 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faWallet} />
                         </span>
                         <span className="mtext">Subscription Prices</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     {/* Helath */}
 
@@ -637,8 +641,8 @@ export default function Dashboard() {
                           display: "block",
                         }}
                       >
-                        <li>
-                          <Link
+                        <li className="header-dropdown">
+                          <NavLink
                             to="/healthreading"
                             style={{
                               textDecoration: "none",
@@ -646,6 +650,7 @@ export default function Dashboard() {
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -655,10 +660,10 @@ export default function Dashboard() {
                               />{" "}
                               Health Reading
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
-                        <li>
-                          <Link
+                        <li className="header-dropdown">
+                          <NavLink
                             to="/healthprecaution"
                             style={{
                               textDecoration: "none",
@@ -666,6 +671,7 @@ export default function Dashboard() {
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -675,10 +681,10 @@ export default function Dashboard() {
                               />{" "}
                               Health Precautions
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
-                        <li>
-                          <Link
+                        <li className="header-dropdown">
+                          <NavLink
                             to="/healthsuggestion"
                             style={{
                               textDecoration: "none",
@@ -686,6 +692,7 @@ export default function Dashboard() {
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -695,10 +702,10 @@ export default function Dashboard() {
                               />{" "}
                               Health Suggestion
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
-                        <li>
-                          <Link
+                        <li className="header-dropdown">
+                          <NavLink
                             to="/healthcycle"
                             style={{
                               textDecoration: "none",
@@ -706,6 +713,7 @@ export default function Dashboard() {
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -715,7 +723,7 @@ export default function Dashboard() {
                               />{" "}
                               Health Cycle
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
                       </ul>
                     </li>
@@ -756,8 +764,8 @@ export default function Dashboard() {
                           display: "block",
                         }}
                       >
-                        <li>
-                          <Link
+                        <li className="header-dropdown">
+                          <NavLink
                             to="/personalyear"
                             style={{
                               textDecoration: "none",
@@ -765,6 +773,7 @@ export default function Dashboard() {
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -774,10 +783,10 @@ export default function Dashboard() {
                               />{" "}
                               Personal Year
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
-                        <li>
-                          <Link
+                        <li className="header-dropdown">
+                          <NavLink
                             to="/personalmonth"
                             style={{
                               textDecoration: "none",
@@ -785,6 +794,7 @@ export default function Dashboard() {
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -794,10 +804,10 @@ export default function Dashboard() {
                               />{" "}
                               Personal Month
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
-                        <li>
-                          <Link
+                        <li className="header-dropdown">
+                          <NavLink
                             to="/personalweek"
                             style={{
                               textDecoration: "none",
@@ -805,6 +815,7 @@ export default function Dashboard() {
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -814,10 +825,10 @@ export default function Dashboard() {
                               />{" "}
                               Personal Week
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
-                        <li>
-                          <Link
+                        <li className="header-dropdown">
+                          <NavLink
                             to="/personalday"
                             style={{
                               textDecoration: "none",
@@ -825,6 +836,7 @@ export default function Dashboard() {
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -834,7 +846,7 @@ export default function Dashboard() {
                               />{" "}
                               Personal Day
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
                       </ul>
                     </li>
@@ -875,8 +887,8 @@ export default function Dashboard() {
                           display: "block",
                         }}
                       >
-                        <li>
-                          <Link
+                        <li className="header-dropdown">
+                          <NavLink
                             to="/universalyear"
                             style={{
                               textDecoration: "none",
@@ -884,6 +896,7 @@ export default function Dashboard() {
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -893,17 +906,18 @@ export default function Dashboard() {
                               />{" "}
                               Universal Year
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
-                        <li>
-                          <Link
-                            to="/modules"
+                        <li className="header-dropdown">
+                          <NavLink
+                            to="/universalmonth"
                             style={{
                               textDecoration: "none",
                             }}
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -913,17 +927,18 @@ export default function Dashboard() {
                               />{" "}
                               Universal Month
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
-                        <li>
-                          <Link
-                            to="/modules"
+                        <li className="header-dropdown">
+                          <NavLink
+                            to="/universalday"
                             style={{
                               textDecoration: "none",
                             }}
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -933,7 +948,7 @@ export default function Dashboard() {
                               />{" "}
                               Universal Day
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
                       </ul>
                     </li>
@@ -972,15 +987,16 @@ export default function Dashboard() {
                           display: "block",
                         }}
                       >
-                        <li>
-                          <Link
-                            to="/systemtype"
+                        <li className="header-dropdown">
+                          <NavLink
+                            to="/fav_parameters"
                             style={{
                               textDecoration: "none",
                             }}
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -990,17 +1006,18 @@ export default function Dashboard() {
                               />{" "}
                               Fav Parameters
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
-                        <li>
-                          <Link
-                            to="/modules"
+                        <li className="header-dropdown">
+                          <NavLink
+                            to="/unfav_parameters"
                             style={{
                               textDecoration: "none",
                             }}
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -1010,13 +1027,13 @@ export default function Dashboard() {
                               />{" "}
                               Unfav Parameters
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
                       </ul>
                     </li>
 
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/zodic_signs"
                         className="dropdown-toggle no-arrow"
                       >
@@ -1024,10 +1041,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faChartLine} />
                         </span>
                         <span className="mtext">Zodiac Signs</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/planet_numbers"
                         className="dropdown-toggle no-arrow"
                       >
@@ -1035,10 +1052,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faGlobe} />
                         </span>
                         <span className="mtext">Planet Number</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/life_cycles"
                         className="dropdown-toggle no-arrow"
                       >
@@ -1046,10 +1063,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faRecycle} />
                         </span>
                         <span className="mtext">Life Cycle</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/life_changes"
                         className="dropdown-toggle no-arrow"
                       >
@@ -1057,10 +1074,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faRecycle} />
                         </span>
                         <span className="mtext">Life Changes</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/compatible_partners"
                         className="dropdown-toggle no-arrow"
                       >
@@ -1068,10 +1085,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faUser} />
                         </span>
                         <span className="mtext">Compatible Partner</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/partner_relationships"
                         className="dropdown-toggle no-arrow"
                       >
@@ -1079,10 +1096,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faHeart} />
                         </span>
                         <span className="mtext">Partner Relationship</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/childrens"
                         className="dropdown-toggle no-arrow"
                       >
@@ -1091,7 +1108,7 @@ export default function Dashboard() {
                         </span>
 
                         <span className="mtext">Children</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     {/* Parenting */}
 
@@ -1129,15 +1146,16 @@ export default function Dashboard() {
                           display: "block",
                         }}
                       >
-                        <li>
-                          <Link
-                            to="/systemtype"
+                        <li className="header-dropdown">
+                          <NavLink
+                            to="/basicparenting"
                             style={{
                               textDecoration: "none",
                             }}
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -1147,17 +1165,18 @@ export default function Dashboard() {
                               />{" "}
                               Basic Parenting
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
-                        <li>
-                          <Link
-                            to="/modules"
+                        <li className="header-dropdown">
+                          <NavLink
+                            to="/detailparenting"
                             style={{
                               textDecoration: "none",
                             }}
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -1167,7 +1186,7 @@ export default function Dashboard() {
                               />{" "}
                               Detailed Parenting
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
                       </ul>
                     </li>
@@ -1208,15 +1227,16 @@ export default function Dashboard() {
                           display: "block",
                         }}
                       >
-                        <li>
-                          <Link
-                            to="/systemtype"
+                        <li className="header-dropdown">
+                          <NavLink
+                            to="/basicmoney"
                             style={{
                               textDecoration: "none",
                             }}
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -1226,17 +1246,18 @@ export default function Dashboard() {
                               />{" "}
                               Basic Money Matters
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
-                        <li>
-                          <Link
-                            to="/modules"
+                        <li className="header-dropdown">
+                          <NavLink
+                            to="/detailedmoney"
                             style={{
                               textDecoration: "none",
                             }}
                           >
                             <span>
                               <FontAwesomeIcon
+                                className="hover-minus"
                                 icon={faMinus}
                                 style={{
                                   position: "absolute",
@@ -1246,13 +1267,13 @@ export default function Dashboard() {
                               />{" "}
                               Detailed Money Matters
                             </span>
-                          </Link>
+                          </NavLink>
                         </li>
                       </ul>
                     </li>
 
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/compatibility_percentage"
                         className="dropdown-toggle no-arrow"
                       >
@@ -1260,7 +1281,7 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faChartBar} />
                         </span>
                         <span className="mtext">Compatibility Scale</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     {/* <li class="dropdown">
               <a href="https://be.astar8.com/commons" class="dropdown-toggle no-arrow">
@@ -1268,7 +1289,7 @@ export default function Dashboard() {
               </a>
           </li> */}
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/compatibility_description"
                         className="dropdown-toggle no-arrow"
                       >
@@ -1276,10 +1297,10 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faBook} />
                         </span>
                         <span className="mtext">Compatibility Description</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link
+                      <NavLink
                         to="/general-settings"
                         className="dropdown-toggle no-arrow"
                       >
@@ -1287,23 +1308,23 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faCog} />
                         </span>
                         <span className="mtext">General Setting</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link to="/payment" className="dropdown-toggle no-arrow">
+                      <NavLink to="/payment" className="dropdown-toggle no-arrow">
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faDollarSign} />
                         </span>
                         <span className="mtext">Payment Setting</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="dropdown">
-                      <Link to="/users" className="dropdown-toggle no-arrow">
+                      <NavLink to="/users" className="dropdown-toggle no-arrow">
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faUser} />
                         </span>
                         <span className="mtext">Users</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     {/* <li class="dropdown">
               <a href="https://be.astar8.com/versions" class="dropdown-toggle no-arrow">

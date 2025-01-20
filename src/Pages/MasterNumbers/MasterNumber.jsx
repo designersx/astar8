@@ -1,10 +1,17 @@
 import React from "react";
-import Header from "../component/Dashboard/Header";
+import Header from "../../component/Dashboard/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { IoIosEye } from "react-icons/io";
-import "../styles/Style.css";
+import "../../styles/Style.css";
+import { Link } from "react-router-dom";
 export default function MasterNumber() {
+
+  const numbers = [
+    { id: 1, number: 22, description: "Description for number 22" },
+    { id: 2, number: 33, description: "Description for number 33" },
+  ];
+
   return (
     <>
       <Header />
@@ -26,37 +33,36 @@ export default function MasterNumber() {
                 <th>Description</th>
                 <th width="280px">Action</th>
               </tr>
-              <tr>
-                <td>22</td>
+              {numbers.map((item) => (
+              <tr key={item.id}>
+                
+                <td>{item.number}</td>
                 <td>
-                  The master number 22 is somewhat similar to the 11 in that
-                  both are magnetic and powerful. However, where the 11 deals
-                  with the mental plane, the 22 deals more directly with the
-                  physical plane. Perhaps this is why the 22 is often referred
-                  to as the "master builder." In modern Numerology, the 22 is
-                  a...
+                {item.description}
                 </td>
                 <td>
                   <div style={{ display: "flex", gap: "10px" }}>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/master_numbers/2"
-                      title="View"
-                      target="_blank"
+                    <Link
+                      // className="btn btn-info"
+                      to="/Master/show"
+                      state={{ number: item.number, description: item.description }}
+                      // title="View"
+                      // target="_blank"
                     >
                       <IoIosEye size={18} />
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       className="btn btn-primary"
-                      href="https://be.astar8.com/master_numbers/2/edit"
+                      to="/Master/edit"
                       title="Edit"
                       target="_blank"
                     >
                       <FontAwesomeIcon icon={faPencilAlt} />
-                    </a>
+                    </Link>
                   </div>
                 </td>
               </tr>
+              ))}
             </tbody>
           </table>
         </div>

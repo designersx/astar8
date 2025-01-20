@@ -20292,3 +20292,12 @@ select.selectpicker {
 .hide {
   display: none;
 }
+
+
+.hover-minus {
+  transition: margin-left 0.3s ease; /* Add transition for smooth effect */
+}
+
+.header-dropdown:hover .hover-minus {
+  margin-left: -15px; /* Adjust the value as needed */
+}

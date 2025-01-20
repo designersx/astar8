@@ -5,7 +5,7 @@ import Profile from './component/Dashboard/Profile';
 import AdminLogin from './component/Login/AdminLogin';
 import ResetPassword from './component/ResetPassword/ResetPassword';
 import Roles from './Pages/Roles';
-import MasterNumber from './Pages/MasterNumber';
+import MasterNumber from './Pages/MasterNumbers/MasterNumber';
 import SystemTypes from './Pages/SystemTypes';
 import DailyForecast from './component/DailyForecast/DailyForecast';
 import PrivateRoute from './PrivateRoute'; 
@@ -45,6 +45,18 @@ import PersonalMonth from './Pages/PersonalMonth/PersonalMonth';
 import PersonalWeek from './Pages/PersonalWeek/PersonalWeek';
 import PersonalDay from './Pages/PersonalDay/PersonalDay';
 import UniversalYear from './Pages/UniversalYear/UniversalYear';
+import UniversalMonth from './Pages/UniversalMonth/UniversalMonth';
+import UniversalDay from './Pages/UniversalDay/UniversalDay';
+import FavParameters from './Pages/FavParameters/FavParameters';
+import UnfavParamaters from './Pages/UnfavParameters/UnfavParamaters';
+import BasicParenting from './Pages/BasicParenting/BasicParenting';
+import DetailParenting from './Pages/DetailParenting/DetailParenting';
+import BasicMoney from './Pages/BasicMoney/BasicMoney';
+import DetailedMoney from './Pages/DetailedMoney/DetailedMoney';
+import ModuleEdit from './Pages/SystemModules/ModuleEdit/ModuleEdit';
+import MasterShow from './Pages/MasterNumbers/MasterShow/MasterShow';
+import MasterEdit from './Pages/MasterNumbers/MasterEdit/MasterEdit';
+import ShowComp from './component/ShowComponent/ShowComp';
 function App() {
   return (
     <AppProvider>
@@ -56,8 +68,16 @@ function App() {
         <Route path="/reset" element={<PrivateRoute element={ResetPassword} />} />
         <Route path="/roles" element={<PrivateRoute element={Roles} />} />
         <Route path="/systemtype" element={<PrivateRoute element={SystemTypes} />} />
+
         <Route path="/modules" element={<PrivateRoute element={SystemModules} />} />
+        <Route path="/modules/edit" element={<PrivateRoute element={ModuleEdit} />} />
+
         <Route path="/Master" element={<PrivateRoute element={MasterNumber} />} />
+        <Route path="/Master/show" element={<PrivateRoute element={ShowComp} />} />
+        <Route path="/Master/edit" element={<PrivateRoute element={MasterEdit} />} />
+
+        <Route path="/show" element={<PrivateRoute element={MasterEdit} />} />
+
         <Route path="/namereading" element={<PrivateRoute element={NameReading} />} />
         <Route path="/dobreading" element={<PrivateRoute element={DobReading} />} />
         <Route path="/luckiest_parameters" element={<PrivateRoute element={LuckiestParameters} />} />
@@ -77,6 +97,10 @@ function App() {
         <Route path="/personalweek" element={<PrivateRoute element={PersonalWeek} />} />
         <Route path="/personalday" element={<PrivateRoute element={PersonalDay} />} />
         <Route path="/universalyear" element={<PrivateRoute element={UniversalYear} />} />
+        <Route path="/universalmonth" element={<PrivateRoute element={UniversalMonth} />} />
+        <Route path="/universalday" element={<PrivateRoute element={UniversalDay} />} />
+        <Route path="/fav_parameters" element={<PrivateRoute element={FavParameters} />} />
+        <Route path="/unfav_parameters" element={<PrivateRoute element={UnfavParamaters} />} />
         <Route path="/zodic_signs" element={<PrivateRoute element={ZodiacSign} />} />
         <Route path="/planet_numbers" element={<PrivateRoute element={PlanetNumbers} />} />
         <Route path="/life_cycles" element={<PrivateRoute element={LifeCycle} />} />
@@ -84,6 +108,10 @@ function App() {
         <Route path="/compatible_partners" element={<PrivateRoute element={CompaitablePartner} />} />
         <Route path="/partner_relationships" element={<PrivateRoute element={PartnerRelationships} />} />
         <Route path="/childrens" element={<PrivateRoute element={ChildrenPage} />} />
+        <Route path="/basicparenting" element={<PrivateRoute element={BasicParenting} />} />
+        <Route path="/detailparenting" element={<PrivateRoute element={DetailParenting} />} />
+        <Route path="/basicmoney" element={<PrivateRoute element={BasicMoney} />} />
+        <Route path="/detailedmoney" element={<PrivateRoute element={DetailedMoney} />} />
         <Route path="/compatibility_percentage" element={<PrivateRoute element={CompatibilityPercentage} />} />
         <Route path="/compatibility_description" element={<PrivateRoute element={CompatibiltyDesc} />} />
         <Route path="/DailyForecast" element={<PrivateRoute element={DailyForecast} />} />
