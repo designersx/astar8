@@ -78,6 +78,9 @@ export default function Dashboard() {
     localStorage.removeItem("userEmail");
     localStorage.removeItem("userId");
     localStorage.removeItem("user_Detailed_id");
+    localStorage.removeItem("editData");
+    localStorage.removeItem("showData");
+
 
     navigate("/");
   };
@@ -99,6 +102,8 @@ export default function Dashboard() {
         localStorage.removeItem("profilePic");
         localStorage.removeItem("userEmail");
         localStorage.removeItem("userId");
+        localStorage.removeItem("editData");
+        localStorage.removeItem("showData");
 
         Swal.fire({
           icon: "error",

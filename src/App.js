@@ -57,6 +57,7 @@ import ModuleEdit from './Pages/SystemModules/ModuleEdit/ModuleEdit';
 import MasterShow from './Pages/MasterNumbers/MasterShow/MasterShow';
 import MasterEdit from './Pages/MasterNumbers/MasterEdit/MasterEdit';
 import ShowComp from './component/ShowComponent/ShowComp';
+import EditComponent from './component/EditComponent/EditComponent';
 function App() {
   return (
     <AppProvider>
@@ -73,10 +74,14 @@ function App() {
         <Route path="/modules/edit" element={<PrivateRoute element={ModuleEdit} />} />
 
         <Route path="/Master" element={<PrivateRoute element={MasterNumber} />} />
-        <Route path="/Master/show" element={<PrivateRoute element={ShowComp} />} />
-        <Route path="/Master/edit" element={<PrivateRoute element={MasterEdit} />} />
+        {/* <Route path="/Master/show" element={<PrivateRoute element={ShowComp} />} />
+        <Route path="/Master/edit" element={<PrivateRoute element={EditComponent} />} /> */}
 
-        <Route path="/show" element={<PrivateRoute element={MasterEdit} />} />
+
+        <Route path="/show" element={<PrivateRoute element={ShowComp} />} />
+        <Route path="/edit" element={<PrivateRoute element={EditComponent} />} />
+
+
 
         <Route path="/namereading" element={<PrivateRoute element={NameReading} />} />
         <Route path="/dobreading" element={<PrivateRoute element={DobReading} />} />

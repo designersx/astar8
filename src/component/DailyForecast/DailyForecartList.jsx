@@ -13,12 +13,12 @@ import Swal from "sweetalert2";
 
 export default function DailyForecartList() {
   const [ForecastData, setForecastData] = useState([]);
-  console.log("ForecastData", ForecastData);
+  // console.log("ForecastData", ForecastData);
   const [displayCount, setDisplayCount] = useState(5);
   const [selectedTab, setSelectedTab] = useState("all");
   const [loading, setLoading] = useState(false);
   const [refreshData, setrefreshData] = useState(false);
-  console.log("refreshData", refreshData);
+  // console.log("refreshData", refreshData);
   const [userPhoto, setuserPhoto] = useState(
     localStorage.getItem("profilePic")
   );
