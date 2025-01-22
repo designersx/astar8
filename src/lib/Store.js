@@ -491,14 +491,39 @@ export const getLuckiestParameter = async () => {
   }
 };
 // edit Master Number
-// export const editMasterNumber = async (finalData) => {
-//   // console.log("finalData", finalData);
-//   try {
-//     const response = await axios.put(`${Url}/45cvfgtr54/458777fffu`, finalData);
-//     const data = await response.data;
-//     return data;
-//   } catch (err) {
-//     console.log(err, "error");
-//     return err;
-//   }
-// };
+export const editLuckiestParameter = async (finalData) => {
+  console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/fg47ghrfgf/123cvb4fg7`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// Name Reading
+//get Name Reading
+export const getNameReading = async () => {
+  try {
+    const response = await axios.get(`${Url}/174hs0ad4m/n2ofxpwq81`);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// edit Master Number
+export const editNameReading = async (finalData) => {
+  console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/174hs0ad4m/e10amvrghp`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};

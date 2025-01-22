@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../component/Dashboard/Header";
+import Header from "../../../component/Dashboard/Header";
 import Swal from "sweetalert2";
-import { editMasterNumber } from "../../lib/Store";
+import { editMasterNumber, editNameReading } from "../../../lib/Store";
 
-const EditComponent = () => {
+const NameReadingEdit = () => {
   const initialData = JSON.parse(localStorage.getItem("editData")) || {
     id: "",
     number: "",
@@ -11,18 +11,28 @@ const EditComponent = () => {
   };
 
   const [data, setData] = useState(initialData);
+  const [positive, setPositive] = useState("");
+  const [negative, setNegative] = useState("");
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("editData"));
     if (storedData) {
       setData(storedData);
     }
+
+    if (storedData && storedData.description.includes("||")) {
+      const [positivePart, negativePart] = storedData.description.split("||");
+      setPositive(positivePart.trim());
+      setNegative(negativePart.trim());
+    } else if (storedData) {
+      setPositive(storedData.description.trim());
+      setNegative("");
+    }
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Helper function to count words
     const countWords = (text) => {
       return text
         .trim()
@@ -30,28 +40,26 @@ const EditComponent = () => {
         .filter((word) => word.length > 0).length;
     };
 
-    // Validation rules
     const MIN_WORDS = 5;
     const MAX_WORDS = 500;
 
-    // Perform validation
     if (
-      countWords(data.description) < MIN_WORDS ||
-      countWords(data.description) > MAX_WORDS
+      countWords(positive) < MIN_WORDS ||
+      countWords(positive) > MAX_WORDS ||
+      countWords(negative) < MIN_WORDS ||
+      countWords(negative) > MAX_WORDS
     ) {
       Swal.fire({
         icon: "error",
         title: "Validation Error",
-        text: `Description must have between ${MIN_WORDS} and ${MAX_WORDS} words.`,
+        text: `Each description must have between ${MIN_WORDS} and ${MAX_WORDS} words.`,
       });
       return;
     }
 
-    
-
     Swal.fire({
       title: "Are you sure?",
-      text: "Do you want to update Description",
+      text: "Do you want to update the description?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, update it!",
@@ -67,18 +75,20 @@ const EditComponent = () => {
             },
           });
 
+          const updatedDescription = `${positive} || ${negative}`;
+
           const updatedData = {
             id: data.id,
             number: data.number,
-            description: e.target.description.value,
+            description: updatedDescription,
           };
 
-          const response = await editMasterNumber(updatedData);
+          const response = await editNameReading(updatedData);
 
           if (response.status === true) {
             const newData = {
               ...data,
-              description: response.master_number.description,
+              description: response.updatedFields.description,
             };
             setData(newData);
             localStorage.setItem("editData", JSON.stringify(newData));
@@ -94,7 +104,7 @@ const EditComponent = () => {
             Swal.fire({
               icon: "warning",
               title: "Warning!",
-              text: result?.message || "Unexpected response from the server.",
+              text: response.message || "Unexpected response from the server.",
             });
           }
         } catch (err) {
@@ -157,14 +167,27 @@ const EditComponent = () => {
               </div>
               <div className="col-xs-12 col-sm-12 col-md-12">
                 <div className="form-group">
-                  <strong>Description:</strong>
+                  <strong>Positive Description:</strong>
                   <textarea
-                    placeholder="Description"
+                    placeholder="Positive Description"
                     className="form-control description"
-                    name="description"
+                    name="positive"
                     cols={50}
-                    rows={10}
-                    defaultValue={data.description}
+                    rows={5}
+                    value={positive}
+                    onChange={(e) => setPositive(e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <strong>Negative Description:</strong>
+                  <textarea
+                    placeholder="Negative Description"
+                    className="form-control description"
+                    name="negative"
+                    cols={50}
+                    rows={5}
+                    value={negative}
+                    onChange={(e) => setNegative(e.target.value)}
                   />
                 </div>
               </div>
@@ -181,4 +204,4 @@ const EditComponent = () => {
   );
 };
 
-export default EditComponent;
+export default NameReadingEdit;

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../component/Dashboard/Header";
+import Header from "../../../component/Dashboard/Header";
 import Swal from "sweetalert2";
-import { editMasterNumber } from "../../lib/Store";
+import { editLuckiestParameter } from "../../../lib/Store";
 
-const EditComponent = () => {
+const LuckiestEdit = () => {
   const initialData = JSON.parse(localStorage.getItem("editData")) || {
     id: "",
     number: "",
-    description: "",
+    lucky_colours: "",
+    lucky_gems: "",
+    lucky_metals: "",
   };
 
   const [data, setData] = useState(initialData);
@@ -18,6 +20,14 @@ const EditComponent = () => {
       setData(storedData);
     }
   }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,27 +41,49 @@ const EditComponent = () => {
     };
 
     // Validation rules
-    const MIN_WORDS = 5;
-    const MAX_WORDS = 500;
+    const MIN_WORDS = 1;
+    const MAX_WORDS = 20;
 
     // Perform validation
     if (
-      countWords(data.description) < MIN_WORDS ||
-      countWords(data.description) > MAX_WORDS
+      countWords(data.lucky_colours) < MIN_WORDS ||
+      countWords(data.lucky_colours) > MAX_WORDS
     ) {
       Swal.fire({
         icon: "error",
         title: "Validation Error",
-        text: `Description must have between ${MIN_WORDS} and ${MAX_WORDS} words.`,
+        text: `Lucky Colours must have between ${MIN_WORDS} and ${MAX_WORDS} words.`,
       });
       return;
     }
 
-    
+    if (
+      countWords(data.lucky_gems) < MIN_WORDS ||
+      countWords(data.lucky_gems) > MAX_WORDS
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Validation Error",
+        text: `Lucky Gems must have between ${MIN_WORDS} and ${MAX_WORDS} words.`,
+      });
+      return;
+    }
+
+    if (
+      countWords(data.lucky_metals) < MIN_WORDS ||
+      countWords(data.lucky_metals) > MAX_WORDS
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Validation Error",
+        text: `Lucky Metals must have between ${MIN_WORDS} and ${MAX_WORDS} words.`,
+      });
+      return;
+    }
 
     Swal.fire({
       title: "Are you sure?",
-      text: "Do you want to update Description",
+      text: "Do you want to update Luckiest Parameters",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, update it!",
@@ -68,20 +100,20 @@ const EditComponent = () => {
           });
 
           const updatedData = {
-            id: data.id,
-            number: data.number,
-            description: e.target.description.value,
+            id: data.id.toString(),
+            lucky_colours: data.lucky_colours,
+            lucky_gems: data.lucky_gems,
+            lucky_metals: data.lucky_metals,
           };
 
-          const response = await editMasterNumber(updatedData);
-
+          const response = await editLuckiestParameter(updatedData);
+          // console.log("dadasd",response)
           if (response.status === true) {
-            const newData = {
-              ...data,
-              description: response.master_number.description,
-            };
-            setData(newData);
-            localStorage.setItem("editData", JSON.stringify(newData));
+            setData(response.luckiest_parameter);
+            localStorage.setItem(
+              "editData",
+              JSON.stringify(response.luckiest_parameter)
+            );
 
             Swal.fire({
               icon: "success",
@@ -94,7 +126,7 @@ const EditComponent = () => {
             Swal.fire({
               icon: "warning",
               title: "Warning!",
-              text: result?.message || "Unexpected response from the server.",
+              text: response.message || "Unexpected response from the server.",
             });
           }
         } catch (err) {
@@ -157,14 +189,33 @@ const EditComponent = () => {
               </div>
               <div className="col-xs-12 col-sm-12 col-md-12">
                 <div className="form-group">
-                  <strong>Description:</strong>
+                  <strong>Lucky Colors:</strong>
                   <textarea
-                    placeholder="Description"
-                    className="form-control description"
-                    name="description"
-                    cols={50}
-                    rows={10}
-                    defaultValue={data.description}
+                    placeholder="Enter lucky colors"
+                    className="form-control"
+                    name="lucky_colours"
+                    value={data.lucky_colours}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <strong>Lucky Gems:</strong>
+                  <textarea
+                    placeholder="Enter lucky gems"
+                    className="form-control"
+                    name="lucky_gems"
+                    value={data.lucky_gems}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <strong>Lucky Metals:</strong>
+                  <textarea
+                    placeholder="Enter lucky metals"
+                    className="form-control"
+                    name="lucky_metals"
+                    value={data.lucky_metals}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -181,4 +232,4 @@ const EditComponent = () => {
   );
 };
 
-export default EditComponent;
+export default LuckiestEdit;

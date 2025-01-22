@@ -58,6 +58,10 @@ import MasterShow from './Pages/MasterNumbers/MasterShow/MasterShow';
 import MasterEdit from './Pages/MasterNumbers/MasterEdit/MasterEdit';
 import ShowComp from './component/ShowComponent/ShowComp';
 import EditComponent from './component/EditComponent/EditComponent';
+import LuckiestShow from './Pages/LuckiestParameters/LuckiestShow/LuckiestShow';
+import LuckiestEdit from './Pages/LuckiestParameters/LuckiestEdit/LuckiestEdit';
+import NameReadingShow from './Pages/NameReading/NameReadingShow/NameReadingShow';
+import NameReadingEdit from './Pages/NameReading/NameReadingEdit/NameReadingEdit';
 function App() {
   return (
     <AppProvider>
@@ -74,18 +78,20 @@ function App() {
         <Route path="/modules/edit" element={<PrivateRoute element={ModuleEdit} />} />
 
         <Route path="/Master" element={<PrivateRoute element={MasterNumber} />} />
-        {/* <Route path="/Master/show" element={<PrivateRoute element={ShowComp} />} />
-        <Route path="/Master/edit" element={<PrivateRoute element={EditComponent} />} /> */}
-
 
         <Route path="/show" element={<PrivateRoute element={ShowComp} />} />
         <Route path="/edit" element={<PrivateRoute element={EditComponent} />} />
 
-
-
         <Route path="/namereading" element={<PrivateRoute element={NameReading} />} />
+        <Route path="/name_reading/show" element={<PrivateRoute element={NameReadingShow} />} />
+        <Route path="/name_reading/edit" element={<PrivateRoute element={NameReadingEdit} />} />
+
         <Route path="/dobreading" element={<PrivateRoute element={DobReading} />} />
+
         <Route path="/luckiest_parameters" element={<PrivateRoute element={LuckiestParameters} />} />
+        <Route path="/luckiest_parameters/show" element={<PrivateRoute element={LuckiestShow} />} />
+        <Route path="/luckiest_parameters/edit" element={<PrivateRoute element={LuckiestEdit} />} />
+
         <Route path="/primaryno_types" element={<PrivateRoute element={PrimaryNumbers} />} />
         <Route path="/magicbox" element={<PrivateRoute element={MagicBox} />} />
         <Route path="/elementalno" element={<PrivateRoute element={ElementalNumber} />} />

@@ -3,39 +3,54 @@ import Header from "../../component/Dashboard/Header";
 import { IoIosEye } from "react-icons/io";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
-import { getLuckiestParameter, getLuckiestParameters } from "../../lib/Store"; // Assuming you have a function to fetch the API
-import Loader from "../../component/Loader/Loader"; // Assuming you have a Loader component
+import { getLuckiestParameter, getLuckiestParameters } from "../../lib/Store";
+import Loader from "../../component/Loader/Loader";
+import { Link } from "react-router-dom";
 
 const LuckiestParameters = () => {
   const [luckiestParams, setLuckiestParams] = useState([]);
-  console.log("lucc",luckiestParams)
+  console.log("lucc", luckiestParams);
   const [loading, setLoading] = useState(false);
 
   const fetchLuckiestParameters = async () => {
-    setLoading(true); // Start loading before API call
+    setLoading(true);
     try {
-      const response = await getLuckiestParameter(); // Fetch data from the API
-      setLuckiestParams(response.luckiest_parameters); // Set the fetched data to state
+      const response = await getLuckiestParameter();
+      setLuckiestParams(response.luckiest_parameters);
     } catch (err) {
       console.log("Error fetching data:", err);
     } finally {
-      setLoading(false); // Stop loading after API call is done
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchLuckiestParameters(); // Fetch data when component is mounted
+    fetchLuckiestParameters();
 
     const handleStorageChange = () => {
-      fetchLuckiestParameters(); // Refetch data if there are changes in storage
+      fetchLuckiestParameters();
     };
 
     window.addEventListener("storage", handleStorageChange);
 
     return () => {
-      window.removeEventListener("storage", handleStorageChange); // Cleanup the event listener
+      window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
+
+  const handleViewClick = (item) => {
+    const newWindow = window.open("/luckiest_parameters/show", "_blank");
+    localStorage.setItem("viewData", JSON.stringify(item));
+    newWindow.dataFromParent = item;
+    console.log("viewData", item);
+  };
+
+  const handleEditClick = (item) => {
+    const newWindow = window.open("/luckiest_parameters/edit", "_blank");
+    localStorage.setItem("editData", JSON.stringify(item));
+    newWindow.dataFromParent = item;
+    console.log("editData", item);
+  };
 
   return (
     <>
@@ -51,11 +66,10 @@ const LuckiestParameters = () => {
           </div>
         </div>
 
-        {/* Show Loader if data is still being fetched */}
-        {loading ? (
-          <Loader />
-        ) : (
-          <div className="pd-20 card-box mb-30">
+        <div className="pd-20 card-box mb-30">
+          {loading ? (
+            <Loader />
+          ) : (
             <table className="table table-striped">
               <tbody>
                 <tr>
@@ -71,30 +85,28 @@ const LuckiestParameters = () => {
                     <td>{param.lucky_gems}</td>
                     <td>
                       <div style={{ display: "flex", gap: "10px" }}>
-                        <a
+                        <Link
                           className="btn btn-info"
-                          href={`https://be.astar8.com/luckiest_parameters/${param.id}`}
+                          onClick={() => handleViewClick(param)}
                           title="View"
-                          target="_blank"
                         >
                           <IoIosEye size={18} />
-                        </a>
-                        <a
+                        </Link>
+                        <Link
                           className="btn btn-primary"
-                          href={`https://be.astar8.com/luckiest_parameters/${param.id}/edit`}
+                          onClick={() => handleEditClick(param)}
                           title="Edit"
-                          target="_blank"
                         >
                           <FontAwesomeIcon icon={faPencilAlt} />
-                        </a>
+                        </Link>
                       </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </>
   );
