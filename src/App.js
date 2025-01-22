@@ -62,6 +62,9 @@ import LuckiestShow from './Pages/LuckiestParameters/LuckiestShow/LuckiestShow';
 import LuckiestEdit from './Pages/LuckiestParameters/LuckiestEdit/LuckiestEdit';
 import NameReadingShow from './Pages/NameReading/NameReadingShow/NameReadingShow';
 import NameReadingEdit from './Pages/NameReading/NameReadingEdit/NameReadingEdit';
+import DobReadingEdit from './Pages/DobReading/DobReadingEdit/DobReadingEdit';
+import PrimaryNumberShow from './Pages/PrimaryNumbers/PrimaryNumberShow/PrimaryNumberShow';
+import PrimaryNumberEdit from './Pages/PrimaryNumbers/PrimaryNumberEdit/PrimaryNumberEdit';
 function App() {
   return (
     <AppProvider>
@@ -87,12 +90,16 @@ function App() {
         <Route path="/name_reading/edit" element={<PrivateRoute element={NameReadingEdit} />} />
 
         <Route path="/dobreading" element={<PrivateRoute element={DobReading} />} />
+        <Route path="/dobreading/edit" element={<PrivateRoute element={DobReadingEdit} />} />
 
         <Route path="/luckiest_parameters" element={<PrivateRoute element={LuckiestParameters} />} />
         <Route path="/luckiest_parameters/show" element={<PrivateRoute element={LuckiestShow} />} />
         <Route path="/luckiest_parameters/edit" element={<PrivateRoute element={LuckiestEdit} />} />
 
         <Route path="/primaryno_types" element={<PrivateRoute element={PrimaryNumbers} />} />
+        <Route path="/primaryno_types/show" element={<PrivateRoute element={PrimaryNumberShow} />} />
+        <Route path="/primaryno_types/edit" element={<PrivateRoute element={PrimaryNumberEdit} />} />
+
         <Route path="/magicbox" element={<PrivateRoute element={MagicBox} />} />
         <Route path="/elementalno" element={<PrivateRoute element={ElementalNumber} />} />
         <Route path="/destinyno" element={<PrivateRoute element={DestinyNumbers} />} />

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../component/Dashboard/Header";
+import Header from "../../../component/Dashboard/Header";
 import Swal from "sweetalert2";
-import { editMasterNumber } from "../../lib/Store";
+import { editDobReading } from "../../../lib/Store";
 
-const EditComponent = () => {
+const DobReadingEdit = () => {
   const initialData = JSON.parse(localStorage.getItem("editData")) || {
     id: "",
     number: "",
@@ -11,7 +11,7 @@ const EditComponent = () => {
   };
 
   const [data, setData] = useState(initialData);
-  console.log("dataa",initialData)
+  console.log("dataa", initialData);
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("editData"));
@@ -48,8 +48,6 @@ const EditComponent = () => {
       return;
     }
 
-    
-
     Swal.fire({
       title: "Are you sure?",
       text: "Do you want to update Description",
@@ -70,16 +68,15 @@ const EditComponent = () => {
 
           const updatedData = {
             id: data.id,
-            number: data.number,
             description: e.target.description.value,
           };
 
-          const response = await editMasterNumber(updatedData);
-
+          const response = await editDobReading(updatedData);
+          console.log("ress",response)
           if (response.status === true) {
             const newData = {
               ...data,
-              description: response.master_number.description,
+              description: response.updatedFields.description,
             };
             setData(newData);
             localStorage.setItem("editData", JSON.stringify(newData));
@@ -87,7 +84,7 @@ const EditComponent = () => {
             Swal.fire({
               icon: "success",
               title: "Success!",
-              text: "Module updated successfully!",
+              text: "Description updated successfully!",
             }).then(() => {
               window.close();
             });
@@ -182,4 +179,4 @@ const EditComponent = () => {
   );
 };
 
-export default EditComponent;
+export default DobReadingEdit;

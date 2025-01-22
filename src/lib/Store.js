@@ -515,11 +515,61 @@ export const getNameReading = async () => {
     return err;
   }
 };
-// edit Master Number
+// edit Name Reading
 export const editNameReading = async (finalData) => {
   console.log("finalData", finalData);
   try {
     const response = await axios.put(`${Url}/174hs0ad4m/e10amvrghp`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// DOB Reading
+//get DOB Reading
+export const getDobReading = async () => {
+  try {
+    const response = await axios.get(`${Url}/2w7ui45io9/d19m4302k8`);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// edit DOB Reading
+export const editDobReading = async (finalData) => {
+  console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/2w7ui45io9/ed19ik45mo`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// Primary Number
+//get Primary Number
+export const getPrimaryNumber = async () => {
+  try {
+    const response = await axios.get(`${Url}/p12qm75kiod/p12wqorty7`);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// edit Primary Number
+export const editPrimaryNumber = async (finalData) => {
+  // console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/p12qm75kiod/p2rwe34567m`, finalData);
     const data = await response.data;
     return data;
   } catch (err) {

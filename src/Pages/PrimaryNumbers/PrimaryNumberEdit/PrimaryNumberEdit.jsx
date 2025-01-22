@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../component/Dashboard/Header";
+import Header from "../../../component/Dashboard/Header";
 import Swal from "sweetalert2";
-import { editMasterNumber } from "../../lib/Store";
+import {editPrimaryNumber } from "../../../lib/Store";
 
-const EditComponent = () => {
+const PrimaryNumberEdit = () => {
   const initialData = JSON.parse(localStorage.getItem("editData")) || {
     id: "",
     number: "",
     description: "",
+    positive: "",
+    negative: "",
+    occupations: "",
+    health: "",
+    partners: "",
+    times_of_the_year: "",
+    countries: "",
+    tibbits: "",
   };
 
   const [data, setData] = useState(initialData);
-  console.log("dataa",initialData)
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("editData"));
@@ -20,10 +27,14 @@ const EditComponent = () => {
     }
   }, []);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Helper function to count words
     const countWords = (text) => {
       return text
         .trim()
@@ -31,28 +42,28 @@ const EditComponent = () => {
         .filter((word) => word.length > 0).length;
     };
 
-    // Validation rules
-    const MIN_WORDS = 5;
+    const MIN_WORDS = 1;
     const MAX_WORDS = 500;
 
-    // Perform validation
-    if (
-      countWords(data.description) < MIN_WORDS ||
-      countWords(data.description) > MAX_WORDS
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Validation Error",
-        text: `Description must have between ${MIN_WORDS} and ${MAX_WORDS} words.`,
-      });
-      return;
+    for (let key in data) {
+      if (
+        typeof data[key] === "string" &&
+        (countWords(data[key]) < MIN_WORDS || countWords(data[key]) > MAX_WORDS)
+      ) {
+        Swal.fire({
+          icon: "error",
+          title: "Validation error",
+          text: `${
+            key.charAt(0).toUpperCase() + key.slice(1)
+          } must have between ${MIN_WORDS} and ${MAX_WORDS} words.`,
+        });
+        return;
+      }
     }
-
-    
 
     Swal.fire({
       title: "Are you sure?",
-      text: "Do you want to update Description",
+      text: "Do you want to update the field?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, update it!",
@@ -68,26 +79,16 @@ const EditComponent = () => {
             },
           });
 
-          const updatedData = {
-            id: data.id,
-            number: data.number,
-            description: e.target.description.value,
-          };
-
-          const response = await editMasterNumber(updatedData);
+          const response = await editPrimaryNumber(data);
 
           if (response.status === true) {
-            const newData = {
-              ...data,
-              description: response.master_number.description,
-            };
-            setData(newData);
-            localStorage.setItem("editData", JSON.stringify(newData));
+            setData(data);
+            localStorage.setItem("editData", JSON.stringify(data));
 
             Swal.fire({
               icon: "success",
               title: "Success!",
-              text: "Module updated successfully!",
+              text: "Primary number details updated successfully!",
             }).then(() => {
               window.close();
             });
@@ -95,14 +96,14 @@ const EditComponent = () => {
             Swal.fire({
               icon: "warning",
               title: "Warning!",
-              text: result?.message || "Unexpected response from the server.",
+              text: response.message || "Unexpected response from the server.",
             });
           }
         } catch (err) {
           console.error("Error executing API:", err);
           Swal.fire({
             icon: "error",
-            title: "API Error",
+            title: "API error",
             text:
               err.response?.data?.message ||
               "Failed to execute API. Please check your network or try again later.",
@@ -134,42 +135,56 @@ const EditComponent = () => {
         <div className="pd-20 card-box mb-30">
           <div className="row">
             <div className="col-md-6">
-              <div>
-                <h2>Edit Number {data.number}</h2>
-              </div>
+              <h2>Edit number {data.number}</h2>
             </div>
           </div>
         </div>
         <div className="pd-20 card-box mb-30">
           <form onSubmit={handleSubmit}>
             <div className="row">
-              <div className="col-xs-12 col-sm-12 col-md-12">
+              <div className="col-md-12">
                 <div className="form-group">
-                  <strong>Number:</strong>
+                  <label htmlFor="number">
+                    <strong>Number:</strong>
+                  </label>
                   <input
-                    placeholder="Number"
+                    type="number"
+                    id="number"
                     className="form-control"
                     disabled
-                    name="number"
-                    type="number"
                     value={data.number}
                   />
                 </div>
+                {[
+                  "description",
+                  "positive",
+                  "negative",
+                  "occupations",
+                  "health",
+                  "partners",
+                  "times_of_the_year",
+                  "countries",
+                  "tibbits",
+                ].map((field, index) => (
+                  <div key={index} className="form-group">
+                    <strong>
+                      {field.replace(/_/g, " ").charAt(0).toUpperCase() +
+                        field.replace(/_/g, " ").slice(1)}
+                      :
+                    </strong>
+                    <textarea
+                      id={field}
+                      name={field}
+                      placeholder={`Enter ${field.replace(/_/g, " ")}`}
+                      className="form-control description"
+                      rows={4}
+                      value={data[field]}
+                      onChange={handleChange}
+                    />
+                  </div>
+                ))}
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-12">
-                <div className="form-group">
-                  <strong>Description:</strong>
-                  <textarea
-                    placeholder="Description"
-                    className="form-control description"
-                    name="description"
-                    cols={50}
-                    rows={10}
-                    defaultValue={data.description}
-                  />
-                </div>
-              </div>
-              <div className="col-xs-12 col-sm-12 col-md-12 text-center">
+              <div className="col-md-12 text-center">
                 <button type="submit" className="btn btn-primary">
                   Submit
                 </button>
@@ -182,4 +197,4 @@ const EditComponent = () => {
   );
 };
 
-export default EditComponent;
+export default PrimaryNumberEdit;
