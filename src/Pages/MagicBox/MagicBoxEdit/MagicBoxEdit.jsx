@@ -1,29 +1,37 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../../component/Dashboard/Header";
 import Swal from "sweetalert2";
-import {editPrimaryNumber } from "../../../lib/Store";
+import { editMagicBox, editPrimaryNumber } from "../../../lib/Store";
 
 const MagicBoxEdit = () => {
   const initialData = JSON.parse(localStorage.getItem("editData")) || {
     id: "",
     number: "",
     description: "",
-    positive: "",
-    negative: "",
-    occupations: "",
-    health: "",
-    partners: "",
-    times_of_the_year: "",
-    countries: "",
-    tibbits: "",
   };
 
   const [data, setData] = useState(initialData);
+  const [box, setbox] = useState();
+  const [many, setmany] = useState();
+  const [few, setfew] = useState();
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("editData"));
     if (storedData) {
       setData(storedData);
+    }
+
+    if (storedData) {
+      if (storedData.description.includes("||")) {
+        const [boxPart, manyPart, fewPart] = storedData.description.split("||");
+        setbox(boxPart.trim());
+        setmany(manyPart.trim());
+        setfew(fewPart.trim());
+      } else {
+        setbox(storedData.description);
+        setmany("");
+        setfew("");
+      }
     }
   }, []);
 
@@ -47,8 +55,10 @@ const MagicBoxEdit = () => {
 
     for (let key in data) {
       if (
-        typeof data[key] === "string" &&
-        (countWords(data[key]) < MIN_WORDS || countWords(data[key]) > MAX_WORDS)
+        [box, many, few].some(
+          (field) =>
+            countWords(field) < MIN_WORDS || countWords(field) > MAX_WORDS
+        )
       ) {
         Swal.fire({
           icon: "error",
@@ -79,11 +89,23 @@ const MagicBoxEdit = () => {
             },
           });
 
-          const response = await editPrimaryNumber(data);
+          const updatedDescription = `${box} || ${many} || ${few}`;
+
+          const updatedData = {
+            id: data.id,
+            number: data.number,
+            description: updatedDescription,
+          };
+
+          const response = await editMagicBox(updatedData);
 
           if (response.status === true) {
-            setData(data);
-            localStorage.setItem("editData", JSON.stringify(data));
+            const newData = {
+              ...data,
+              description: response.updatedFields.description,
+            };
+            setData(newData);
+            localStorage.setItem("editData", JSON.stringify(newData));
 
             Swal.fire({
               icon: "success",
@@ -131,7 +153,7 @@ const MagicBoxEdit = () => {
   return (
     <>
       <Header />
-      <div className="main-container">
+      <div className="main-container pb-3">
         <div className="pd-20 card-box mb-30">
           <div className="row">
             <div className="col-md-6">
@@ -155,34 +177,44 @@ const MagicBoxEdit = () => {
                     value={data.number}
                   />
                 </div>
-                {[
-                  "description",
-                  "positive",
-                  "negative",
-                  "occupations",
-                  "health",
-                  "partners",
-                  "times_of_the_year",
-                  "countries",
-                  "tibbits",
-                ].map((field, index) => (
-                  <div key={index} className="form-group">
-                    <strong>
-                      {field.replace(/_/g, " ").charAt(0).toUpperCase() +
-                        field.replace(/_/g, " ").slice(1)}
-                      :
-                    </strong>
-                    <textarea
-                      id={field}
-                      name={field}
-                      placeholder={`Enter ${field.replace(/_/g, " ")}`}
-                      className="form-control description"
-                      rows={4}
-                      value={data[field]}
-                      onChange={handleChange}
-                    />
-                  </div>
-                ))}
+              </div>
+              <div className="col-xs-12 col-sm-12 col-md-12">
+                <div className="form-group">
+                  <strong>Box Description:</strong>
+                  <textarea
+                    placeholder="Positive Description"
+                    className="form-control description"
+                    name="box"
+                    cols={50}
+                    rows={4}
+                    value={box}
+                    onChange={(e) => setbox(e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <strong>Many's Description:</strong>
+                  <textarea
+                    placeholder="Negative Description"
+                    className="form-control description"
+                    name="many"
+                    cols={50}
+                    rows={4}
+                    value={many}
+                    onChange={(e) => setmany(e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <strong>Few/No's Description:</strong>
+                  <textarea
+                    placeholder="Negative Description"
+                    className="form-control description"
+                    name="few"
+                    cols={50}
+                    rows={4}
+                    value={few}
+                    onChange={(e) => setfew(e.target.value)}
+                  />
+                </div>
               </div>
               <div className="col-md-12 text-center">
                 <button type="submit" className="btn btn-primary">

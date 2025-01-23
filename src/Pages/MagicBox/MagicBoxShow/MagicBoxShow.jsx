@@ -51,7 +51,7 @@ const MagicBoxShow = () => {
               </div>
             </div>
             <div className="pd-20 card-box mb-30">
-              <div className="row" style={{ gap: "10px" }}>
+              <div className="row" >
                 <div className="col-xs-12 col-sm-12 col-md-12">
                   <div className="form-group">
                     <strong>Number:</strong> {showData?.number}
@@ -59,7 +59,10 @@ const MagicBoxShow = () => {
                 </div>
                 <div className="col-xs-12 col-sm-12 col-md-12">
                   <div className="form-group">
-                    <strong>Description:</strong> {showData?.description}
+                    <strong>Description:</strong> 
+                    <p>BOX #1: {box}</p>
+                    <p>Many 1s: {many}</p>
+                    <p>Few/No 1s: {few}</p>
                   </div>
                 </div>
               </div>
