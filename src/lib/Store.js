@@ -1,6 +1,6 @@
 import axios from "axios";
-// export const Url = "http://localhost:5234";
-export const Url = "https://dev.astar8.com"
+export const Url = "http://localhost:5234";
+// export const Url = "https://dev.astar8.com"
 
 //   admin login api
 export const LoginApi = async (email, password) => {
@@ -567,6 +567,31 @@ export const getPrimaryNumber = async () => {
 };
 // edit Primary Number
 export const editPrimaryNumber = async (finalData) => {
+  // console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/p12qm75kiod/p2rwe34567m`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// Magic Box
+//get Primary Number
+export const getMagicBox = async () => {
+  try {
+    const response = await axios.get(`${Url}/m1q2derf54/m1q2w3e4r5t`);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// edit Primary Number
+export const editMagicBox = async (finalData) => {
   // console.log("finalData", finalData);
   try {
     const response = await axios.put(`${Url}/p12qm75kiod/p2rwe34567m`, finalData);

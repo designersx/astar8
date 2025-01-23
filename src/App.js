@@ -65,6 +65,8 @@ import NameReadingEdit from './Pages/NameReading/NameReadingEdit/NameReadingEdit
 import DobReadingEdit from './Pages/DobReading/DobReadingEdit/DobReadingEdit';
 import PrimaryNumberShow from './Pages/PrimaryNumbers/PrimaryNumberShow/PrimaryNumberShow';
 import PrimaryNumberEdit from './Pages/PrimaryNumbers/PrimaryNumberEdit/PrimaryNumberEdit';
+import MagicBoxShow from './Pages/MagicBox/MagicBoxShow/MagicBoxShow';
+import MagicBoxEdit from './Pages/MagicBox/MagicBoxEdit/MagicBoxEdit';
 function App() {
   return (
     <AppProvider>
@@ -101,6 +103,9 @@ function App() {
         <Route path="/primaryno_types/edit" element={<PrivateRoute element={PrimaryNumberEdit} />} />
 
         <Route path="/magicbox" element={<PrivateRoute element={MagicBox} />} />
+        <Route path="/magicbox/show" element={<PrivateRoute element={MagicBoxShow} />} />
+        <Route path="/magicbox/edit" element={<PrivateRoute element={MagicBoxEdit} />} />
+
         <Route path="/elementalno" element={<PrivateRoute element={ElementalNumber} />} />
         <Route path="/destinyno" element={<PrivateRoute element={DestinyNumbers} />} />
         <Route path="/videos" element={<PrivateRoute element={VideosPage} />} />
