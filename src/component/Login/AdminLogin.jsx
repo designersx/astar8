@@ -105,7 +105,7 @@ export default function AdminLogin() {
     <div className="login-wrap d-flex align-items-center flex-wrap justify-content-center loginPage">
       <div className="container">
         <div className="row align-items-center">
-          <div className="col-md-6 col-lg-7">
+          <div className="col-md-6 col-lg-6 imgCon">
             <img src={logo} alt="Logo" height="60%" width="60%" />
           </div>
           <div className="col-md-6 col-lg-5">

@@ -102,10 +102,11 @@ export default function User() {
           
 
             <div className="row clearfix">
-              <div className="col-lg-12 col-md-12 col-sm-12 mb-30">
-                <div className="pd-20 card-box">
+              <div className="col-lg-12 col-md-12 col-sm-12 mb-30 ">
+                <div className="pd-20 card-box ">
+                  <div className="usertable">
                   <div
-                    style={{ float: "right", display: "inline-flex" }}
+                    style={{ float: "right", display: "flex", gap:"10px" }}
                     className="form-group filterInput"
                   >
                     <input
@@ -512,6 +513,7 @@ export default function User() {
                       </div>
                     </div>
                   </div>
+                </div>
                 </div>
               </div>
             </div>

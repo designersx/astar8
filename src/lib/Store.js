@@ -2,8 +2,8 @@ import axios from "axios";
 // export const Url = "http://localhost:5234";
 export const Url = "https://dev.astar8.com"
 
-//   admin login api
-export const LoginApi = async (email, password) => {
+//admin login api
+export const LoginApi = async (email, password) =>{
   try {
     const response = await axios.post(
       `${Url}/r367jklp09i/adm36g5n56`,
@@ -570,6 +570,56 @@ export const editPrimaryNumber = async (finalData) => {
   // console.log("finalData", finalData);
   try {
     const response = await axios.put(`${Url}/p12qm75kiod/p2rwe34567m`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// Magic Box
+//get Magic Box
+export const getMagicBox = async () => {
+  try {
+    const response = await axios.get(`${Url}/m1q2derf54/m1q2w3e4r5t`);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// edit Magic Box
+export const editMagicBox = async (finalData) => {
+  console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/m1q2derf54/me30mjn45b`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// Elemental number
+//get Elemental number
+export const getElementalNumber = async () => {
+  try {
+    const response = await axios.get(`${Url}/e2aemnjzlo/el2m6nbi9x`);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// edit Elemental number
+export const editElementalNumber = async (finalData) => {
+  console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/m1q2derf54/me30mjn45b`, finalData);
     const data = await response.data;
     return data;
   } catch (err) {
