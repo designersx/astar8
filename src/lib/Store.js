@@ -2,8 +2,8 @@ import axios from "axios";
 // export const Url = "http://localhost:5234";
 export const Url = "https://dev.astar8.com"
 
-//   admin login api
-export const LoginApi = async (email, password) => {
+//admin login api
+export const LoginApi = async (email, password) =>{
   try {
     const response = await axios.post(
       `${Url}/r367jklp09i/adm36g5n56`,
