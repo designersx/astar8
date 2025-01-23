@@ -105,6 +105,7 @@ const UserMessages = () => {
             {/* Date  */}
             <div className="col-md-8 col-sm-12 text-right">
               <div className="datesearch">
+                <div className="d-flex">
                 <span className="input-b">
                   <b>From:</b> &nbsp;
                 </span>
@@ -117,7 +118,10 @@ const UserMessages = () => {
                   name="filterdateFrom"
                   type="date"
                 />
-                &nbsp;&nbsp;
+                </div>
+
+                
+                <div className="d-flex">
                 <span className="input-b">
                   <b>To:</b> &nbsp;
                 </span>
@@ -131,7 +135,8 @@ const UserMessages = () => {
                   name="filterdateTo"
                   type="date"
                 />
-                &nbsp;
+                </div>
+              
                 <button
                   className="btn btn-primary btn-lg btnclr"
                   onClick={() => {
