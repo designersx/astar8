@@ -393,10 +393,13 @@ export const paymentSettingChange = async (finalData) => {
 // Daily prediction Publish Button for Scheduled
 export const publishButtonScheduled = async (e) => {
   const finalData = {
-    predictionId:e
-  }
+    predictionId: e,
+  };
   try {
-    const response = await axios.post(`${Url}/p1g6s9ik3n/45dsfr684t`, finalData);
+    const response = await axios.post(
+      `${Url}/p1g6s9ik3n/45dsfr684t`,
+      finalData
+    );
     const data = await response.data;
     return data;
   } catch (err) {
@@ -405,14 +408,168 @@ export const publishButtonScheduled = async (e) => {
   }
 };
 
-
 // Daily prediction Cancel Button for Scheduled
 export const cancelButtonScheduled = async (e) => {
   const finalData = {
-    predictionId:e
-  }
+    predictionId: e,
+  };
   try {
-    const response = await axios.post(`${Url}/p1g6s9ik3n/458fjguip3`, finalData);
+    const response = await axios.post(
+      `${Url}/p1g6s9ik3n/458fjguip3`,
+      finalData
+    );
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// super Admin APIs
+
+// Module Types
+//get module
+export const getModuleTypes = async () => {
+  try {
+    const response = await axios.get(`${Url}/12ak80qmzp/1o93vfaplo`);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// edit module
+export const editModuleTypes = async (finalData) => {
+  // console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/12ak80qmzp/1j63eopqmj`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+//Master Numbers
+//get Master Number
+export const getMasterNumber = async () => {
+  try {
+    const response = await axios.get(`${Url}/45cvfgtr54/dhfyg9877f`);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// edit Master Number
+export const editMasterNumber = async (finalData) => {
+  // console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/45cvfgtr54/458777fffu`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// Luckiest parameter
+//get Master Number
+export const getLuckiestParameter = async () => {
+  try {
+    const response = await axios.get(`${Url}/fg47ghrfgf/7d8f8g7r8d`);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// edit Master Number
+export const editLuckiestParameter = async (finalData) => {
+  console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/fg47ghrfgf/123cvb4fg7`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// Name Reading
+//get Name Reading
+export const getNameReading = async () => {
+  try {
+    const response = await axios.get(`${Url}/174hs0ad4m/n2ofxpwq81`);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// edit Name Reading
+export const editNameReading = async (finalData) => {
+  console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/174hs0ad4m/e10amvrghp`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// DOB Reading
+//get DOB Reading
+export const getDobReading = async () => {
+  try {
+    const response = await axios.get(`${Url}/2w7ui45io9/d19m4302k8`);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// edit DOB Reading
+export const editDobReading = async (finalData) => {
+  console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/2w7ui45io9/ed19ik45mo`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// Primary Number
+//get Primary Number
+export const getPrimaryNumber = async () => {
+  try {
+    const response = await axios.get(`${Url}/p12qm75kiod/p12wqorty7`);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// edit Primary Number
+export const editPrimaryNumber = async (finalData) => {
+  // console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/p12qm75kiod/p2rwe34567m`, finalData);
     const data = await response.data;
     return data;
   } catch (err) {

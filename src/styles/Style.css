@@ -6280,7 +6280,7 @@ pre code {
 }
 
 .form-control:focus {
-  color: #495057;
+  /* color: #495057; */
   background-color: #fff;
   border-color: #80bdff;
   outline: 0;
@@ -8766,8 +8766,11 @@ input[type="submit"].btn-block {
   cursor: default;
 }
 
-.nav-tabs {
+/* .nav-tabs {
   border-bottom: 1px solid #dee2e6;
+} */
+.custom-ullist li {
+  padding: 16px 0;
 }
 
 .nav-tabs .nav-item {
@@ -20291,4 +20294,13 @@ select.selectpicker {
 }
 .hide {
   display: none;
+}
+
+
+.hover-minus {
+  transition: margin-left 0.3s ease; /* Add transition for smooth effect */
+}
+
+.header-dropdown:hover .hover-minus {
+  margin-left: -15px; /* Adjust the value as needed */
 }
