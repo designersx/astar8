@@ -106,7 +106,7 @@ export default function User() {
                 <div className="pd-20 card-box ">
                   <div className="usertable">
                   <div
-                    style={{ float: "right", display: "inline-flex" }}
+                    style={{ float: "right", display: "flex", gap:"10px" }}
                     className="form-group filterInput"
                   >
                     <input
