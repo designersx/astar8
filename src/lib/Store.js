@@ -643,7 +643,7 @@ export const getDestinyNumbers = async () => {
   }
 };
 // edit destiny number
-export const editDestinyNumber=async(finalData)=>{
+export const editDestinyNumber = async (finalData) => {
   try {
     const response = await axios.put(`${Url}/ele1a2mbfg/d1qmki7gr4`, finalData);
     const data = await response.data;
@@ -652,4 +652,48 @@ export const editDestinyNumber=async(finalData)=>{
     console.log(err, "error");
     return err;
   }
-}
+};
+
+// Add new video
+export const addVideo = async (formData) => {
+  try {
+    const response = await axios.post(
+      `${Url}/v1qaz2wsx3e/c23emki8zl`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    console.error("Error in addVideo:", err);
+    throw err;
+  }
+};
+//  get videos list api
+export const Videos = async () => {
+  try {
+    const response = await axios.get(`${Url}/v1qaz2wsx3e/v123wazxsd`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// edit video list
+export const editVideoList = async (finalData) => {
+  try {
+    const response = await axios.put(
+      `${Url}/v1qaz2wsx3e/v543d6mk78`,
+      finalData
+    );
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
