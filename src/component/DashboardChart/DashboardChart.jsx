@@ -211,6 +211,46 @@ const data = [
     relation: 0,
     other: 0,
   },
+  {
+    date: "Jan 26, 2025",
+    car: 4,
+    business: 16,
+    property: 30,
+    relation: 50,
+    other: 0,
+  },
+  {
+    date: "Jan 27, 2025",
+    car: 4,
+    business: 12,
+    property: 30,
+    relation: 22,
+    other: 0,
+  },
+  {
+    date: "Jan 28, 2025",
+    car: 4,
+    business: 80,
+    property: 90,
+    relation: 5,
+    other: 0,
+  },
+  {
+    date: "Jan 29, 2025",
+    car: 4,
+    business: 10,
+    property: 20,
+    relation: 30,
+    other: 0,
+  },
+  {
+    date: "Jan 30, 2025",
+    car: 4,
+    business: 20,
+    property: 35,
+    relation: 22,
+    other: 0,
+  },
 ];
 
 const DashboardChart = () => {
@@ -255,10 +295,87 @@ const DashboardChart = () => {
                 style={{ backgroundColor: "white" }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
+                <XAxis
+                  dataKey="date"
+                  tickFormatter={(date) => {
+                    const d = new Date(date);
+                    return `${d.getDate()}/${d.getMonth() + 1}`;
+                  }}
+                  interval={Math.ceil(getFilteredData())}
+                  tick={{ angle: -30, fontSize: 12 }}
+                  tickMargin={7}
+                />
+                <YAxis />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#f5f5f5",
+                    borderRadius: "5px",
+                  }}
+                />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="car"
+                  stroke="#0088FE"
+                  name="Car Compatibility Check"
+                  dot={{ r: 3 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="business"
+                  stroke="#FF00FF"
+                  name="Business Compatibility Check"
+                  dot={{ r: 3 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="property"
+                  stroke="#FF0000"
+                  name="Property Compatibility Check"
+                  dot={{ r: 3 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="relation"
+                  stroke="#00FF00"
+                  name="Relation Compatibility Check"
+                  dot={{ r: 3 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="other"
+                  stroke="#FFD700"
+                  name="Other Compatibility Check"
+                  dot={{ r: 3 }}
+                />
+              </LineChart>
+
+              {/* <LineChart
+                data={getFilteredData()}
+                style={{ backgroundColor: "white"}}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="date"
+                  tickFormatter={(date) => {
+                    const d = new Date(date);
+                    return `${d.getDate()}/${
+                      d.getMonth() + 1
+                    }/${d.getFullYear()}`;
+                  }}
+                  interval={0}
+                  tickCount={7}
+                  tick={{ angle: -45, dy: 10, fontSize: 10 }}
+                  tickMargin={20}
+                  padding={{ right: 15}}
+        
+                />
+                <YAxis />
                 <YAxis />
                 <Tooltip />
                 <Legend />
+                
+                <div style={{ marginTop: "30px" }}></div>
                 <Line
                   type="monotone"
                   dataKey="car"
@@ -289,7 +406,7 @@ const DashboardChart = () => {
                   stroke="#FFD700"
                   name="Other Compatibility Check"
                 />
-              </LineChart>
+              </LineChart> */}
             </ResponsiveContainer>
           </div>
         </div>

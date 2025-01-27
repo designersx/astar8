@@ -3,7 +3,7 @@ import axios from "axios";
 export const Url = "https://dev.astar8.com"
 
 //admin login api
-export const LoginApi = async (email, password) =>{
+export const LoginApi = async (email, password) => {
   try {
     const response = await axios.post(
       `${Url}/r367jklp09i/adm36g5n56`,
@@ -569,7 +569,10 @@ export const getPrimaryNumber = async () => {
 export const editPrimaryNumber = async (finalData) => {
   // console.log("finalData", finalData);
   try {
-    const response = await axios.put(`${Url}/p12qm75kiod/p2rwe34567m`, finalData);
+    const response = await axios.put(
+      `${Url}/p12qm75kiod/p2rwe34567m`,
+      finalData
+    );
     const data = await response.data;
     return data;
   } catch (err) {
@@ -627,3 +630,26 @@ export const editElementalNumber = async (finalData) => {
     return err;
   }
 };
+
+// get destiny numbers
+export const getDestinyNumbers = async () => {
+  try {
+    const response = await axios.get(`${Url}/ele1a2mbfg/de2ax56n8o`);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// edit destiny number
+export const editDestinyNumber=async(finalData)=>{
+  try {
+    const response = await axios.put(`${Url}/ele1a2mbfg/d1qmki7gr4`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+}

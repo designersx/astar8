@@ -1,14 +1,61 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../component/Dashboard/Header";
 import { IoIosEye } from "react-icons/io";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { getDestinyNumbers } from "../../lib/Store";
 
 const DestinyNumbers = () => {
+  const [destinyNumber, showDestinyNumber] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchElementalNumbers = async () => {
+    setLoading(true);
+    try {
+      const response = await getDestinyNumbers();
+      console.log("response", response);
+      showDestinyNumber(response || []);
+    } catch (err) {
+      console.error("Error fetching elemental numbers:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchElementalNumbers();
+
+    const handleStorageChange = () => {
+      fetchElementalNumbers();
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+    // Handle View Click
+    const handleViewClick = (item) => {
+      const newWindow = window.open("/destinyShow/view", "_blank");
+      localStorage.setItem("viewData", JSON.stringify(item));
+      newWindow.dataFromParent = item;
+      console.log("viewData", item);
+    };
+  
+    // Handle Edit Click
+    const handleEditClick = (item) => {
+      const newWindow = window.open("destinyEdit/edit", "_blank");
+      localStorage.setItem("editData", JSON.stringify(item));
+      newWindow.dataFromParent = item;
+      console.log("editData", item);
+    };
+
   return (
     <>
       <Header />
-      <div className="main-container">
+      <div className="main-container pb-3">
         <div className="pd-20 card-box mb-30">
           <div className="row">
             <div className="col-md-6">
@@ -27,58 +74,35 @@ const DestinyNumbers = () => {
                   <th>Description</th>
                   <th width="280px">Action</th>
                 </tr>
-                <tr>
-                  <td>1</td>
-                  <td>
-                    Original, Creative, Forceful, Determined, Ambitious, Bold,
-                    Self-controlled, and Self-confi...
-                  </td>
-                  <td>
-                  <div style={{ display: "flex", gap: "10px" }}>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/destinyno/100"
-                      title="View"
-                      target="_blank"
-                    >
-                      <IoIosEye size={18} />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/destinyno/100/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <FontAwesomeIcon icon={faPencilAlt} />
-                    </a>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>
-                    Loving, Peaceful, Considerate, Kind, Understanding,
-                    Persuasive, Patient, and Gentle.||Over...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/destinyno/101"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/destinyno/101/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
+                {destinyNumber?.map((item) => (
+                  <tr>
+                    <td>{item.number}</td>
+                    <td>
+                     {item.description}
+                    </td>
+                    <td>
+                      <div style={{ display: "flex", gap: "10px" }}>
+                        <a
+                          className="btn btn-info"
+                          onClick={() => handleViewClick(item)}
+                          title="View"
+                          target="_blank"
+                        >
+                          <IoIosEye size={18} />
+                        </a>
+                        <a
+                          className="btn btn-primary"
+                      
+                          title="Edit"
+                          target="_blank"
+                          onClick={() => handleEditClick(item)}
+                        >
+                          <FontAwesomeIcon icon={faPencilAlt} />
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
