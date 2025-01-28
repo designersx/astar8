@@ -73,7 +73,9 @@ import DestinyShow from "./Pages/DestinyNumbers/DestinyShow";
 import DestinyEdit from "./Pages/DestinyNumbers/DestinyEdit";
 import VideoShow from "./Pages/VideosPage/VideoShow";
 import VideoEdit from "./Pages/VideosPage/VideoEdit";
-import AddVideo from "./Pages/VideosPage/AddVideo"
+import AddVideo from "./Pages/VideosPage/AddVideo";
+import LifeCoachDescriptionShow from "./Pages/LifeCoachDesc/LifeCoachDescriptionShow"
+import LifeCoachDescriptionEdit from './Pages/LifeCoachDesc/LifeCoachDescriptionEdit';
 function App() {
   return (
     <AppProvider>
@@ -127,6 +129,9 @@ function App() {
         <Route path="/video_page/edit" element={<PrivateRoute element={VideoEdit} />} />
 
         <Route path="/lifecoach_descriptions" element={<PrivateRoute element={LifeCoachDesc} />} />
+        <Route path="/lifecoach_descriptions/show" element={<PrivateRoute element={LifeCoachDescriptionShow} />} />
+        <Route path="/lifecoach_descriptions/edit" element={<PrivateRoute element={LifeCoachDescriptionEdit} />} />
+
         <Route path="/subscription_price" element={<PrivateRoute element={SubscriptionPirce} />} />
         <Route path="/healthreading" element={<PrivateRoute element={HealthReading} />} />
         <Route path="/healthprecaution" element={<PrivateRoute element={HealthPrecaution} />} />

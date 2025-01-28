@@ -697,3 +697,26 @@ export const editVideoList = async (finalData) => {
     return err;
   }
 };
+// get lifecoach description
+export const getLifeCoachdescription = async () => {
+  try {
+    const response = await axios.get(`${Url}/llwe32mjki/l1q2wazxvb`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// edit lifecoach description
+export const editLifeCoackDEscription = async (finalData) => {
+  try {
+    const response = await axios.put(`${Url}/llwe32mjki/eldk367890`, {
+      finalData,
+    });
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
