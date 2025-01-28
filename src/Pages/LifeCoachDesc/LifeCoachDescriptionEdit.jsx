@@ -119,17 +119,6 @@ export default function LifeCoachDescriptionEdit() {
         </div>
         <div className="pd-20 card-box mb-30">
           <form method="POST" onSubmit={handleSubmit}>
-            <input name="_method" type="hidden" defaultValue="PATCH" />
-            <input
-              name="_token"
-              type="hidden"
-              defaultValue="RweiqmuZNZJvBxMihjlWy87RjXaCFeAunPI2zoet"
-            />
-            <input
-              type="hidden"
-              name="_token"
-              defaultValue="RweiqmuZNZJvBxMihjlWy87RjXaCFeAunPI2zoet"
-            />{" "}
             <div className="row">
               <div className="col-xs-12 col-sm-12 col-md-12">
                 <div className="form-group">
