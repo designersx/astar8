@@ -1,6 +1,6 @@
 import axios from "axios";
-// export const Url = "http://localhost:5234";
-export const Url = "https://dev.astar8.com"
+export const Url = "http://localhost:5234";
+// export const Url = "https://dev.astar8.com"
 
 //admin login api
 export const LoginApi = async (email, password) => {
@@ -718,5 +718,24 @@ export const editLifeCoackDEscription = async (finalData) => {
   } catch (err) {
     console.log(err, "error");
     return err;
+  }
+};
+
+// filter user tables
+export const filterUsers = async (name, email, subscription, platform) => {
+  try {
+    let url = `${Url}/u1r5a03ki8/ufrm8u4j8i?`;
+
+    const params = new URLSearchParams();
+    if (name) params.append("name", name);
+    if (email) params.append("email", email);
+    if (subscription) params.append("subscription", subscription);
+    if (platform) params.append("platform", platform);
+
+    const response = await axios.get(url + params.toString());
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return error;
   }
 };
