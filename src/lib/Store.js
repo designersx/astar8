@@ -750,3 +750,16 @@ export const dashboardHistory=async(req,res)=>{
     return error;
   }
 }
+
+// Stripe payment data
+export const getPaymentSettingData = async ()=>{
+  const data = "all"
+  try {
+    const response = await axios.post(`${Url}/stripe/kgjhir90gu`,{data})
+    const datas = await response.data;
+    return datas;
+  } catch (error) {
+    console.log(error, "error");
+    return error;
+  }
+}
