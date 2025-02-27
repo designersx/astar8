@@ -739,3 +739,14 @@ export const filterUsers = async (name, email, subscription, platform) => {
     return error;
   }
 };
+
+// dashboard count users
+export const dashboardHistory=async(req,res)=>{
+  try {
+    const response = await axios.get(`${Url}/history/dhm3k7m4m6`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
