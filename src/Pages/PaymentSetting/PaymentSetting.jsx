@@ -157,8 +157,8 @@ const PaymentSetting = () => {
 
   // Dynamic styles for buttons
   const getButtonStyle = (isActive) => ({
-    backgroundColor: isActive ? "red" : "white", // Red for active, white for inactive
-    color: isActive ? "white" : "black", // White text for active, black for inactive
+    backgroundColor: isActive ? "red" : "white", 
+    color: isActive ? "white" : "black", 
     border: "1px solid #ccc",
     padding: "10px 20px",
     cursor: isLoading ? "not-allowed" : "pointer", // Disable cursor when loading
