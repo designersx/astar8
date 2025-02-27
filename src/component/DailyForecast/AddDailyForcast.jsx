@@ -39,7 +39,7 @@ export default function AddDailyForcast() {
       const formattedDate = new Date(date).toISOString().split("T")[0]; // Use user-selected date
       const trimmedPrediction = prediction.trim().replace(/\n/g, " "); // Replace newlines with spaces
 
-      // console.log("details", token, formattedDate, trimmedPrediction, user_id);
+      console.log("details", {token}, {formattedDate}, {trimmedPrediction}, {user_id});
 
       const response = await addDailyForecast(
         token,
