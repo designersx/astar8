@@ -44,10 +44,12 @@ export default function User() {
     }
   };
   const handleClear = () => {
+    setfilterloading(false)
     setFilterName("");
     setFilterEmail("");
     setFilterSubscription("");
     setFilterPlatform("");
+
     fetchUsers();
   };
 
@@ -138,7 +140,7 @@ export default function User() {
   const currentUsers = user?.slice(indexOfFirstUser, indexOfLastUser);
 
   useEffect(() => {
-    setTotalPages(Math.ceil(user.length / usersPerPage));
+    setTotalPages(Math.ceil(user?.length / usersPerPage));
   }, [user, usersPerPage]);
   return (
     <>
