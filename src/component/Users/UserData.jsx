@@ -13,12 +13,16 @@ import {
 } from "../../lib/Store";
 import { toast, Toaster } from "react-hot-toast";
 
-export default function UserData({ user, currentPage, usersPerPage, loading }) {
+export default function UserData({
+  user,
+  currentPage,
+  usersPerPage,
+  loading,
+}) {
   const onHandleNextPage = (id) => {
     localStorage.setItem("user_Detailed_id", id);
     window.open(`/userDetailedData`, "_blank");
   };
-
   const subscriptionspecialMonth = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -225,8 +229,8 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                 <Loader />
               </td>
             </tr>
-          ) : user && user.length > 0 ? (
-            user.map((data, index) => {
+          ) : user && user?.length > 0 ? (
+            user?.map((data, index) => {
               const rowNumber = (currentPage - 1) * usersPerPage + index + 1;
               return (
                 <tr key={data.id}>
@@ -234,7 +238,13 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                   <td>{data.name}</td>
                   <td>{data.email || data.username}</td>
                   <td style={{ textAlign: "center" }}>
-                    {data.subscription_status === 0 ? "Free" : "Paid"}
+                    {data.subscription_status === 0
+                      ? "Free"
+                      : data.subscription_status === 1
+                      ? "Paid"
+                      : data.subscription_status === 9
+                      ? "Special Offer"
+                      : "Free"}
                   </td>
                   <td>{data.platform || "N/A"}</td>
 
@@ -313,7 +323,7 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                         style={{ backgroundColor: "#0199FE", color: "white" }}
                         title="Click to Activate Subscription"
                         onClick={() => subscriptionspecialMonth(data.id)}
-                        disabled={data.total_days > 31} // 👈 3-month user ke liye disabled
+                        disabled={data.total_days > 31}
                       >
                         Active
                       </button>

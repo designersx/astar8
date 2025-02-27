@@ -67,7 +67,6 @@ export default function UserDetailedData() {
 
   return (
     <>
-      
       {loading ? (
         <div>
           <DashBoardLoader />
@@ -76,14 +75,15 @@ export default function UserDetailedData() {
         <h1 className="error-user text-center">
           {error}
           <br />
-          <Link to="/users" className="btn btn-primary mt-2">Go Back</Link>
+          <Link to="/users" className="btn btn-primary mt-2">
+            Go Back
+          </Link>
         </h1>
       ) : !userDetails ? (
         <p className="text-center">No user details available.</p>
       ) : (
-        
         <>
-        <Header />
+          <Header />
           <div className="main-container" style={{ paddingBottom: "40px" }}>
             <div className="pd-ltr-20 xs-pd-20-10">
               <div className="min-height-200px">
@@ -112,8 +112,9 @@ export default function UserDetailedData() {
                               : "https://be.astar8.com/img/default-profile-img.png"
                           }
                           onError={(e) => {
-                            e.target.onerror = null; 
-                            e.target.src = "https://be.astar8.com/img/default-profile-img.png"; 
+                            e.target.onerror = null;
+                            e.target.src =
+                              "https://be.astar8.com/img/default-profile-img.png";
                           }}
                           height="100%"
                           width="100%"
@@ -140,11 +141,29 @@ export default function UserDetailedData() {
                           </li>
                           <li>
                             <span>Relationship:</span>
-                            {userDetails.userdetails.relationship || "N/A"}
+                            {/* {userDetails.userdetails.relationship || "N/A"} */}
+                            {userDetails.userdetails.relationship === 1
+                              ? "Married"
+                              : userDetails.userdetails.relationship === 2
+                              ? "In-Relationship"
+                              : userDetails.userdetails.relationship === 3
+                              ? "Complicated"
+                              : userDetails.userdetails.relationship === 4
+                              ? "Single"
+                              : "N/A"}
                           </li>
                           <li>
                             <span>Occupation:</span>
-                            {userDetails.userdetails.occupation || "N/A"}
+                            {/* {userDetails.userdetails.occupation || "N/A"} */}
+                            {userDetails.userdetails.occupation === 1
+                              ? "Business"
+                              : userDetails.userdetails.occupation === 2
+                              ? "Job"
+                              : userDetails.userdetails.occupation === 3
+                              ? "Farmer"
+                              : userDetails.userdetails.occupation === 4
+                              ? "Other"
+                              : "N/A"}
                           </li>
                           <li>
                             <span>Joining Date:</span>
@@ -152,8 +171,17 @@ export default function UserDetailedData() {
                           </li>
                           <li>
                             <span>Subscription Status</span>
-                            {userDetails.userdetails.subscription_status ||
-                              "N/A"}
+                            {/* {userDetails.userdetails.subscription_status ||
+                              "N/A"} */}
+                            {userDetails.userdetails.subscription_status === 0
+                              ? "Free"
+                              : userDetails.userdetails.subscription_status ===
+                                1
+                              ? "Paid"
+                              : userDetails.userdetails.subscription_status ===
+                                9
+                              ? "Special Offer"
+                              : "Free"}
                           </li>
                         </ul>
                       </div>
