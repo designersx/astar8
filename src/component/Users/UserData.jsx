@@ -13,12 +13,16 @@ import {
 } from "../../lib/Store";
 import { toast, Toaster } from "react-hot-toast";
 
-export default function UserData({ user, currentPage, usersPerPage, loading }) {
+export default function UserData({
+  user,
+  currentPage,
+  usersPerPage,
+  loading,
+}) {
   const onHandleNextPage = (id) => {
     localStorage.setItem("user_Detailed_id", id);
     window.open(`/userDetailedData`, "_blank");
   };
-
   const subscriptionspecialMonth = async (id) => {
     Swal.fire({
       title: "Are you sure?",

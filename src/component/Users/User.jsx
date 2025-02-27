@@ -4,6 +4,7 @@ import Header from "../Dashboard/Header";
 import { getAllUsers, filterUsers } from "../../lib/Store";
 import UserData from "./UserData";
 import { toast, Toaster } from "react-hot-toast";
+import Loader from "../Loader/Loader";
 export default function User() {
   const [user, setUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,50 +18,31 @@ export default function User() {
   const [filterSubscription, setFilterSubscription] = useState("");
   const [filterPlatform, setFilterPlatform] = useState("");
   const [filterloading, setfilterloading] = useState(false);
+  console.log(loading, "main loading");
 
-  // 🔹 Handle Search Button Click
-  const handleSearch = async () => {
-    try {
-      setfilterloading(true);
-      const isFilterEmpty =
-        !filterName && !filterEmail && !filterSubscription && !filterPlatform;
-      if (isFilterEmpty) {
+  useEffect(() => {
+    setLoading(true);
+    setUser([]);
+    setNextPageToken(null);
+    setTimeout(() => {
+      if (activeTab === "all") {
         fetchUsers();
-      } else {
-        const data = await filterUsers(
-          filterName,
-          filterEmail,
-          filterSubscription,
-          filterPlatform
-        );
-        setUser(data);
+      } else if (activeTab === "active") {
+        fetchUsers(1);
+      } else if (activeTab === "inactive") {
+        fetchUsers(0);
       }
-
-      setCurrentPage(1);
-      setfilterloading(false);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      setfilterloading(false);
-    }
-  };
-  const handleClear = () => {
-    setfilterloading(false)
-    setFilterName("");
-    setFilterEmail("");
-    setFilterSubscription("");
-    setFilterPlatform("");
-
-    fetchUsers();
-  };
+    }, 0);
+    setCurrentPage(1);
+  }, [activeTab]);
 
   const fetchUsers = async (
     status = null,
     pageNumber = 1,
     pageToken = null
-    
   ) => {
+    setLoading(true);
     try {
-      setLoading(true);
       const token = localStorage.getItem("UserToken");
       if (!token) {
         throw new Error("User token not found");
@@ -96,11 +78,47 @@ export default function User() {
       } else {
         throw new Error("Failed to fetch users or no users found.");
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching users:", error.message);
     } finally {
       setLoading(false);
     }
+  };
+
+  // 🔹 Handle Search Button Click
+  const handleSearch = async () => {
+    try {
+      setfilterloading(true);
+      const isFilterEmpty =
+        !filterName && !filterEmail && !filterSubscription && !filterPlatform;
+      if (isFilterEmpty) {
+        fetchUsers();
+      } else {
+        const data = await filterUsers(
+          filterName,
+          filterEmail,
+          filterSubscription,
+          filterPlatform
+        );
+        setUser(data);
+      }
+
+      setCurrentPage(1);
+      setfilterloading(false);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      setfilterloading(false);
+    }
+  };
+  const handleClear = () => {
+    setfilterloading(false);
+    setFilterName("");
+    setFilterEmail("");
+    setFilterSubscription("");
+    setFilterPlatform("");
+
+    fetchUsers();
   };
   const paginate = (pageNumber) => {
     let tokenToSend = pageNumber === 1 ? null : nextPageToken;
@@ -122,18 +140,19 @@ export default function User() {
     });
   };
 
-  useEffect(() => {
-    setUser([]);
-    setNextPageToken(null);
-    if (activeTab === "all") {
-      fetchUsers();
-    } else if (activeTab === "active") {
-      fetchUsers(1);
-    } else if (activeTab === "inactive") {
-      fetchUsers(0);
-    }
-    setCurrentPage(1);
-  }, [activeTab]);
+  // useEffect(() => {
+  //   setUser([]);
+  //   setNextPageToken(null);
+  //   setLoading(true);
+  //   if (activeTab === "all") {
+  //     fetchUsers();
+  //   } else if (activeTab === "active") {
+  //     fetchUsers(1);
+  //   } else if (activeTab === "inactive") {
+  //     fetchUsers(0);
+  //   }
+  //   setCurrentPage(1);
+  // }, [activeTab]);
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
