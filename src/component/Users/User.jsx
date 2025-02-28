@@ -78,7 +78,6 @@ export default function User() {
       } else {
         throw new Error("Failed to fetch users or no users found.");
       }
-      setLoading(false);
     } catch (error) {
       console.error("Error fetching users:", error.message);
     } finally {
@@ -368,6 +367,7 @@ export default function User() {
                               user={currentUsers}
                               currentPage={currentPage}
                               usersPerPage={usersPerPage}
+                              loading={loading}
                             />
                           </div>
                           <div className="custom-pagination">
@@ -428,6 +428,7 @@ export default function User() {
                               user={currentUsers}
                               currentPage={currentPage}
                               usersPerPage={usersPerPage}
+                              loading={loading}
                             />
                           </div>
                           <div className="custom-pagination">
