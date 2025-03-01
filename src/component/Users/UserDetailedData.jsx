@@ -140,6 +140,10 @@ export default function UserDetailedData() {
                             {userDetails.userdetails.email || "N/A"}
                           </li>
                           <li>
+                            <span>Phone Number:</span>
+                            {userDetails.userdetails.phoneno || "N/A"}
+                          </li>
+                          <li>
                             <span>Relationship:</span>
                             {/* {userDetails.userdetails.relationship || "N/A"} */}
                             {userDetails.userdetails.relationship === 1
