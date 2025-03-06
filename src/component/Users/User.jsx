@@ -67,8 +67,11 @@ export default function User() {
       const response = await getAllUsers(token, url);
 
       if (response && response.Users) {
+        const filteredUsers = response.Users.filter(user => 
+          user.email.match(/^[^\s@]+@[^\s@]+\.com$/) // ✅ Only allow emails ending with ".com"
+        );
         setUser((prevUsers) =>
-          pageNumber === 1 ? response.Users : [...prevUsers, ...response.Users]
+          pageNumber === 1 ? filteredUsers : [...prevUsers, ...filteredUsers]
         );
 
         // ✅ Only update `nextPageToken` if a new one is available
