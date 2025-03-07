@@ -763,3 +763,26 @@ export const getPaymentSettingData = async ()=>{
     return error;
   }
 }
+// update version
+export const updateVersion=async(platform, version)=>{
+  console.log(version,platform,"version,platofrm")
+  try {
+    const response=await axios.post(`${Url}/lvp4m6m7f5/plv5mg8i3d`,{platform, version});
+    console.log(response,"response")
+    const data=await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
+// get version 
+ export const getLatestVersions=async(req,res)=>{
+  try {
+    const response=await axios.get(`${Url}/lvp4m6m7f5/glvp3m7m5r`);
+    console.log(response,"response")
+    const data=await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+}

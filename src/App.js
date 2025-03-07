@@ -76,6 +76,7 @@ import VideoEdit from "./Pages/VideosPage/VideoEdit";
 import AddVideo from "./Pages/VideosPage/AddVideo";
 import LifeCoachDescriptionShow from "./Pages/LifeCoachDesc/LifeCoachDescriptionShow"
 import LifeCoachDescriptionEdit from './Pages/LifeCoachDesc/LifeCoachDescriptionEdit';
+import Version from './component/Versions/Version';
 function App() {
   return (
     <AppProvider>
@@ -165,6 +166,7 @@ function App() {
         <Route path="/general-settings" element={<PrivateRoute element={GeneralSettings} />} />
         <Route path="/payment" element={<PrivateRoute element={PaymentSetting} />} />
         <Route path="/userDetailedData" element={<PrivateRoute element={UserDetailedData} />} />
+        <Route path="/Version" element={<PrivateRoute element={Version} />} />
         </Routes>
       </Router>
     </AppProvider>

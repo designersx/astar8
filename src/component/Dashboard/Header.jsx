@@ -3,6 +3,7 @@ import "../../styles/Style.css";
 import "font-awesome/css/font-awesome.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, NavLink } from "react-router-dom";
+import { faCodeBranch } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import {
@@ -1329,6 +1330,14 @@ export default function Dashboard() {
                           <FontAwesomeIcon icon={faUser} />
                         </span>
                         <span className="mtext">Users</span>
+                      </NavLink>
+                    </li>
+                    <li className="dropdown">
+                      <NavLink to="/Version" className="dropdown-toggle no-arrow">
+                        <span className="sideBarIcon">
+                          <FontAwesomeIcon icon={faCodeBranch} />
+                        </span>
+                        <span className="mtext">Version Control</span>
                       </NavLink>
                     </li>
                     {/* <li class="dropdown">
