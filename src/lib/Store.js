@@ -1,6 +1,6 @@
 import axios from "axios";
-// export const Url = "http://localhost:5234";
-export const Url = "https://dev.astar8.com"
+export const Url = "http://localhost:5234";
+// export const Url = "https://dev.astar8.com"
 
 //admin login api
 export const LoginApi = async (email, password) => {
@@ -152,6 +152,7 @@ export const getAllUsers = async (token, status = null) => {
 };
 
 export const getAdminUserMessages = async (finalData) => {
+  console.log("dasdsa",finalData)
   try {
     const response = await axios.post(
       `${Url}/a3dm8k40ok/4fdfg8trc1`,

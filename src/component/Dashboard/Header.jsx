@@ -349,7 +349,7 @@ export default function Dashboard() {
                       </NavLink>
                     </li>
 
-                    <li className="dropdown">
+                    {/* <li className="dropdown">
                       <NavLink
                         to="/general-settings"
                         className="dropdown-toggle no-arrow"
@@ -359,16 +359,16 @@ export default function Dashboard() {
                         </span>
                         <span className="mtext">General Setting</span>
                       </NavLink>
-                    </li>
+                    </li> */}
 
-                    <li className="dropdown">
+                    {/* <li className="dropdown">
                       <NavLink to="/payment" className="dropdown-toggle no-arrow">
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faDollarSign} style={{height:"22px",paddingLeft:"3px"}} />
                         </span>
                         <span className="mtext">Payment Setting</span>
                       </NavLink>
-                    </li>
+                    </li> */}
                     <li className="dropdown">
                       <NavLink to="/users" className="dropdown-toggle no-arrow">
                         <span className="sideBarIcon">

@@ -3,16 +3,12 @@ import ChatItem from "./ChatItem";
 import Loader from "../Loader/Loader";
 
 const ChatList = ({ users, onSelectUser }) => {
-  console.log("userrer",users)
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true); // Add loading state
-  console.log("loading", loading);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    if (users) {
+    if (users !== undefined) {
       setLoading(false);
-    }
-    else if (users === undefined){
-      setLoading(false)
     }
   }, [users]);
 
@@ -34,10 +30,6 @@ const ChatList = ({ users, onSelectUser }) => {
       <div className="notification-list">
         {loading ? (
           <Loader />
-        ) : users === undefined ? (
-          <div>
-            <p style={{textAlign:"center"}}>No user found</p>
-          </div>
         ) : filteredUsers && filteredUsers.length > 0 ? (
           filteredUsers.map((user) => (
             <ChatItem
@@ -47,7 +39,7 @@ const ChatList = ({ users, onSelectUser }) => {
             />
           ))
         ) : (
-          <p>No user found</p>
+          <p style={{ textAlign: "center" }}>No user found</p>
         )}
       </div>
     </div>

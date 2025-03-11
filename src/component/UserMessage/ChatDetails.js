@@ -7,10 +7,10 @@ import { BeatLoader } from "react-spinners";
 import Loader from "../Loader/Loader";
 
 const ChatDetails = ({ user, onMessageSent }) => {
-  const url = "https://dev.astar8.com"
-  // const url = "http://localhost:5234";
+  // const url = "https://dev.astar8.com"
+  const url = "http://localhost:5234";
   const [userChatMessages, setUserChatMessages] = useState([]);
-  console.log("userrr", user);
+  // console.log("userrr", user);
   const [messageInput, setMessageInput] = useState("");
   const [socket, setSocket] = useState(null);
   const [loading, setLoading] = useState(true); // Add loading state
@@ -211,7 +211,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
                   DOB: {formatDate(user.user_dob)}
                 </p>
                 <p className="mb-0 small" style={{ color: "#a4a4a4" }}>
-                  EMAIL: {user.user_username || "Pending!"}
+                  E-mail: {user.user_username || "Pending!"}
                 </p>
                 <p className="mb-0 small" style={{ color: "#a4a4a4" }}>
                   Joining Date: {formatDate(user.user_created_at)}
