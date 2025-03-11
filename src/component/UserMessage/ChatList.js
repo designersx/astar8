@@ -15,6 +15,7 @@ const ChatList = ({ users, onSelectUser }) => {
   const filteredUsers = users?.filter((user) =>
     user.user_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  console.log("filterdUserss",filteredUsers)
 
   return (
     <div className="chat-list bg-light-gray">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { setSeenMessages } from "../../lib/Store";
 
 const ChatItem = ({ user, onSelectUser }) => {
-  // console.log("chatitemmmmm", user);
+  console.log("chatitemmmmm", user);
   const [unseenMessagesCount, setUnseenMessagesCount] = useState(0);
 
   const formatDate = (dateString) => {
@@ -43,7 +43,7 @@ const ChatItem = ({ user, onSelectUser }) => {
         className="d-flex align-items-start text-decoration-none"
         style={{ cursor: "pointer" }}
       >
-        {/* Profile Picture */}
+        {/* Profile Pictured */}
         <div className="me-3 pr-3" style={{ width: "60px", height: "60px" }}>
           <img
             src={
