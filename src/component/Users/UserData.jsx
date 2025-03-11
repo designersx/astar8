@@ -13,12 +13,7 @@ import {
 } from "../../lib/Store";
 import { toast, Toaster } from "react-hot-toast";
 
-export default function UserData({
-  user,
-  currentPage,
-  usersPerPage,
-  loading,
-}) {
+export default function UserData({ user, currentPage, usersPerPage, loading }) {
   const onHandleNextPage = (id) => {
     localStorage.setItem("user_Detailed_id", id);
     window.open(`/userDetailedData`, "_blank");
@@ -205,6 +200,9 @@ export default function UserData({
     });
   };
 
+  const formatDate = (dateString) => {
+    return dateString ? dateString.split("T")[0] : "";
+  };
   return (
     <>
       <Toaster />
@@ -218,6 +216,8 @@ export default function UserData({
             <th>Payment Platform</th>
             <th>Subscription Action</th>
             <th>3 Month Subscription Action</th>
+            <th style={{ width: "9%" }}>Start Date</th>
+            <th>Renewal Date</th>
             <th>Action</th>
           </tr>
           {loading ? (
@@ -238,16 +238,30 @@ export default function UserData({
                   <td>{data.name}</td>
                   <td>{data.email || data.username}</td>
                   <td style={{ textAlign: "center" }}>
-                    {data.subscription_status === 0
+                    {data.subscription_status === null
+                      ? data.subscription_status_admin === "ByAdmin" ||
+                        (data.subscription_status_admin === null &&
+                          data.start_date &&
+                          data.renewal_date)
+                        ? "Special Offer"
+                        : "Free"
+                      : data.subscription_status === 0
                       ? "Free"
                       : data.subscription_status === 1
                       ? "Paid"
                       : data.subscription_status === 9
                       ? "Special Offer"
                       : "Free"}
+
+                    {/* {data.subscription_status === 0
+                      ? "Free"
+                      : data.subscription_status === 1
+                      ? "Paid"
+                      : data.subscription_status === 9
+                      ? "Special Offer"
+                      : "Free"} */}
                   </td>
                   <td>{data.platform || "N/A"}</td>
-
                   {/* 1- month subscription button */}
                   {/* <td style={{ textAlign: "center" }}>
                     {data.subscription_status === 9 || data.total_days <= 31 ? (
@@ -356,6 +370,8 @@ export default function UserData({
                       </button>
                     )}
                   </td>
+                  <td>{formatDate(data.start_date) || "N/A"}</td>
+                  <td>{formatDate(data.renewal_date) || "N/A"}</td>
 
                   <td className="userTableTd">
                     <a
