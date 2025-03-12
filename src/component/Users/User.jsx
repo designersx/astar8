@@ -939,6 +939,13 @@ export default function User() {
             ? filteredUsers
             : [...filteredUsers]
         );
+
+        // setUser((prevUsers) =>
+        //   pageNumber === 1 || pageNumber === totalPages
+        //     ? filteredUsers
+        //     : [...prevUsers, ...filteredUsers]
+        // );
+        
      
 
         setNextPageToken(response.nextPageToken || null);
