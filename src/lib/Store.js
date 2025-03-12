@@ -24,7 +24,7 @@ export const LoginApi = async (email, password) => {
   }
 };
 
-//  get admin profile data
+//  get admin profile dataa
 
 export const GetUserData = async (email, token) => {
   try {
