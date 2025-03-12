@@ -14,7 +14,6 @@ import {
 import { toast, Toaster } from "react-hot-toast";
 
 export default function UserData({ user, currentPage, usersPerPage, loading }) {
-  console.log(loading,"loading of users table data")
   const onHandleNextPage = (id) => {
     localStorage.setItem("user_Detailed_id", id);
     window.open(`/userDetailedData`, "_blank");
@@ -254,8 +253,9 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
             </tr>
           ) : user && user?.length > 0 ? (
             user?.map((data, index) => {
-              // const rowNumber = (currentPage - 1) * usersPerPage + index + 1;
-              const rowNumber=index+1;
+              console.log(`User ID: ${data.id}, Row Number: ${index + 1}, Page: ${currentPage}`);
+              const rowNumber = (currentPage - 1) * usersPerPage + index + 1;
+              // const rowNumber=index+1;
               return (
                 <tr key={data.id}>
                   <td>{rowNumber}</td>
