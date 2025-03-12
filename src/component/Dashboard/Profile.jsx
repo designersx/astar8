@@ -34,7 +34,11 @@ export default function Profile() {
         localStorage.setItem("profilePic", response.user.profile_pic);
         const { _seconds } = response.user.created_at;
         const dateObject = new Date(_seconds * 1000);
-        const formattedDate = dateObject.toISOString().split("T")[0];
+        const formattedDate = dateObject.toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        });
         setFormattedDate(formattedDate);
       }
     } catch (error) {

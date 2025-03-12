@@ -72,19 +72,40 @@ export default function Dashboard() {
   // };
 
   const onHandleLogout = () => {
-    localStorage.removeItem("Role");
-    localStorage.removeItem("UserToken");
-    localStorage.removeItem("name");
-    localStorage.removeItem("profilePic");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("user_Detailed_id");
-    localStorage.removeItem("editData");
-    localStorage.removeItem("showData");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you really want to log out?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, log out",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("Role");
+        localStorage.removeItem("UserToken");
+        localStorage.removeItem("name");
+        localStorage.removeItem("profilePic");
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("user_Detailed_id");
+        localStorage.removeItem("editData");
+        localStorage.removeItem("showData");
+        localStorage.removeItem("totalUsers");
 
-
-    navigate("/");
+        // Optional: show a success message before navigating
+        Swal.fire({
+          title: "Logged Out!",
+          text: "You have been logged out.",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1000,
+        }).then(() => {
+          navigate("/");
+        });
+      }
+    });
   };
+
   const onSideClose = () => {
     setIsSidebarOpen(false);
   };
@@ -318,10 +339,16 @@ export default function Dashboard() {
               <div className="sidebar-menu">
                 {userRole === "1" ? (
                   <ul id="accordion-menu">
-                    <NavLink to="/dashboard" className="dropdown-toggle no-arrow">
+                    <NavLink
+                      to="/dashboard"
+                      className="dropdown-toggle no-arrow"
+                    >
                       <span>
                         {" "}
-                        <FontAwesomeIcon icon={faHouse} style={{height:"20px"}}/>
+                        <FontAwesomeIcon
+                          icon={faHouse}
+                          style={{ height: "20px" }}
+                        />
                       </span>
                       <span className="mtext">Home</span>
                     </NavLink>
@@ -332,7 +359,10 @@ export default function Dashboard() {
                         className="dropdown-toggle no-arrow"
                       >
                         <span className="sideBarIcon">
-                          <FontAwesomeIcon icon={faComment} style={{height:"20px"}} />
+                          <FontAwesomeIcon
+                            icon={faComment}
+                            style={{ height: "20px" }}
+                          />
                         </span>
                         <span className="mtext">User Messages</span>
                       </NavLink>
@@ -343,7 +373,10 @@ export default function Dashboard() {
                         className="dropdown-toggle no-arrow"
                       >
                         <span className="sideBarIcon">
-                          <FontAwesomeIcon icon={faBook} style={{height:"20px"}} />
+                          <FontAwesomeIcon
+                            icon={faBook}
+                            style={{ height: "20px" }}
+                          />
                         </span>
                         <span className="mtext">Daily Forecast</span>
                       </NavLink>
@@ -372,7 +405,10 @@ export default function Dashboard() {
                     <li className="dropdown">
                       <NavLink to="/users" className="dropdown-toggle no-arrow">
                         <span className="sideBarIcon">
-                          <FontAwesomeIcon icon={faUser} style={{height:"20px",paddingLeft:"1px"}} />
+                          <FontAwesomeIcon
+                            icon={faUser}
+                            style={{ height: "20px", paddingLeft: "1px" }}
+                          />
                         </span>
                         <span className="mtext">Users</span>
                       </NavLink>
@@ -380,7 +416,10 @@ export default function Dashboard() {
                   </ul>
                 ) : (
                   <ul id="accordion-menu">
-                    <NavLink to="/dashboard" className="dropdown-toggle no-arrow">
+                    <NavLink
+                      to="/dashboard"
+                      className="dropdown-toggle no-arrow"
+                    >
                       <span>
                         {" "}
                         <FontAwesomeIcon icon={faHouse} />
@@ -477,7 +516,10 @@ export default function Dashboard() {
                     </li>
 
                     <li className="dropdown">
-                      <NavLink to="/Master" className="dropdown-toggle no-arrow">
+                      <NavLink
+                        to="/Master"
+                        className="dropdown-toggle no-arrow"
+                      >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faList} />
                         </span>
@@ -530,7 +572,10 @@ export default function Dashboard() {
                       </NavLink>
                     </li>
                     <li className="dropdown">
-                      <NavLink to="/magicbox" className="dropdown-toggle no-arrow">
+                      <NavLink
+                        to="/magicbox"
+                        className="dropdown-toggle no-arrow"
+                      >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faBox} />
                         </span>
@@ -582,7 +627,10 @@ export default function Dashboard() {
                       </NavLink>
                     </li>
                     <li className="dropdown">
-                      <NavLink to="/videos" className="dropdown-toggle no-arrow">
+                      <NavLink
+                        to="/videos"
+                        className="dropdown-toggle no-arrow"
+                      >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faVideo} />
                         </span>
@@ -1317,7 +1365,10 @@ export default function Dashboard() {
                       </NavLink>
                     </li>
                     <li className="dropdown">
-                      <NavLink to="/payment" className="dropdown-toggle no-arrow">
+                      <NavLink
+                        to="/payment"
+                        className="dropdown-toggle no-arrow"
+                      >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faDollarSign} />
                         </span>
@@ -1333,7 +1384,10 @@ export default function Dashboard() {
                       </NavLink>
                     </li>
                     <li className="dropdown">
-                      <NavLink to="/Version" className="dropdown-toggle no-arrow">
+                      <NavLink
+                        to="/Version"
+                        className="dropdown-toggle no-arrow"
+                      >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faCodeBranch} />
                         </span>
