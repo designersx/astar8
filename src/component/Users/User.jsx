@@ -846,8 +846,8 @@ export default function User() {
   const [filterloading, setfilterloading] = useState(false);
   const [subscriptionCount, setSubscriptionCount] = useState(null);
   const [filterCount, setFiltersCount] = useState(null);
-  console.log(subscriptionCount,"subscriptionCount");
-  console.log(filterCount,"filterCount")
+  console.log(subscriptionCount, "subscriptionCount");
+  console.log(filterCount, "filterCount");
   // overall total user count
   const [count, setTotalCount] = useState(0);
   const [pageTokens, setPageTokens] = useState([]);
@@ -939,6 +939,7 @@ export default function User() {
             ? filteredUsers
             : [...filteredUsers]
         );
+     
 
         setNextPageToken(response.nextPageToken || null);
         setCurrentPage(pageNumber);
@@ -995,7 +996,7 @@ export default function User() {
     setFilterPlatform("");
     fetchUsers();
     setSubscriptionCount("");
-    setFilterPlatform("")
+    setFilterPlatform("");
   };
 
   // const paginate = (pageNumber) => {
@@ -1023,11 +1024,10 @@ export default function User() {
   //   });
   // };
 
-
   // const paginate = (pageNumber) => {
-  
+
   //   let tokenToSend = null;
-  
+
   //   if (pageNumber > currentPage) {
   //     tokenToSend = nextPageToken;  // Ensure nextPageToken is used when going forward
   //   } else if (pageNumber < currentPage) {
@@ -1036,11 +1036,11 @@ export default function User() {
   //     tokensCopy.pop();
   //     setPageTokens(tokensCopy);
   //   }
-  
+
   //   console.log("Paginate Function Call - Next Page Token:", tokenToSend); // Debugging Log
-  
+
   //   if (pageNumber > totalPages) return;
-  
+
   //   if (filterName || filterEmail || filterSubscription || filterPlatform) {
   //     filterUsers(filterName, filterEmail, filterSubscription, filterPlatform, pageNumber, tokenToSend)
   //       .then((data) => {
@@ -1062,7 +1062,7 @@ export default function User() {
   //       tokenToSend
   //     );
   //   }
-  
+
   //   window.scrollTo({
   //     top: 300,
   //     behavior: "smooth",
@@ -1073,12 +1073,12 @@ export default function User() {
     let tokenToSend = null;
 
     if (pageNumber > currentPage) {
-        tokenToSend = nextPageToken;  // Ensure nextPageToken is used when going forward
+      tokenToSend = nextPageToken; // Ensure nextPageToken is used when going forward
     } else if (pageNumber < currentPage) {
-        const tokensCopy = [...pageTokens];
-        tokenToSend = tokensCopy[tokensCopy.length - 2] || null;
-        tokensCopy.pop();
-        setPageTokens(tokensCopy);
+      const tokensCopy = [...pageTokens];
+      tokenToSend = tokensCopy[tokensCopy.length - 2] || null;
+      tokensCopy.pop();
+      setPageTokens(tokensCopy);
     }
 
     console.log("Paginate Function Call - Next Page Token:", tokenToSend); // Debugging Log
@@ -1088,39 +1088,43 @@ export default function User() {
     setLoading(true); // 🔥 Show loading before making API call
 
     if (filterName || filterEmail || filterSubscription || filterPlatform) {
-        filterUsers(filterName, filterEmail, filterSubscription, filterPlatform, pageNumber, tokenToSend)
-            .then((data) => {
-                if (data && data.users) {
-                    setUser(data.users);
-                    setNextPageToken(data.nextPageToken); // Ensure nextPageToken is updated
-                    setSubscriptionCount(data.subscriptionCount);
-                    setFiltersCount(data.platformCount);
-                    setCurrentPage(pageNumber);
-                } else {
-                    console.error("No users found from filterUsers");
-                }
-            })
-            .catch((error) => console.error("Error fetching filtered users:", error))
-            .finally(() => setLoading(false)); // 🔥 Hide loading after response
+      filterUsers(
+        filterName,
+        filterEmail,
+        filterSubscription,
+        filterPlatform,
+        pageNumber,
+        tokenToSend
+      )
+        .then((data) => {
+          if (data && data.users) {
+            setUser(data.users);
+            setNextPageToken(data.nextPageToken); // Ensure nextPageToken is updated
+            setSubscriptionCount(data.subscriptionCount);
+            setFiltersCount(data.platformCount);
+            setCurrentPage(pageNumber);
+          } else {
+            console.error("No users found from filterUsers");
+          }
+        })
+        .catch((error) =>
+          console.error("Error fetching filtered users:", error)
+        )
+        .finally(() => setLoading(false)); // 🔥 Hide loading after response
     } else {
-        fetchUsers(
-            activeTab === "all" ? null : activeTab === "active" ? 1 : 0,
-            pageNumber,
-            tokenToSend
-        ).finally(() => setLoading(false)); // 🔥 Hide loading after response
+      fetchUsers(
+        activeTab === "all" ? null : activeTab === "active" ? 1 : 0,
+        pageNumber,
+        tokenToSend
+      ).finally(() => setLoading(false)); // 🔥 Hide loading after response
     }
 
     window.scrollTo({
-        top: 300,
-        behavior: "smooth",
+      top: 300,
+      behavior: "smooth",
     });
-};
+  };
 
-  
-  
-  
-
-  
   const goToFirstPage = () => {
     setUser([]);
     setNextPageToken(null);
@@ -1322,7 +1326,7 @@ export default function User() {
 
                     <div className="tab">
                       <ul className="nav nav-tabs" role="tablist">
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                           <a
                             className={`nav-link text-blue ${
                               activeTab === "all" ? "active" : ""
@@ -1331,7 +1335,7 @@ export default function User() {
                           >
                             All
                           </a>
-                        </li>
+                        </li> */}
                         {/* Additional tabs can be added here */}
                       </ul>
 
@@ -1381,7 +1385,7 @@ export default function User() {
                                 </li>
                                 <li className="page-item active">
                                   <span className="page-link">
-                                    {currentPage} / {totalPages}
+                                    {currentPage}
                                   </span>
                                 </li>
                                 <li
