@@ -182,8 +182,8 @@ export const getUserChatMessages = async (finaldata) => {
 export const setSeenMessages = async (data) => {
   try {
     const response = await axios.post(`${Url}/m1afg56903/124fglj80r`, data);
-    const data1 = await response.data;
-    return data;
+    const data1 = await response;
+    return data1;
   } catch (error) {
     console.log("eerrrrrr", error);
     return error;

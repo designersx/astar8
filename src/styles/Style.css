@@ -3506,8 +3506,9 @@ body.IE .register-page-wrap .container {
   color: #33484f;
 }
 .chat-list .notification-list {
-  height: calc(100% - 76px);
+  height: calc(85% - 49px);
   padding: 10px;
+  padding-top: 0px;
 }
 .notification-list.chat-notification-list ul li a {
   padding-top: 16px;

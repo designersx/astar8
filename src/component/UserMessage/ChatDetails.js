@@ -5,6 +5,7 @@ import { getUserChatMessages, setSeenMessages } from "../../lib/Store";
 import { io } from "socket.io-client";
 import { BeatLoader } from "react-spinners";
 import Loader from "../Loader/Loader";
+import { AiOutlineMessage } from "react-icons/ai";
 
 const ChatDetails = ({ user, onMessageSent }) => {
   // const url = "https://dev.astar8.com"
@@ -19,7 +20,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
     localStorage.getItem("profilePic" || "")
   );
   const [userRole, setuserRole] = useState(localStorage.getItem("Role") || "");
-  console.log("userROleee", userRole);
+  // console.log("userROleee", userRole);
   const llyadId = "5mywqbuSYUPveHLmD0Df";
   const llyodProfilePic = "https://dev.astar8.com/uploads/1737091948321.png";
   const [handleSocketError, sethandleSocketError] = useState();
@@ -196,13 +197,13 @@ const ChatDetails = ({ user, onMessageSent }) => {
                     style={{
                       width: "100%",
                       height: "100%",
-                      objectFit: "cover",
+                      // objectFit: "cover",
                     }}
                   />
                 </div>
                 <h5
                   className="mb-1 mt-1"
-                  style={{ color: "#44aeff" }}
+                  style={{ color: "#44aeff", cursor: "pointer" }}
                   onClick={() => onHandleNextPage(user.user_id)}
                 >
                   {user.user_name}
@@ -263,7 +264,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
                             style={{
                               width: "40px",
                               height: "40px",
-                              objectFit: "cover",
+                              // objectFit: "cover",
                             }}
                           />
                         )}
@@ -291,7 +292,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
                         {message.senderId !== user?.user_id && (
                           <img
                             src={
-                              userRole === "2"
+                              userRole === "1"
                                 ? llyodProfilePic
                                 : user.user_profile_pic
                                 ? user.user_profile_pic
@@ -307,7 +308,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
                             style={{
                               width: "40px",
                               height: "40px",
-                              objectFit: "cover",
+                              // objectFit: "cover",
                             }}
                           />
                         )}
@@ -362,8 +363,26 @@ const ChatDetails = ({ user, onMessageSent }) => {
           </div>
         </>
       ) : (
-        <div className="default-message text-center p-4 font-weight-bold">
-          No Message Found
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            padding: "2rem",
+            // minHeight: "300px",
+            height:"100%"
+          }}
+        >
+          <AiOutlineMessage
+            size={60}
+            style={{ marginBottom: "1rem", color: "#6c757d" }}
+          />
+          <h4 style={{ fontWeight: "bold", marginBottom: "0.5rem" }}>
+            No Message Found
+          </h4>
+          <p style={{ color: "#6c757d" }}>Please select a message to chat</p>
         </div>
       )}
     </div>
