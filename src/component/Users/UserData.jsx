@@ -14,6 +14,7 @@ import {
 import { toast, Toaster } from "react-hot-toast";
 
 export default function UserData({ user, currentPage, usersPerPage, loading }) {
+  console.log(loading,"loading of users table data")
   const onHandleNextPage = (id) => {
     localStorage.setItem("user_Detailed_id", id);
     window.open(`/userDetailedData`, "_blank");
@@ -200,8 +201,30 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
     });
   };
 
-  const formatDate = (dateString) => {
-    return dateString ? dateString.split("T")[0] : "";
+  // const formatDate = (dateString) => {
+  //   return dateString ? dateString.split("T")[0] : "";
+  // };
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "N/A";
+    const date = new Date(dateStr);
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const monthName = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${monthName} ${day}, ${year}`;
   };
   return (
     <>
@@ -216,8 +239,8 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
             <th>Payment Platform</th>
             <th>Subscription Action</th>
             <th>3 Month Subscription Action</th>
-            <th style={{ width: "9%" }}>Start Date</th>
-            <th>Renewal Date</th>
+            <th style={{ width: "9%" }}>Subscription Start Date</th>
+            <th>Subscription Renewal Date</th>
             <th>Action</th>
           </tr>
           {loading ? (
@@ -231,14 +254,15 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
             </tr>
           ) : user && user?.length > 0 ? (
             user?.map((data, index) => {
-              const rowNumber = (currentPage - 1) * usersPerPage + index + 1;
+              // const rowNumber = (currentPage - 1) * usersPerPage + index + 1;
+              const rowNumber=index+1;
               return (
                 <tr key={data.id}>
                   <td>{rowNumber}</td>
                   <td>{data.name}</td>
-                  <td>{data.email || data.username}</td>
+                  <td>{data.email || data.username||"--"}</td>
                   <td style={{ textAlign: "center" }}>
-                    {data.subscription_status === null
+                    {/* {data.subscription_status === null
                       ? data.subscription_status_admin === "ByAdmin" ||
                         (data.subscription_status_admin === null &&
                           data.start_date &&
@@ -251,17 +275,18 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                       ? "Paid"
                       : data.subscription_status === 9
                       ? "Special Offer"
-                      : "Free"}
+                      : "Free"} */}
 
-                    {/* {data.subscription_status === 0
+                    {data.subscription_status === 0 
                       ? "Free"
                       : data.subscription_status === 1
                       ? "Paid"
                       : data.subscription_status === 9
                       ? "Special Offer"
-                      : "Free"} */}
+                      : "Free"}
                   </td>
-                  <td>{data.platform || "N/A"}</td>
+                  <td>{data.platform === "ios" ? "iOS" : (data.platform || "N/A")}</td>
+                  {/* <td>{data.platform || "N/A"}</td> */}
                   {/* 1- month subscription button */}
                   {/* <td style={{ textAlign: "center" }}>
                     {data.subscription_status === 9 || data.total_days <= 31 ? (
@@ -324,7 +349,7 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                         type="submit"
                         name="subscribe"
                         className="btn btn-danger alert-subscribe"
-                        title="Click to Inactivate Subscription"
+                        title="Click to Deactivate 1 Month Subscription"
                         onClick={() => CancelsubscriptionspecialMonth(data.id)}
                       >
                         InActive
@@ -335,7 +360,7 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                         name="subscribe"
                         className="btn alert-subscribe"
                         style={{ backgroundColor: "#0199FE", color: "white" }}
-                        title="Click to Activate Subscription"
+                        title="Click to Activate 1 Month Subscription"
                         onClick={() => subscriptionspecialMonth(data.id)}
                         disabled={data.total_days > 31}
                       >
@@ -351,7 +376,7 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                         type="submit"
                         name="subscribe"
                         className="btn btn-danger alert-subscribe"
-                        title="Click to Inactivate Subscription"
+                        title="Click to Deactivate 3 Month Subscription"
                         onClick={() => cancel3Actions(data.id)}
                       >
                         InActive
@@ -362,9 +387,9 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                         name="subscribe"
                         className="btn alert-subscribe"
                         style={{ backgroundColor: "#0199FE", color: "white" }}
-                        title="Click to Activate Subscription"
+                        title="Click to Activate 3 Month Subscription"
                         onClick={() => subscription3Month(data.id)}
-                        disabled={data.total_days > 0 && data.total_days <= 31} // 👈 1-month user ke liye disabled
+                        disabled={data.total_days > 0 && data.total_days <= 31}
                       >
                         Active
                       </button>
@@ -377,7 +402,7 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                     <a
                       className="btn btn-info btnButton"
                       style={{ padding: "2px 12px" }}
-                      title="View"
+                      title="Click to View User Details"
                       onClick={() => onHandleNextPage(data.id)}
                     >
                       <FontAwesomeIcon
