@@ -1024,48 +1024,100 @@ export default function User() {
   // };
 
 
+  // const paginate = (pageNumber) => {
+  
+  //   let tokenToSend = null;
+  
+  //   if (pageNumber > currentPage) {
+  //     tokenToSend = nextPageToken;  // Ensure nextPageToken is used when going forward
+  //   } else if (pageNumber < currentPage) {
+  //     const tokensCopy = [...pageTokens];
+  //     tokenToSend = tokensCopy[tokensCopy.length - 2] || null;
+  //     tokensCopy.pop();
+  //     setPageTokens(tokensCopy);
+  //   }
+  
+  //   console.log("Paginate Function Call - Next Page Token:", tokenToSend); // Debugging Log
+  
+  //   if (pageNumber > totalPages) return;
+  
+  //   if (filterName || filterEmail || filterSubscription || filterPlatform) {
+  //     filterUsers(filterName, filterEmail, filterSubscription, filterPlatform, pageNumber, tokenToSend)
+  //       .then((data) => {
+  //         if (data && data.users) {
+  //           setUser(data.users);
+  //           setNextPageToken(data.nextPageToken); // Ensure nextPageToken is updated
+  //           setSubscriptionCount(data.subscriptionCount);
+  //           setFiltersCount(data.platformCount);
+  //           setCurrentPage(pageNumber);
+  //         } else {
+  //           console.error("No users found from filterUsers");
+  //         }
+  //       })
+  //       .catch((error) => console.error("Error fetching filtered users:", error));
+  //   } else {
+  //     fetchUsers(
+  //       activeTab === "all" ? null : activeTab === "active" ? 1 : 0,
+  //       pageNumber,
+  //       tokenToSend
+  //     );
+  //   }
+  
+  //   window.scrollTo({
+  //     top: 300,
+  //     behavior: "smooth",
+  //   });
+  // };
+
   const paginate = (pageNumber) => {
     let tokenToSend = null;
+
     if (pageNumber > currentPage) {
-      tokenToSend = nextPageToken;
+        tokenToSend = nextPageToken;  // Ensure nextPageToken is used when going forward
     } else if (pageNumber < currentPage) {
-      const tokensCopy = [...pageTokens];
-      tokenToSend = tokensCopy[tokensCopy.length - 2] || null;
-      tokensCopy.pop();
-      setPageTokens(tokensCopy);
+        const tokensCopy = [...pageTokens];
+        tokenToSend = tokensCopy[tokensCopy.length - 2] || null;
+        tokensCopy.pop();
+        setPageTokens(tokensCopy);
     }
-  
+
+    console.log("Paginate Function Call - Next Page Token:", tokenToSend); // Debugging Log
+
     if (pageNumber > totalPages) return;
-  
+
+    setLoading(true); // 🔥 Show loading before making API call
+
     if (filterName || filterEmail || filterSubscription || filterPlatform) {
-      // If filters are applied, use `filterUsers` instead of `fetchUsers`
-      filterUsers(filterName, filterEmail, filterSubscription, filterPlatform, pageNumber, tokenToSend)
-        .then((data) => {
-          if (data && data.users) {
-            setUser(data.users);
-            setNextPageToken(data.nextPageToken);
-            setSubscriptionCount(data.subscriptionCount);
-            setFiltersCount(data.platformCount);
-            setCurrentPage(pageNumber);
-          } else {
-            console.error("No users found from filterUsers");
-          }
-        })
-        .catch((error) => console.error("Error fetching filtered users:", error));
+        filterUsers(filterName, filterEmail, filterSubscription, filterPlatform, pageNumber, tokenToSend)
+            .then((data) => {
+                if (data && data.users) {
+                    setUser(data.users);
+                    setNextPageToken(data.nextPageToken); // Ensure nextPageToken is updated
+                    setSubscriptionCount(data.subscriptionCount);
+                    setFiltersCount(data.platformCount);
+                    setCurrentPage(pageNumber);
+                } else {
+                    console.error("No users found from filterUsers");
+                }
+            })
+            .catch((error) => console.error("Error fetching filtered users:", error))
+            .finally(() => setLoading(false)); // 🔥 Hide loading after response
     } else {
-      // If no filters, use the normal `fetchUsers`
-      fetchUsers(
-        activeTab === "all" ? null : activeTab === "active" ? 1 : 0,
-        pageNumber,
-        tokenToSend
-      );
+        fetchUsers(
+            activeTab === "all" ? null : activeTab === "active" ? 1 : 0,
+            pageNumber,
+            tokenToSend
+        ).finally(() => setLoading(false)); // 🔥 Hide loading after response
     }
-  
+
     window.scrollTo({
-      top: 300,
-      behavior: "smooth",
+        top: 300,
+        behavior: "smooth",
     });
-  };
+};
+
+  
+  
   
 
   

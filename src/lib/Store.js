@@ -723,20 +723,41 @@ export const editLifeCoackDEscription = async (finalData) => {
 };
 
 // filter user tables
-export const filterUsers = async (name, email, subscription, platform) => {
+// export const filterUsers = async (name, email, subscription, platform) => {
+//   try {
+//     let url = `${Url}/u1r5a03ki8/ufrm8u4j8i?`;
+
+//     const params = new URLSearchParams();
+//     if (name) params.append("name", name);
+//     if (email) params.append("email", email);
+//     if (subscription) params.append("subscription", subscription);
+//     if (platform) params.append("platform", platform);
+
+//     const response = await axios.get(url + params.toString());
+//     return response.data;
+//   } catch (error) {
+//     console.error(error);
+//     return error;
+//   }
+// };
+
+export const filterUsers = async (name, email, subscription, platform, pageNumber = 1, pageToken = null) => {
   try {
     let url = `${Url}/u1r5a03ki8/ufrm8u4j8i?`;
-
     const params = new URLSearchParams();
+    
     if (name) params.append("name", name);
     if (email) params.append("email", email);
     if (subscription) params.append("subscription", subscription);
     if (platform) params.append("platform", platform);
+    if (pageToken) params.append("pageToken", pageToken); // Ensure pageToken is passed
 
     const response = await axios.get(url + params.toString());
+
+    console.log("Filter API Response:", response.data); // Debugging log
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching filtered users:", error);
     return error;
   }
 };
