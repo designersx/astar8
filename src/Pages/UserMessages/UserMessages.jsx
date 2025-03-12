@@ -9,14 +9,13 @@ import { getAdminUserMessages } from "../../lib/Store";
 
 const UserMessages = () => {
   const [usersList, setUsersList] = useState();
-  // console.log("userListtt",usersList)
+  console.log("userListtt", usersList);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [sample, setsample] = useState(0)
-  const [userId, setuserId] = useState(localStorage.getItem("userId") || "")
-  const [userRole, setuserRole] = useState(localStorage.getItem("Role") || "")
+  const [sample, setsample] = useState(0);
+  const [userId, setuserId] = useState(localStorage.getItem("userId") || "");
+  const [userRole, setuserRole] = useState(localStorage.getItem("Role") || "");
   // console.log("userRolee",userRole)
-  const llyadId = "5mywqbuSYUPveHLmD0Df"
-
+  const llyadId = "6";
 
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -34,17 +33,17 @@ const UserMessages = () => {
   const fetchUserList = async () => {
     const receiverId = userRole === "1" ? userId : llyadId;
     const finalDate = {
-      receiver_id:receiverId,
-      from:fromDate,
-      to:toDate
-    }
+      receiver_id: receiverId,
+      from: fromDate,
+      to: toDate,
+    };
     const response = await getAdminUserMessages(finalDate);
     setUsersList(response?.data);
   };
 
   useEffect(() => {
     fetchUserList();
-  }, [fromDate,toDate,selectedUser,sample]);
+  }, [fromDate, toDate, selectedUser, sample]);
 
   const handleUserSelect = (userId) => {
     const user = usersList?.find((u) => u.user_id === userId);
@@ -106,37 +105,36 @@ const UserMessages = () => {
             <div className="col-md-8 col-sm-12 text-right">
               <div className="datesearch">
                 <div className="d-flex">
-                <span className="input-b">
-                  <b>From:</b> &nbsp;
-                </span>
-                <input
-                  className="form-control dateselected filter w-25"
-                  id="messagefilterFrom"
-                  value={fromDate}
-                  onChange={handleFromDateChange}
-                  max={toDate}
-                  name="filterdateFrom"
-                  type="date"
-                />
+                  <span className="input-b">
+                    <b>From:</b> &nbsp;
+                  </span>
+                  <input
+                    className="form-control dateselected filter w-25"
+                    id="messagefilterFrom"
+                    value={fromDate}
+                    onChange={handleFromDateChange}
+                    max={toDate}
+                    name="filterdateFrom"
+                    type="date"
+                  />
                 </div>
 
-                
                 <div className="d-flex">
-                <span className="input-b">
-                  <b>To:</b> &nbsp;
-                </span>
-                <input
-                  className="form-control dateselected filter w-25"
-                  id="messagefilterTo"
-                  value={toDate}
-                  onChange={handleToDateChange}
-                  min={fromDate}
-                  max={new Date().toISOString().split("T")[0]} // Dynamically set max to today's date
-                  name="filterdateTo"
-                  type="date"
-                />
+                  <span className="input-b">
+                    <b>To:</b> &nbsp;
+                  </span>
+                  <input
+                    className="form-control dateselected filter w-25"
+                    id="messagefilterTo"
+                    value={toDate}
+                    onChange={handleToDateChange}
+                    min={fromDate}
+                    max={new Date().toISOString().split("T")[0]} // Dynamically set max to today's date
+                    name="filterdateTo"
+                    type="date"
+                  />
                 </div>
-              
+
                 <button
                   className="btn btn-primary btn-lg btnclr"
                   onClick={() => {

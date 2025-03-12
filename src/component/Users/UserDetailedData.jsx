@@ -19,6 +19,28 @@ export default function UserDetailedData() {
     return date.toLocaleDateString("en-US", options);
   };
 
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "N/A";
+    const date = new Date(dateStr);
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const monthName = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${monthName} ${day}, ${year}`;
+  };
   const fetchUserDetailed = async () => {
     try {
       setLoading(true);
@@ -186,6 +208,21 @@ export default function UserDetailedData() {
                                 9
                               ? "Special Offer"
                               : "Free"}
+                          </li>
+
+                          <li>
+                            <span>Subscription Start Date:</span>
+                            {formatDate(
+                              userDetails?.subscription_details
+                              ?.start_date
+                            )||"N/A"}
+                          </li>
+                          <li>
+                            <span>Subscription Renewal Date:</span>
+                            {formatDate(
+                              userDetails?.subscription_details
+                                ?.renewal_date
+                            )||'N/A'}
                           </li>
                         </ul>
                       </div>

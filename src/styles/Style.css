@@ -3506,8 +3506,9 @@ body.IE .register-page-wrap .container {
   color: #33484f;
 }
 .chat-list .notification-list {
-  height: calc(100% - 76px);
+  height: calc(85% - 49px);
   padding: 10px;
+  padding-top: 0px;
 }
 .notification-list.chat-notification-list ul li a {
   padding-top: 16px;
@@ -5944,7 +5945,8 @@ pre code {
 .table-bordered td,
 .table-bordered th {
   border: 1px solid #dee2e6;
-}
+  border-right: none;
+} 
 
 .table-bordered thead td,
 .table-bordered thead th {
@@ -8837,7 +8839,8 @@ input[type="submit"].btn-block {
 .nav-tabs .nav-link:hover {
   border-color: #e9ecef #e9ecef #dee2e6;
   cursor: pointer;
-  color: #0062cc;
+  color: #e600e1;
+  /* color: #0062cc; */
 }
 
 .nav-tabs .nav-link.disabled {

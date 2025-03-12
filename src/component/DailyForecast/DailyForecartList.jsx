@@ -440,6 +440,7 @@ export default function DailyForecartList() {
                                                     style={{
                                                       cursor: "pointer",
                                                     }}
+                                                     title=" Click to Publish prediction now"
                                                     onClick={() =>
                                                       publishButton(
                                                         forecast?.id
@@ -449,6 +450,7 @@ export default function DailyForecartList() {
                                                     <FaUpload size={14} />
                                                   </div>
                                                   <div
+                                                  title="Click to Cancel Prediction"
                                                     style={{
                                                       cursor: "pointer",
                                                     }}
