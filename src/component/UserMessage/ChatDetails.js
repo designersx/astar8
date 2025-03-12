@@ -8,8 +8,8 @@ import Loader from "../Loader/Loader";
 import { AiOutlineMessage } from "react-icons/ai";
 
 const ChatDetails = ({ user, onMessageSent }) => {
-  const url = "https://dev.astar8.com"
-  // const url = "http://localhost:5234";
+  // const url = "https://dev.astar8.com"
+  const url = "http://localhost:5234";
   const [userChatMessages, setUserChatMessages] = useState([]);
   // console.log("userrr", user);
   const [messageInput, setMessageInput] = useState("");
