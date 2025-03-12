@@ -934,19 +934,25 @@ export default function User() {
         console.log("Filtered Users:", filteredUsers);
 
         // For page 1 (or special case page 2739) replace data; otherwise, append.
-        setUser((prevUsers) =>
-          pageNumber === 1 || pageNumber === 2739
-            ? filteredUsers
-            : [...filteredUsers]
-        );
-
         // setUser((prevUsers) =>
-        //   pageNumber === 1 || pageNumber === totalPages
+        //   pageNumber === 1 || pageNumber === 2739
         //     ? filteredUsers
-        //     : [...prevUsers, ...filteredUsers]
+        //     : [...filteredUsers]
         // );
-        
-     
+
+        setUser((prevUsers) => {
+          if (pageNumber === 1 || pageNumber === totalPages) {
+            return filteredUsers; // Replace for first and last page
+          }
+
+          // Append without duplicates
+          const uniqueUsers = [
+            ...new Map(
+              [...prevUsers, ...filteredUsers].map((user) => [user.id, user])
+            ).values(),
+          ];
+          return uniqueUsers;
+        });
 
         setNextPageToken(response.nextPageToken || null);
         setCurrentPage(pageNumber);
@@ -1106,7 +1112,7 @@ export default function User() {
         .then((data) => {
           if (data && data.users) {
             setUser(data.users);
-            setNextPageToken(data.nextPageToken); // Ensure nextPageToken is updated
+            setNextPageToken(data.nextPageToken);
             setSubscriptionCount(data.subscriptionCount);
             setFiltersCount(data.platformCount);
             setCurrentPage(pageNumber);
@@ -1190,7 +1196,7 @@ export default function User() {
               <div className="col-md-4">
                 <div className="card text-center shadow-sm">
                   <div className="card-body">
-                    <h6 className="card-title text-uppercase text-muted mb-1">
+                    <h6 className="card-title text-muted mb-1">
                       Total Filtered Users
                     </h6>
                     <h3 className="card-text fw-bold mb-0">{user.length}</h3>
@@ -1203,7 +1209,7 @@ export default function User() {
                 <div className="col-md-8">
                   <div className="card text-center shadow-sm h-100">
                     <div className="card-body d-flex flex-column justify-content-center">
-                      <h6 className="card-title text-uppercase text-muted mb-2">
+                      <h6 className="card-title text-muted mb-2">
                         No Additional Filters
                       </h6>
                       <h5 className="card-text fw-bold mb-0">
