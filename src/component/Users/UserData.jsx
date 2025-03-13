@@ -253,14 +253,18 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
             </tr>
           ) : user && user?.length > 0 ? (
             user?.map((data, index) => {
-              console.log(`User ID: ${data.id}, Row Number: ${index + 1}, Page: ${currentPage}`);
+              console.log(
+                `User ID: ${data.id}, Row Number: ${
+                  index + 1
+                }, Page: ${currentPage}`
+              );
               const rowNumber = (currentPage - 1) * usersPerPage + index + 1;
               // const rowNumber=index+1;
               return (
                 <tr key={data.id}>
                   <td>{rowNumber}</td>
                   <td>{data.name}</td>
-                  <td>{data.email || data.username||"--"}</td>
+                  <td>{data.email || data.username || "--"}</td>
                   <td style={{ textAlign: "center" }}>
                     {/* {data.subscription_status === null
                       ? data.subscription_status_admin === "ByAdmin" ||
@@ -277,7 +281,7 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                       ? "Special Offer"
                       : "Free"} */}
 
-                    {data.subscription_status === 0 
+                    {data.subscription_status === 0
                       ? "Free"
                       : data.subscription_status === 1
                       ? "Paid"
@@ -285,7 +289,9 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                       ? "Special Offer"
                       : "Free"}
                   </td>
-                  <td>{data.platform === "ios" ? "iOS" : (data.platform || "N/A")}</td>
+                  <td>
+                    {data.platform === "ios" ? "iOS" : data.platform || "N/A"}
+                  </td>
                   {/* <td>{data.platform || "N/A"}</td> */}
                   {/* 1- month subscription button */}
                   {/* <td style={{ textAlign: "center" }}>
@@ -352,7 +358,7 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                         title="Click to Deactivate 1 Month Subscription"
                         onClick={() => CancelsubscriptionspecialMonth(data.id)}
                       >
-                        InActive
+                        Deactivate
                       </button>
                     ) : (
                       <button
@@ -362,7 +368,9 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                         style={{ backgroundColor: "#0199FE", color: "white" }}
                         title="Click to Activate 1 Month Subscription"
                         onClick={() => subscriptionspecialMonth(data.id)}
-                        disabled={data.total_days > 31}
+                        disabled={
+                          data.total_days > 31 || data.subscription_status === 1
+                        }
                       >
                         Active
                       </button>
@@ -379,7 +387,7 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                         title="Click to Deactivate 3 Month Subscription"
                         onClick={() => cancel3Actions(data.id)}
                       >
-                        InActive
+                        Deactivate
                       </button>
                     ) : (
                       <button
@@ -389,7 +397,10 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                         style={{ backgroundColor: "#0199FE", color: "white" }}
                         title="Click to Activate 3 Month Subscription"
                         onClick={() => subscription3Month(data.id)}
-                        disabled={data.total_days > 0 && data.total_days <= 31}
+                        disabled={
+                          (data.total_days > 0 && data.total_days <= 31) ||
+                          data.subscription_status === 1
+                        }
                       >
                         Active
                       </button>
