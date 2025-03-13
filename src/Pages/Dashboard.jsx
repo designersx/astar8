@@ -88,7 +88,7 @@ export default function DashBoard() {
                 </div>
               </div>
               <div className="row clearfix progress-box ">
-                <div className="col-lg-3 col-md-6 col-sm-12 " onClick={navigateUsers}>
+                <div className="col-lg-3 col-md-6 col-sm-12 " onClick={navigateUsers}  style={{ cursor: "pointer" }}>
                   <div className="card-box pd-30 height-100-p">
                     <div className="progress-box text-center">
                       <h5 className="text-blue padding-top-10 h5">
@@ -102,7 +102,7 @@ export default function DashBoard() {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-6 col-sm-12" onClick={navigateUsers}>
+                <div className="col-lg-3 col-md-6 col-sm-12" onClick={navigateUsers}  style={{ cursor: "pointer" }}>
                   <div className="card-box pd-30 height-100-p">
                     <div className="progress-box text-center">
                       <h5 className="text-light-green padding-top-10 h5">

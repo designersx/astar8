@@ -71,8 +71,8 @@ console.log(data,"data")
                 value={compDays}
                 onChange={handleSelectChange}
               >
-                <option value="week">Weekly</option>
-                <option value="month">Monthly</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
               </select>
             </div>
           </div>
