@@ -12,7 +12,7 @@ export default function User() {
   const [user, setUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   // This value is used to compute totalPages from the overall count.
-  const [usersPerPage, setUsersPerPage] = useState(10);
+  const [usersPerPage, setUsersPerPage] = useState(50);
   const [activeTab, setActiveTab] = useState("all");
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -26,11 +26,22 @@ export default function User() {
   const [filterCount, setFiltersCount] = useState(null);
   const [lastPageMode, setLastPageMode] = useState(false);
   const [combinedCount, setCombinedCount] = useState(null);
-  console.log(subscriptionCount, "subscriptionCount");
-  console.log(filterCount, "filterCount");
+  // console.log(subscriptionCount, "subscriptionCount");
+  // console.log(filterCount, "filterCount");
   // overall total user count
   const [count, setTotalCount] = useState(0);
   const [pageTokens, setPageTokens] = useState([]);
+
+  const [searchExecuted, setSearchExecuted] = useState(false);
+  const [searchFilters, setSearchFilters] = useState({
+    name: "",
+    email: "",
+    subscription: "",
+    platform: "",
+  });
+
+  const isFilterActive =
+    filterName || filterEmail || filterSubscription || filterPlatform;
 
   // Get overall count from localStorage and calculate totalPages based on usersPerPage
   useEffect(() => {
@@ -141,10 +152,13 @@ export default function User() {
   const handleSearch = async () => {
     try {
       setfilterloading(true);
+      setSearchExecuted(false); // Reset before fetching new data
+
       const isFilterEmpty =
         !filterName && !filterEmail && !filterSubscription && !filterPlatform;
       if (isFilterEmpty) {
         fetchUsers();
+        setSearchExecuted(false);
       } else {
         const data = await filterUsers(
           filterName,
@@ -152,17 +166,29 @@ export default function User() {
           filterSubscription,
           filterPlatform
         );
+
         if (data && data.users) {
           setUser(data.users);
-          console.log("Filtered data.Users:", data.users);
           setNextPageToken(data.nextPageToken);
+
+          // ✅ Store the filters only when Search is clicked
+          setSearchFilters({
+            name: filterName,
+            email: filterEmail,
+            subscription: filterSubscription,
+            platform: filterPlatform,
+          });
+
+          // ✅ Update counts only after search
           setSubscriptionCount(data.subscriptionCount);
           setFiltersCount(data.platformCount);
           setCombinedCount(data.combinedCount);
+          setSearchExecuted(true);
         } else {
           console.error("No users found from filterUsers");
         }
       }
+
       setCurrentPage(1);
       setfilterloading(false);
     } catch (error) {
@@ -177,9 +203,11 @@ export default function User() {
     setFilterEmail("");
     setFilterSubscription("");
     setFilterPlatform("");
+    setSearchExecuted(false); // ✅ Hide filter-based cards on clear
     fetchUsers();
-    setSubscriptionCount("");
-    setFilterPlatform("");
+    setSubscriptionCount(null);
+    setFiltersCount(null);
+    setCombinedCount(null);
   };
 
   // const paginate = (pageNumber) => {
@@ -474,41 +502,29 @@ export default function User() {
 
             {/* Filter Summary: row of small cards */}
             <div className="row row-cols-1 row-cols-md-4 g-3 my-3">
-              {/* Card 1: Total Displayed Users */}
+              {/* ✅ This card always shows */}
               <div className="col">
                 <div className="card text-center shadow-sm h-100">
                   <div className="card-body">
                     <h6 className="card-title text-muted mb-1">
                       Total Displayed Users
                     </h6>
-                    <h3 className="card-text fw-bold mb-0">{user.length}</h3>
+                    <h3 className="card-text fw-bold mb-0 mt-2">
+                      {user.length}
+                    </h3>
                   </div>
                 </div>
               </div>
 
-              {/* If no platform/subscription filters, show a single wide card prompting user to select filters */}
-              {!filterPlatform && !filterSubscription ? (
-                <div className="col-12">
-                  <div className="card text-center shadow-sm h-100">
-                    <div className="card-body d-flex flex-column justify-content-center">
-                      <h6 className="card-title text-muted mb-2">
-                        No Additional Filters
-                      </h6>
-                      <h5 className="card-text fw-bold mb-0">
-                        Please select a filter to show more stats
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-              ) : (
+              {/* ✅ Other cards show only after Search is clicked */}
+              {searchExecuted && (
                 <>
-                  {/* Card 2: Platform Count (Only if filterPlatform is chosen) */}
-                  {filterPlatform && (
+                  {searchFilters.platform && (
                     <div className="col">
                       <div className="card text-center shadow-sm h-100">
                         <div className="card-body">
                           <h6 className="card-title text-muted mb-1">
-                            Platform “{filterPlatform}”
+                            Platform “{searchFilters.platform}”
                           </h6>
                           <h3 className="card-text fw-bold mb-0">
                             {filterCount || 0}
@@ -518,18 +534,17 @@ export default function User() {
                     </div>
                   )}
 
-                  {/* Card 3: Subscription Count (Only if filterSubscription is chosen) */}
-                  {filterSubscription && (
+                  {searchFilters.subscription && (
                     <div className="col">
                       <div className="card text-center shadow-sm h-100">
                         <div className="card-body">
                           <h6 className="card-title text-muted mb-1">
                             Subscription “
-                            {filterSubscription === "0"
+                            {searchFilters.subscription === "0"
                               ? "Free"
-                              : filterSubscription === "1"
+                              : searchFilters.subscription === "1"
                               ? "Paid"
-                              : filterSubscription === "9"
+                              : searchFilters.subscription === "9"
                               ? "Special Offer"
                               : "N/A"}
                             ”
@@ -542,25 +557,23 @@ export default function User() {
                     </div>
                   )}
 
-                  {/* Card 4: Intersection (Only if both filters are chosen) */}
-                  {filterPlatform && filterSubscription && (
+                  {searchFilters.platform && searchFilters.subscription && (
                     <div className="col">
                       <div className="card text-center shadow-sm h-100">
                         <div className="card-body">
                           <h6 className="card-title text-muted mb-1">
-                            {filterSubscription === "0"
+                            {searchFilters.subscription === "0"
                               ? "Free"
-                              : filterSubscription === "1"
+                              : searchFilters.subscription === "1"
                               ? "Paid"
-                              : filterSubscription === "9"
+                              : searchFilters.subscription === "9"
                               ? "Special Offer"
                               : "N/A"}{" "}
-                             {filterPlatform}  Users
+                            {searchFilters.platform} Users
                           </h6>
                           <h3 className="card-text fw-bold mb-0">
                             {combinedCount || 0}
                           </h3>
-                          {/* or user.length if you prefer to show the actual displayed user count */}
                         </div>
                       </div>
                     </div>
@@ -572,43 +585,45 @@ export default function User() {
             <div className="row clearfix">
               <div className="col-lg-12 col-md-12 col-sm-12 mb-30">
                 <div className="pd-20 card-box">
-                  <div className="usertable">
+                  <div className="">
                     <div
                       style={{
                         float: "right",
                         display: "flex",
                         gap: "10px",
-                        width: "65%",
+                        width: "100%",
                       }}
                       className="form-group filterInput"
                     >
                       <input
                         type="text"
                         className="form-control"
-                        style={{ width: 140 }}
+                        style={{ width: "40%", padding: "7px" }}
                         name="username"
                         id="username"
                         placeholder="Enter Name"
                         value={filterName}
-                        onChange={(e) => setFilterName(e.target.value)}
+                        onChange={(e) => setFilterName(e.target.value)} // ✅ Updates live but doesn't affect cards yet
                       />
                       <input
                         type="text"
                         className="form-control"
-                        style={{ width: 140 }}
+                        style={{ width: "45%", padding: "7px" }}
                         name="useremail"
                         id="useremail"
                         placeholder="Enter Email"
                         value={filterEmail}
-                        onChange={(e) => setFilterEmail(e.target.value)}
+                        onChange={(e) =>
+                          setFilterEmail(e.target.value.toLowerCase())
+                        }
                       />
                       <select
                         name="usersubscription"
                         className="form-control SelectBoxHeight"
-                        style={{ width: "78%" }}
+                        style={{ width: "35%" }}
                         id="usersubscription"
                         value={filterSubscription}
-                        onChange={(e) => setFilterSubscription(e.target.value)}
+                        onChange={(e) => setFilterSubscription(e.target.value)} // ✅ Updates live but doesn’t affect cards
                       >
                         <option value="">Subscription</option>
                         <option value={0}>Free</option>
@@ -619,7 +634,7 @@ export default function User() {
                         name="subscriptionPlatform"
                         className="form-control SelectBoxHeight1"
                         id="subscriptionPlatform"
-                        style={{ width: "84%" }}
+                        style={{ width: "35%" }}
                         value={filterPlatform}
                         onChange={(e) => setFilterPlatform(e.target.value)}
                       >
@@ -666,7 +681,14 @@ export default function User() {
                           id="all"
                           role="tabpanel"
                         >
-                          <div className="card-block table-border-style alluserlist">
+                          <div
+                            className="card-block table-border-style alluserlist"
+                            style={{
+                              overflow: "auto",
+                              minWidth: "1000px",
+                              marginBottom: "17px",
+                            }}
+                          >
                             <UserData
                               user={user}
                               currentPage={currentPage}
@@ -678,11 +700,25 @@ export default function User() {
 
                           <div className="custom-pagination">
                             <nav>
-                              <ul className="pagination">
-                                <li className="page-item">
+                              <ul
+                                className="pagination"
+                                style={{ marginBottom: "0px" }}
+                              >
+                                <li
+                                  className={`page-item ${
+                                    isFilterActive ? "disabled" : ""
+                                  }`}
+                                  style={{
+                                    cursor: isFilterActive
+                                      ? "not-allowed"
+                                      : "pointer",
+                                  }}
+                                >
                                   <span
                                     className="page-link"
-                                    onClick={goToFirstPage}
+                                    onClick={() => {
+                                      if (!isFilterActive) goToFirstPage();
+                                    }}
                                   >
                                     First Page
                                   </span>
@@ -727,10 +763,21 @@ export default function User() {
                                     Next
                                   </span>
                                 </li>
-                                <li className="page-item">
+                                <li
+                                  className={`page-item ${
+                                    isFilterActive ? "disabled" : ""
+                                  }`}
+                                  style={{
+                                    cursor: isFilterActive
+                                      ? "not-allowed"
+                                      : "pointer",
+                                  }}
+                                >
                                   <span
                                     className="page-link"
-                                    onClick={goToLastPage}
+                                    onClick={() => {
+                                      if (!isFilterActive) goToFirstPage();
+                                    }}
                                   >
                                     Last Page
                                   </span>

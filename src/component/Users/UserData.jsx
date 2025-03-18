@@ -245,7 +245,7 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
           {loading ? (
             <tr>
               <td
-                colSpan="8"
+                colSpan="10"
                 style={{ textAlign: "center", padding: "15px 0" }}
               >
                 <Loader />
@@ -253,11 +253,11 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
             </tr>
           ) : user && user?.length > 0 ? (
             user?.map((data, index) => {
-              console.log(
-                `User ID: ${data.id}, Row Number: ${
-                  index + 1
-                }, Page: ${currentPage}`
-              );
+              // console.log(
+              //   `User ID: ${data.id}, Row Number: ${
+              //     index + 1
+              //   }, Page: ${currentPage}`
+              // );
               const rowNumber = (currentPage - 1) * usersPerPage + index + 1;
               // const rowNumber=index+1;
               return (
@@ -427,7 +427,7 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
             })
           ) : (
             <tr>
-              <td colSpan="8" style={{ textAlign: "center" }}>
+              <td colSpan="10" style={{ textAlign: "center" }}>
                 No results found
               </td>
             </tr>

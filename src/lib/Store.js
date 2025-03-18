@@ -742,6 +742,7 @@ export const editLifeCoackDEscription = async (finalData) => {
 // };
 
 export const filterUsers = async (name, email, subscription, platform, pageNumber = 1, pageToken = null) => {
+  console.log("Dataa",name,email,subscription, platform,pageToken)
   try {
     let url = `${Url}/u1r5a03ki8/ufrm8u4j8i?`;
     const params = new URLSearchParams();
