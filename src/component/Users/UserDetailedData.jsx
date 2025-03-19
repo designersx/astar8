@@ -213,16 +213,14 @@ export default function UserDetailedData() {
                           <li>
                             <span>Subscription Start Date:</span>
                             {formatDate(
-                              userDetails?.subscription_details
-                              ?.start_date
-                            )||"N/A"}
+                              userDetails?.subscription_details?.start_date
+                            ) || "N/A"}
                           </li>
                           <li>
                             <span>Subscription Renewal Date:</span>
                             {formatDate(
-                              userDetails?.subscription_details
-                                ?.renewal_date
-                            )||'N/A'}
+                              userDetails?.subscription_details?.renewal_date
+                            ) || "N/A"}
                           </li>
                         </ul>
                       </div>
@@ -367,7 +365,16 @@ export default function UserDetailedData() {
                                         <div className="form-group">
                                           <strong>Parenting: </strong>
                                           {userDetails.otherdetails
-                                            .basic_parent_reading || "N/A"}
+                                            .basic_parent_reading ? (
+                                            <span>
+                                              {userDetails?.otherdetails?.basic_parent_reading.replace(
+                                                /<\/?[^>]+(>|$)/g,
+                                                ""
+                                              )}
+                                            </span>
+                                          ) : (
+                                            "N/A"
+                                          )}
                                         </div>
                                       </div>
                                     </div>

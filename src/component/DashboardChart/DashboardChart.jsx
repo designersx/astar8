@@ -9,30 +9,43 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { BarLoader } from "react-spinners"; // Import BarLoader
 import { dashboardHistory } from "../../lib/Store";
+
+const COLORS = {
+  car: "#1E88E5",
+  business: "#E53935",
+  property: "#FB8C00",
+  relation: "#43A047",
+  other: "#8E24AA",
+  travel: "#00ACC1",
+};
+
+const allLinesActive = Object.keys(COLORS).reduce((acc, key) => {
+  acc[key] = true;
+  return acc;
+}, {});
 
 const DashboardChart = () => {
   const [compDays, setCompDays] = useState("week");
   const [data, setData] = useState([]);
-  const [loading, setloading] = useState(false);
-console.log(data,"data")
-  console.log(compDays, "compDays");
+  const [loading, setLoading] = useState(false);
+  const [activeLines, setActiveLines] = useState(allLinesActive);
+  const [selectedLine, setSelectedLine] = useState(null); // Track which line is selected
 
   const fetchHistory = async () => {
+    setLoading(true);
     try {
-      setloading(true);
       const response = await dashboardHistory();
-      console.log("Fetched Data:", response.data);
-
       if (Array.isArray(response.data)) {
         setData(response.data);
       } else {
         console.error("API response is not an array", response.data);
       }
     } catch (error) {
-      console.log(error, "Error");
+      console.log(error, "Error fetching history");
     } finally {
-      setloading(false);
+      setLoading(false);
     }
   };
 
@@ -40,126 +53,164 @@ console.log(data,"data")
     fetchHistory();
   }, []);
 
-  const handleSelectChange = (event) => {
-    console.log(event, "event");
-    setCompDays(event.target.value);
+  const handleSelectChange = (e) => {
+    setCompDays(e.target.value);
   };
 
-  const getFilteredData = () => {
-    if (!data.length) return [];
+  const filteredData = () => {
+    const rawData = compDays === "month" ? data : data.slice(-7);
+    return rawData.map((item) => ({
+      date: item.date,
+      car: item.car || 0,
+      business: item.business || 0,
+      property: item.property || 0,
+      relation: item.relation || 0,
+      other: item.other || 0,
+      travel: item.travel || 0,
+    }));
+  };
 
-    if (compDays === "month") {
-      return data;
-    } else if (compDays === "week") {
-      return data.slice(-7);
+  const handleLegendClick = (e) => {
+    const clickedKey = e.dataKey;
+
+    // If the same option is clicked again, show all lines
+    if (selectedLine === clickedKey) {
+      setActiveLines(allLinesActive);
+      setSelectedLine(null);
+    } else {
+      // Otherwise, highlight only the selected line
+      setActiveLines({
+        car: false,
+        business: false,
+        property: false,
+        relation: false,
+        other: false,
+        travel: false,
+        [clickedKey]: true,
+      });
+      setSelectedLine(clickedKey);
     }
+  };
+
+  const handleReset = () => {
+    setActiveLines(allLinesActive);
+    setSelectedLine(null);
   };
 
   return (
     <div className="row" style={{ marginTop: "35px" }}>
-      <div className="col-lg-12 col-md-12 col-sm-12 mb-30">
-        <div className="card-box pd-30 height-100-p">
-          <div className="compChart d-flex justify-content-between mb-3">
-            <h4 className="mb-30 h5 font-weight-bold">
-              Compatibility User Record
-            </h4>
-            <div className="col-sm-2 col-md-2">
-              <select
-                className="custom-select col-12"
-                name="compdays"
-                id="compdays"
-                value={compDays}
-                onChange={handleSelectChange}
-              >
-                <option value="week">This Week</option>
-                <option value="month">This Month</option>
-              </select>
-            </div>
+      <div className="col-lg-12 mb-30">
+        <div className="card-box pd-30" style={{ paddingLeft: "20px" }}>
+          {/* Title and Dropdown */}
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <h4 className="h5 font-weight-bold">Compatibility User Record</h4>
+
+            <select
+              className="custom-select col-sm-3 col-md-2"
+              value={compDays}
+              onChange={handleSelectChange}
+              style={{ marginLeft: "10px" }}
+            >
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+            </select>
           </div>
 
-          {loading ? ( // ✅ Corrected condition
-            <h4 style={{ marginLeft: "45%", marginTop: "3%" }}>
-              Loading chart...
-            </h4>
-          ) : (
-            <div style={{ width: "100%", height: "400px" }}>
-              <ResponsiveContainer>
-                <LineChart
-                  data={getFilteredData()}
-                  style={{ backgroundColor: "white" }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
+          {/* Reset Button */}
+          <div className="d-flex justify-content-end mb-1">
+            <span
+              className="text-primary"
+              style={{ cursor: "pointer", textDecoration: "none" }}
+              onClick={handleReset}
+              onMouseEnter={(e) =>
+                (e.target.style.textDecoration = "underline")
+              }
+              onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
+            >
+              Reset Chart
+            </span>
+          </div>
 
-                  <XAxis
-                    dataKey="date"
-                    tickFormatter={(date) => {
-                      const d = new Date(date);
-                      if (isNaN(d.getTime())) {
-                        console.error("Invalid date format:", date);
-                        return date;
-                      }
-                      return `${d.getDate()}/${d.getMonth() + 1}`;
-                    }}
-                    interval={0}
-                    tick={{ angle: -30, fontSize: 12 }}
-                    tickMargin={7}
-                    padding={{ right: 20 }}
-                  />
-
-                  <YAxis />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#f5f5f5",
-                      borderRadius: "5px",
-                    }}
-                  />
-                  <Legend />
-
-                  <Line
-                    type="monotone"
-                    dataKey="car"
-                    stroke="#0088FE"
-                    name="Car Compatibility Check"
-                    dot={{ r: 3 }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="business"
-                    stroke="#FF00FF"
-                    name="Business Compatibility Check"
-                    dot={{ r: 3 }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="property"
-                    stroke="#FF0000"
-                    name="Property Compatibility Check"
-                    dot={{ r: 3 }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="relation"
-                    stroke="#00FF00"
-                    name="Relation Compatibility Check"
-                    dot={{ r: 3 }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="other"
-                    stroke="#FFD700"
-                    name="Another Person Name Reading Check"
-                    dot={{ r: 3 }}
-                  />
-                     <Line
-                    type="monotone"
-                    dataKey="travel"
-                    stroke="#00BFFF"
-                    name="Travel Compatibility Check"
-                    dot={{ r: 3 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+          {/* Chart or Loader */}
+          {loading ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginTop: "5%",
+              }}
+            >
+              <BarLoader width={150} color="#1E88E5" loading={loading} />
+              <h4 style={{ marginTop: "10px", color: "#555" }}>
+                Loading Chart...
+              </h4>
             </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={450}>
+              <LineChart
+                data={filteredData()}
+                margin={{ top: 20, right: 30, left: -10, bottom: 50 }} // Increased bottom margin for legend
+              >
+                <CartesianGrid strokeDasharray="4 4" opacity={0.3} />
+                <XAxis
+                  dataKey="date"
+                  tickFormatter={(date) => {
+                    const d = new Date(date);
+                    return isNaN(d)
+                      ? date
+                      : d.toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "2-digit",
+                        });
+                  }}
+                  tick={{ fontSize: 13 }}
+                />
+                <YAxis tick={{ fontSize: 13 }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#fff",
+                    borderRadius: "8px",
+                    border: "1px solid #ccc",
+                  }}
+                  cursor={{ stroke: "#ddd", strokeWidth: 2 }}
+                />
+
+                {Object.keys(activeLines).map(
+                  (key) =>
+                    activeLines[key] && (
+                      <Line
+                        key={key}
+                        type="monotone"
+                        dataKey={key}
+                        stroke={COLORS[key]}
+                        strokeWidth={selectedLine === key ? 4 : 2.5} // Highlight selected line
+                        dot={{
+                          r: selectedLine === key ? 6 : 4,
+                          strokeWidth: 2,
+                        }} // Bigger dots on selection
+                        activeDot={{ r: selectedLine === key ? 8 : 6 }} // Larger active dots
+                        name={`${key.charAt(0).toUpperCase()}${key.slice(
+                          1
+                        )} Compatibility`}
+                      />
+                    )
+                )}
+
+                {/* Legend moved below */}
+                <Legend
+                  verticalAlign="bottom"
+                  // height={60}
+                  wrapperStyle={{
+                    // marginTop: "25px",
+                    bottom: "15px",
+                    left: "20px",
+                    cursor: "pointer",
+                  }}
+                  onClick={handleLegendClick}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           )}
         </div>
       </div>

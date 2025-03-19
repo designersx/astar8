@@ -32,6 +32,10 @@ export default function User() {
   const [count, setTotalCount] = useState(0);
   const [pageTokens, setPageTokens] = useState([]);
 
+  const [clearUrl, setclearUrl] = useState(false);
+
+  const [previousPageToken, setPreviousPageToken] = useState(null);
+
   const [searchExecuted, setSearchExecuted] = useState(false);
   const [searchFilters, setSearchFilters] = useState({
     name: "",
@@ -78,8 +82,7 @@ export default function User() {
   const fetchUsers = async (
     status = null,
     pageNumber = 1,
-    pageToken = null,
-    ascendingDocId = null // <-- New argument
+    pageToken = null
   ) => {
     setUser([]);
     setLoading(true);
@@ -111,9 +114,9 @@ export default function User() {
         url += `&pageToken=${pageToken}`;
       }
 
-      // If we are in ascending mode AND we have a doc ID, append ascendingDocId
-      if (pageToken === "true" && ascendingDocId) {
-        url += `&ascendingDocId=${ascendingDocId}`;
+      // For previous data
+      if (pageToken === previousPageToken && previousPageToken !== null) {
+        url += `&isPrevious=true`;
       }
 
       console.log("fetchUsers -> final URL:", url);
@@ -137,6 +140,7 @@ export default function User() {
         });
 
         setNextPageToken(response.nextPageToken || null);
+        setPreviousPageToken(response.previousPageToken || null);
         setCurrentPage(pageNumber);
       } else {
         console.error("No users found in API response.");
@@ -198,12 +202,20 @@ export default function User() {
   };
 
   const handleClear = () => {
+    setclearUrl(true);
     setfilterloading(false);
     setFilterName("");
     setFilterEmail("");
     setFilterSubscription("");
     setFilterPlatform("");
-    setSearchExecuted(false); // ✅ Hide filter-based cards on clear
+    setSearchExecuted(false); // Hide filter-based cards on clear
+
+    // Reset pagination state so that lastPageMode is turned off.
+    setLastPageMode(false);
+    setPageTokens([]);
+    setNextPageToken(null);
+    setPreviousPageToken(null);
+
     fetchUsers();
     setSubscriptionCount(null);
     setFiltersCount(null);
@@ -339,31 +351,32 @@ export default function User() {
   const paginate = (pageNumber) => {
     let tokenToSend = null;
 
-    // If in lastPageMode, we're in ascending order
     if (lastPageMode) {
-      // If user navigates to page 1, we reset everything
       if (pageNumber === 1) {
         goToFirstPage();
         return;
-      } else {
-        // Stay in ascending mode => always use "true"
-        tokenToSend = "true";
+      } else if (pageNumber < currentPage) {
+        // Navigating backwards in lastPageMode: use the previousPageToken
+        tokenToSend = previousPageToken;
+      } else if (pageNumber > currentPage) {
+        // (If needed) navigating forward in lastPageMode: use nextPageToken
+        tokenToSend = nextPageToken;
       }
     } else {
       // Normal (descending) pagination logic
       if (pageNumber > currentPage) {
-        // Going forward
         tokenToSend = nextPageToken;
         setPageTokens((prevTokens) => [...prevTokens, nextPageToken]);
       } else if (pageNumber < currentPage) {
-        // Going backward
-        const tokensCopy = [...pageTokens];
-        tokenToSend = tokensCopy[tokensCopy.length - 2] || null;
-        tokensCopy.pop();
-        setPageTokens(tokensCopy);
+        if (filterName || filterEmail || filterSubscription || filterPlatform) {
+          const tokensCopy = [...pageTokens];
+          tokenToSend = tokensCopy[tokensCopy.length - 2] || null;
+          tokensCopy.pop();
+          setPageTokens(tokensCopy);
+        } else {
+          tokenToSend = previousPageToken;
+        }
       }
-
-      // If user clicks page 1, explicitly reset
       if (pageNumber === 1) {
         tokenToSend = null;
         setPageTokens([]);
@@ -377,15 +390,11 @@ export default function User() {
       tokenToSend
     );
 
-    // Prevent navigating beyond total pages
     if (pageNumber > totalPages) return;
 
     setLoading(true);
 
-    // If filters are active, you might call filterUsers here.
-    // If no filters, call fetchUsers directly.
     if (filterName || filterEmail || filterSubscription || filterPlatform) {
-      // Example if your filterUsers function can also accept ascendingDocId:
       filterUsers(
         filterName,
         filterEmail,
@@ -393,7 +402,7 @@ export default function User() {
         filterPlatform,
         pageNumber,
         tokenToSend,
-        lastPageMode ? nextPageToken : null // optional ascendingDocId
+        lastPageMode ? nextPageToken : null
       )
         .then((data) => {
           if (data && data.users) {
@@ -411,12 +420,10 @@ export default function User() {
         )
         .finally(() => setLoading(false));
     } else {
-      // No filters => normal fetch
       fetchUsers(
         activeTab === "all" ? null : activeTab === "active" ? 1 : 0,
         pageNumber,
         tokenToSend,
-        // If we're in lastPageMode, pass nextPageToken as ascendingDocId
         lastPageMode ? nextPageToken : null
       ).finally(() => setLoading(false));
     }
@@ -776,7 +783,7 @@ export default function User() {
                                   <span
                                     className="page-link"
                                     onClick={() => {
-                                      if (!isFilterActive) goToFirstPage();
+                                      if (!isFilterActive) goToLastPage();
                                     }}
                                   >
                                     Last Page

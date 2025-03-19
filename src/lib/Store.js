@@ -132,6 +132,7 @@ export const updateImage = async (token, formdata) => {
 //  get all user api
 
 export const getAllUsers = async (token, status = null) => {
+  console.log("dasds",status)
   try {
     let url = `${Url}/u1r5a03ki8/usr123erd6`;
     if (status !== null) {
