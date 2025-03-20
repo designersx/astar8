@@ -62,7 +62,7 @@ export default function DashBoard() {
         </>
       ) : (
         <>
-          <div className="main-container">
+          <div className="main-container pb-4">
             <div className="">
               <div className="page-header">
                 <div className="row ">
@@ -140,7 +140,7 @@ export default function DashBoard() {
               </div>
               {/* <DashboardChart/> */}
               <DashboardChart />
-              <div className="footer-wrap pd-20 card-box mt-4">
+              <div className="footer-wrap pd-20 card-box mt-2">
                 ASTAR8 - Designed By{" "}
                 <a href="https://www.designersx.us/" target="_blank">
                   DesignersX

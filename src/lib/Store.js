@@ -229,6 +229,7 @@ export const addDailyForecast = async (token, date, prediction, user_id) => {
 
 // get forecast
 export const getForecastData = async (token, status) => {
+  console.log("statusss",status)
   try {
     const response = await axios.get(
       `${Url}/p1g6s9ik3n/dlyf45v3rf?status=${status}`,

@@ -37,6 +37,7 @@ const DashboardChart = () => {
     setLoading(true);
     try {
       const response = await dashboardHistory();
+      // console.log("ress",response)
       if (Array.isArray(response.data)) {
         setData(response.data);
       } else {
@@ -97,6 +98,8 @@ const DashboardChart = () => {
     setSelectedLine(null);
   };
 
+  
+
   return (
     <div className="row" style={{ marginTop: "35px" }}>
       <div className="col-lg-12 mb-30">
@@ -109,7 +112,7 @@ const DashboardChart = () => {
               className="custom-select col-sm-3 col-md-2"
               value={compDays}
               onChange={handleSelectChange}
-              style={{ marginLeft: "10px" }}
+              style={{ marginLeft: "10px",cursor:"pointer" }}
             >
               <option value="week">This Week</option>
               <option value="month">This Month</option>
@@ -176,7 +179,7 @@ const DashboardChart = () => {
                   cursor={{ stroke: "#ddd", strokeWidth: 2 }}
                 />
 
-                {Object.keys(activeLines).map(
+{Object.keys(activeLines).map(
                   (key) =>
                     activeLines[key] && (
                       <Line
@@ -184,15 +187,17 @@ const DashboardChart = () => {
                         type="monotone"
                         dataKey={key}
                         stroke={COLORS[key]}
-                        strokeWidth={selectedLine === key ? 4 : 2.5} // Highlight selected line
+                        strokeWidth={selectedLine === key ? 4 : 2.5}
                         dot={{
                           r: selectedLine === key ? 6 : 4,
                           strokeWidth: 2,
-                        }} // Bigger dots on selection
-                        activeDot={{ r: selectedLine === key ? 8 : 6 }} // Larger active dots
-                        name={`${key.charAt(0).toUpperCase()}${key.slice(
-                          1
-                        )} Compatibility`}
+                        }}
+                        activeDot={{ r: selectedLine === key ? 8 : 6 }}
+                        name={
+                          key === "other"
+                            ? "Other's Person Compatibility"
+                            : `${key.charAt(0).toUpperCase()}${key.slice(1)} Compatibility`
+                        }
                       />
                     )
                 )}

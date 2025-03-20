@@ -6276,6 +6276,7 @@ pre code {
 
 input#messagefilterFrom {
     min-width: 126px;
+    
 }
 
 input#messagefilterTo {
