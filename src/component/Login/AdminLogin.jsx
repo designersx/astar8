@@ -27,9 +27,9 @@ export default function AdminLogin() {
   const [rememberMe, setRememberMe] = useState(false);
 
   useEffect(() => {
-    const savedEmail = sessionStorage.getItem("rememberedEmail");
-    const savedPassword = sessionStorage.getItem("rememberedPassword");
-    const savedRememberMe = sessionStorage.getItem("rememberMe");
+    const savedEmail = localStorage.getItem("rememberedEmail");
+    const savedPassword = localStorage.getItem("rememberedPassword");
+    const savedRememberMe = localStorage.getItem("rememberMe");
 
     if (savedRememberMe === "true" && savedEmail && savedPassword) {
       setEmail(savedEmail);
@@ -91,13 +91,13 @@ export default function AdminLogin() {
         localStorage.setItem("name", response.name);
 
         if (rememberMe) {
-          sessionStorage.setItem("rememberedEmail", email);
-          sessionStorage.setItem("rememberedPassword", password);
-          sessionStorage.setItem("rememberMe", "true");
+          localStorage.setItem("rememberedEmail", email);
+          localStorage.setItem("rememberedPassword", password);
+          localStorage.setItem("rememberMe", "true");
         } else {
-          sessionStorage.removeItem("rememberedEmail");
-          sessionStorage.removeItem("rememberedPassword");
-          sessionStorage.removeItem("rememberMe");
+          localStorage.removeItem("rememberedEmail");
+          localStorage.removeItem("rememberedPassword");
+          localStorage.removeItem("rememberMe");
         }
 
         const savedData = {
