@@ -6,11 +6,23 @@ import DailyForecartList from "./DailyForecartList";
 
 export default function DailyForecast() {
   const [activeTab, setActiveTab] = useState("preditionList");
-  const [userRole, setuserRole] = useState(localStorage.getItem("Role"))
-  console.log("userROle",userRole)
+  const [userRole, setuserRole] = useState(localStorage.getItem("Role"));
+  const [showModal, setShowModal] = useState(false);
+  const [refresh1, setRefresh1] = useState(false);
 
-  const handleTabClick = (tabName) => {
-    setActiveTab(tabName);
+
+  const handleModalOpen = () => {
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
+  const handleRefresh = (isRefreshed) => {
+    if (isRefreshed) {
+      setRefresh1((prev) => !prev);
+    }
   };
 
   return (
@@ -18,47 +30,23 @@ export default function DailyForecast() {
       <Header />
       <div className="main-container pb-3">
         <div className="pd-20 card-box mb-30">
-          <div className="row">
-            <div className="col-md-6">
-              <div>
-                <h2 style={{ fontWeight: "700" }}>Daily Forecast</h2>
-              </div>
-            </div>
+          <div className="d-flex justify-content-between align-items-center">
+            <h2 className="fw-bold mb-0">Daily Forecast</h2>
+            <button className="btn btn-primary" onClick={handleModalOpen}>
+              Add Forecast
+            </button>
           </div>
         </div>
+
         <div className="pd-20 card-box mb-30">
-          <ul className="nav nav-tabs tabs" role="tablist">
-            <li className="nav-item">
-              <a
-                className={`nav-link text-blue ${
-                  activeTab === "preditionList" ? "active" : ""
-                }`}
-                data-toggle="tab"
-                role="tab"
-                onClick={() => handleTabClick("preditionList")}
-              >
-                Daily Forecast List
-              </a>
-            </li>
-            {userRole !== "2" && (
-              <li className="nav-item">
-                <a
-                  className={`nav-link text-blue ${
-                    activeTab === "predictionform" ? "active" : ""
-                  }`}
-                  data-toggle="tab"
-                  role="tab"
-                  onClick={() => handleTabClick("predictionform")}
-                >
-                  Add Daily Forecast
-                </a>
-              </li>
-            )}
-          </ul>
-          {activeTab === "preditionList" && <DailyForecartList />}
-          {activeTab === "predictionform" && <AddDailyForcast />}
+          {activeTab === "preditionList" && <DailyForecartList refresh1={refresh1} />}
         </div>
       </div>
+
+      {/* Add Forecast Modal */}
+      {showModal && (
+        <AddDailyForcast onClose={handleModalClose} onSuccess={handleRefresh} />
+      )}
     </>
   );
 }

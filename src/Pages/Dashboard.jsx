@@ -1,11 +1,11 @@
 import { React, useEffect, useState } from "react";
 import Header from "../component/Dashboard/Header";
 import { dashboardApi } from "../lib/Store";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import DashBoardLoader from "./../component/Loader/DashBoardLoader";
 import DashboardChart from "../component/DashboardChart/DashboardChart";
 export default function DashBoard() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [activeCount, setactiveCount] = useState([]);
   const [totalCount, setTotalCount] = useState([]);
   const [like, setlike] = useState([]);
@@ -17,13 +17,12 @@ export default function DashBoard() {
     const handlePopState = () => {
       window.history.pushState(null, null, window.location.href);
     };
-    window.addEventListener('popstate', handlePopState);
+    window.addEventListener("popstate", handlePopState);
 
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener("popstate", handlePopState);
     };
   }, []);
-
 
   const fetchDashboardData = async () => {
     try {
@@ -31,7 +30,7 @@ export default function DashBoard() {
       const response = await dashboardApi();
       setactiveCount(response.activeCount);
       setTotalCount(response.totalCount);
-      localStorage.setItem('totalUsers',response.totalCount)
+      localStorage.setItem("totalUsers", response.totalCount);
       setlike(response.likesCount);
       setdislike(response.dislikesCount);
     } catch (err) {
@@ -44,14 +43,14 @@ export default function DashBoard() {
     fetchDashboardData();
   }, []);
 
-  const navigateUsers=()=>{
-    navigate('/users')
-  }
+  const navigateUsers = () => {
+    navigate("/users");
+  };
 
   const handleActiveUsers = () => {
     navigate("/users", { state: { activeTab: "active" } });
   };
-  
+
   return (
     <>
       <Header />
@@ -64,31 +63,22 @@ export default function DashBoard() {
       ) : (
         <>
           <div className="main-container">
-            <div className="pb-4">
+            <div className="">
               <div className="page-header">
                 <div className="row ">
                   <div className="col-md-6 col-sm-12">
                     <div className="title">
-                      <h4>Dashboard</h4>
+                      <h3 style={{margin:"0px",fontWeight:"600"}}>Dashboard</h3>
                     </div>
-                    <nav aria-label="breadcrumb" role="navigation">
-                      <ol className="d-flex">
-                        <li className="breadcrumb-item">
-                          <a href="#">Home</a>
-                        </li>
-                        <li
-                          className="breadcrumb-item active"
-                          aria-current="page"
-                        >
-                          Dashboard
-                        </li>
-                      </ol>
-                    </nav>
                   </div>
                 </div>
               </div>
               <div className="row clearfix progress-box ">
-                <div className="col-lg-3 col-md-6 col-sm-12 " onClick={navigateUsers}  style={{ cursor: "pointer" }}>
+                <div
+                  className="col-lg-3 col-md-6 col-sm-12 "
+                  onClick={navigateUsers}
+                  style={{ cursor: "pointer" }}
+                >
                   <div className="card-box pd-30 height-100-p">
                     <div className="progress-box text-center">
                       <h5 className="text-blue padding-top-10 h5">
@@ -102,7 +92,11 @@ export default function DashBoard() {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-6 col-sm-12" onClick={navigateUsers}  style={{ cursor: "pointer" }}>
+                <div
+                  className="col-lg-3 col-md-6 col-sm-12"
+                  onClick={navigateUsers}
+                  style={{ cursor: "pointer" }}
+                >
                   <div className="card-box pd-30 height-100-p">
                     <div className="progress-box text-center">
                       <h5 className="text-light-green padding-top-10 h5">
@@ -145,7 +139,7 @@ export default function DashBoard() {
                 </div>
               </div>
               {/* <DashboardChart/> */}
-              <DashboardChart/>
+              <DashboardChart />
               <div className="footer-wrap pd-20 card-box mt-4">
                 ASTAR8 - Designed By{" "}
                 <a href="https://www.designersx.us/" target="_blank">

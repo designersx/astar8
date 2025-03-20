@@ -2,7 +2,7 @@ import axios from "axios";
 // export const Url = "http://localhost:5234";
 export const Url = "https://dev.astar8.com"
 
-//admin login api
+//admin login apii
 export const LoginApi = async (email, password) => {
   try {
     const response = await axios.post(
@@ -132,6 +132,7 @@ export const updateImage = async (token, formdata) => {
 //  get all user api
 
 export const getAllUsers = async (token, status = null) => {
+  console.log("dasds",status)
   try {
     let url = `${Url}/u1r5a03ki8/usr123erd6`;
     if (status !== null) {
@@ -742,6 +743,7 @@ export const editLifeCoackDEscription = async (finalData) => {
 // };
 
 export const filterUsers = async (name, email, subscription, platform, pageNumber = 1, pageToken = null) => {
+  console.log("Dataa",name,email,subscription, platform,pageToken)
   try {
     let url = `${Url}/u1r5a03ki8/ufrm8u4j8i?`;
     const params = new URLSearchParams();
