@@ -627,7 +627,7 @@ export default function User() {
                       <select
                         name="usersubscription"
                         className="form-control SelectBoxHeight"
-                        style={{ width: "35%",cursor:"pointer" }}
+                        style={{ width: "35%", cursor: "pointer" }}
                         id="usersubscription"
                         value={filterSubscription}
                         onChange={(e) => setFilterSubscription(e.target.value)} // ✅ Updates live but doesn’t affect cards
@@ -641,7 +641,7 @@ export default function User() {
                         name="subscriptionPlatform"
                         className="form-control SelectBoxHeight1"
                         id="subscriptionPlatform"
-                        style={{ width: "35%",cursor:"pointer" }}
+                        style={{ width: "35%", cursor: "pointer" }}
                         value={filterPlatform}
                         onChange={(e) => setFilterPlatform(e.target.value)}
                       >
@@ -752,7 +752,9 @@ export default function User() {
                                 </li>
                                 <li
                                   className={`page-item ${
-                                    currentPage === totalPages || !nextPageToken
+                                    currentPage === totalPages ||
+                                    !nextPageToken ||
+                                    user.length < usersPerPage
                                       ? "disabled"
                                       : ""
                                   }`}
@@ -762,14 +764,17 @@ export default function User() {
                                     onClick={() => {
                                       if (
                                         currentPage !== totalPages &&
-                                        nextPageToken
-                                      )
+                                        nextPageToken &&
+                                        user.length === usersPerPage
+                                      ) {
                                         paginate(currentPage + 1);
+                                      }
                                     }}
                                   >
                                     Next
                                   </span>
                                 </li>
+
                                 <li
                                   className={`page-item ${
                                     isFilterActive ? "disabled" : ""

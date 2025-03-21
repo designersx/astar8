@@ -98,8 +98,6 @@ const DashboardChart = () => {
     setSelectedLine(null);
   };
 
-  
-
   return (
     <div className="row" style={{ marginTop: "35px" }}>
       <div className="col-lg-12 mb-30">
@@ -112,7 +110,7 @@ const DashboardChart = () => {
               className="custom-select col-sm-3 col-md-2"
               value={compDays}
               onChange={handleSelectChange}
-              style={{ marginLeft: "10px",cursor:"pointer" }}
+              style={{ marginLeft: "10px", cursor: "pointer" }}
             >
               <option value="week">This Week</option>
               <option value="month">This Month</option>
@@ -179,7 +177,7 @@ const DashboardChart = () => {
                   cursor={{ stroke: "#ddd", strokeWidth: 2 }}
                 />
 
-{Object.keys(activeLines).map(
+                {Object.keys(activeLines).map(
                   (key) =>
                     activeLines[key] && (
                       <Line
@@ -195,8 +193,10 @@ const DashboardChart = () => {
                         activeDot={{ r: selectedLine === key ? 8 : 6 }}
                         name={
                           key === "other"
-                            ? "Other's Person Compatibility"
-                            : `${key.charAt(0).toUpperCase()}${key.slice(1)} Compatibility`
+                            ? "Other Person's Compatibility"
+                            : `${key.charAt(0).toUpperCase()}${key.slice(
+                                1
+                              )} Compatibility`
                         }
                       />
                     )
