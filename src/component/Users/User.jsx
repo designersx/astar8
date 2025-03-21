@@ -122,7 +122,7 @@ export default function User() {
       console.log("fetchUsers -> final URL:", url);
 
       const response = await getAllUsers(token, url);
-      console.log("API response:", response);
+      // console.log("API response:", response);
 
       if (response && response.Users) {
         // For page 1 or the last page, replace data; otherwise, append
@@ -705,7 +705,7 @@ export default function User() {
                             />
                           </div>
 
-                          <div className="custom-pagination">
+                          {/* <div className="custom-pagination">
                             <nav>
                               <ul
                                 className="pagination"
@@ -752,9 +752,7 @@ export default function User() {
                                 </li>
                                 <li
                                   className={`page-item ${
-                                    currentPage === totalPages ||
-                                    !nextPageToken ||
-                                    user.length < usersPerPage
+                                    currentPage === totalPages || !nextPageToken
                                       ? "disabled"
                                       : ""
                                   }`}
@@ -764,17 +762,14 @@ export default function User() {
                                     onClick={() => {
                                       if (
                                         currentPage !== totalPages &&
-                                        nextPageToken &&
-                                        user.length === usersPerPage
-                                      ) {
+                                        nextPageToken
+                                      )
                                         paginate(currentPage + 1);
-                                      }
                                     }}
                                   >
                                     Next
                                   </span>
                                 </li>
-
                                 <li
                                   className={`page-item ${
                                     isFilterActive ? "disabled" : ""
@@ -792,6 +787,143 @@ export default function User() {
                                     }}
                                   >
                                     Last Page
+                                  </span>
+                                </li>
+                              </ul>
+                            </nav>
+                          </div> */}
+                          <div className="custom-pagination">
+                            <nav>
+                              <ul
+                                className="pagination"
+                                style={{ marginBottom: "0px", color: "black" }}
+                              >
+                                {/* Previous Button */}
+                                <li
+                                  className={`page-item ${
+                                    currentPage === 1 ? "disabled" : ""
+                                  }`}
+                                  style={{
+                                    cursor:
+                                      currentPage === 1
+                                        ? "not-allowed"
+                                        : "pointer",
+                                  }}
+                                >
+                                  <span
+                                    className="page-link"
+                                    style={{
+                                      color: "black",
+                                      cursor:
+                                        currentPage === 1
+                                          ? "not-allowed"
+                                          : "pointer",
+                                    }}
+                                    onClick={() =>
+                                      currentPage > 1 &&
+                                      paginate(currentPage - 1)
+                                    }
+                                  >
+                                    Previous
+                                  </span>
+                                </li>
+
+                                {/* Displaying the page numbers dynamically */}
+                                {!isFilterActive && currentPage > 1 && (
+                                  <li className="page-item">
+                                    <span
+                                      className="page-link"
+                                      style={{ color: "black" }}
+                                      onClick={() => paginate(1)}
+                                    >
+                                      1
+                                    </span>
+                                  </li>
+                                )}
+
+                                {!isFilterActive && currentPage > 2 && (
+                                  <li className="page-item">
+                                    <span
+                                      className="page-link"
+                                      style={{ color: "black" }}
+                                    >
+                                      ...
+                                    </span>
+                                  </li>
+                                )}
+
+                                <li className="page-item active">
+                                  <span
+                                    className="page-link"
+                                    style={{ color: "black" }}
+                                  >
+                                    {currentPage}
+                                  </span>
+                                </li>
+
+                                {!isFilterActive &&
+                                  currentPage < totalPages - 1 && (
+                                    <li className="page-item">
+                                      <span
+                                        className="page-link"
+                                        style={{ color: "black" }}
+                                      >
+                                        ...
+                                      </span>
+                                    </li>
+                                  )}
+
+                                {!isFilterActive &&
+                                  currentPage < totalPages && (
+                                    <li className="page-item">
+                                      <span
+                                        className="page-link"
+                                        style={{ color: "black" }}
+                                        onClick={() => {
+                                          if (!isFilterActive) goToLastPage(); // Same functionality as the "Last Page" button
+                                        }}
+                                      >
+                                        {totalPages}
+                                      </span>
+                                    </li>
+                                  )}
+
+                                {/* Next Button */}
+                                <li
+                                  className={`page-item ${
+                                    currentPage === totalPages ||
+                                    !nextPageToken ||
+                                    user.length < usersPerPage
+                                      ? "disabled"
+                                      : ""
+                                  }`}
+                                  style={{
+                                    cursor:
+                                      currentPage === totalPages
+                                        ? "not-allowed"
+                                        : "pointer",
+                                  }}
+                                >
+                                  <span
+                                    className="page-link"
+                                    style={{
+                                      color: "black",
+                                      cursor:
+                                        currentPage === totalPages
+                                          ? "not-allowed"
+                                          : "pointer",
+                                    }}
+                                    onClick={() => {
+                                      if (
+                                        currentPage !== totalPages &&
+                                        nextPageToken &&
+                                        user.length === usersPerPage
+                                      ) {
+                                        paginate(currentPage + 1);
+                                      }
+                                    }}
+                                  >
+                                    Next
                                   </span>
                                 </li>
                               </ul>

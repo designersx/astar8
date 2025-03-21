@@ -26,7 +26,34 @@ export default function AdminLogin() {
   const [errorPassword, setErrorPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
+  // State for tracking failed attempts and lockout
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [isLockedOut, setIsLockedOut] = useState(false);
+  const [lockoutTime, setLockoutTime] = useState(0);
+
   useEffect(() => {
+    // Retrieve failed attempts and lockout time from localStorage
+    const savedFailedAttempts = parseInt(
+      localStorage.getItem("failedAttempts") || "0"
+    );
+    const savedLockoutTime = parseInt(
+      localStorage.getItem("lockoutTime") || "0"
+    );
+
+    // Reset failed attempts and lockout time after timer has expired
+    if (savedLockoutTime === 0) {
+      localStorage.setItem("failedAttempts", "0");
+      setFailedAttempts(0);
+    }
+
+    // If the user is locked out, use the lockout time stored in localStorage
+    if (savedFailedAttempts >= 5) {
+      setFailedAttempts(savedFailedAttempts);
+      setIsLockedOut(true);
+      setLockoutTime(savedLockoutTime);
+    }
+
+    // Load saved email and password if rememberMe is true
     const savedEmail = localStorage.getItem("rememberedEmail");
     const savedPassword = localStorage.getItem("rememberedPassword");
     const savedRememberMe = localStorage.getItem("rememberMe");
@@ -38,6 +65,33 @@ export default function AdminLogin() {
       setButtonDisabled(false);
     }
   }, []);
+
+  useEffect(() => {
+    // When the user is locked out, start the countdown timer
+    if (isLockedOut && lockoutTime > 0) {
+      const timer = setInterval(() => {
+        if (lockoutTime === 1) {
+          // Reset lockout after timer ends
+          setIsLockedOut(false);
+          setLockoutTime(0);
+          localStorage.removeItem("lockoutTime");
+
+          // Reset failed attempts to 0
+          setFailedAttempts(0);
+          localStorage.setItem("failedAttempts", "0"); // Update localStorage with 0 failed attempts
+        } else {
+          setLockoutTime((prevTime) => {
+            const newTime = prevTime - 1;
+            // Update lockout time in localStorage
+            localStorage.setItem("lockoutTime", newTime.toString());
+            return newTime;
+          });
+        }
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [isLockedOut, lockoutTime]);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -64,6 +118,15 @@ export default function AdminLogin() {
     setError("");
     setEmailInvalid(false);
     setPasswordInvalid(false);
+
+    // Check if the user is locked out
+    if (isLockedOut) {
+      setError(
+        `Too many failed attempts. Please wait ${lockoutTime} seconds before trying again.`
+      );
+      setLoading(false);
+      return;
+    }
 
     if (!validateEmail(email)) {
       setErrorEmail("Please include an '@' in the email address.");
@@ -110,13 +173,35 @@ export default function AdminLogin() {
         };
         setData(savedData);
 
+        // Reset failed attempts and lockout data on successful login
+        localStorage.removeItem("failedAttempts");
+        localStorage.removeItem("lockoutTime");
+
         Navigate("/dashboard");
       } else if (response.status === 1) {
         setErrorEmail(response.error || "Invalid email address.");
         setEmailInvalid(true);
+
+        // Only increment failed attempts if the user is not locked out
+        if (!isLockedOut) {
+          setFailedAttempts((prevAttempts) => {
+            const newFailedAttempts = prevAttempts + 1;
+            localStorage.setItem("failedAttempts", newFailedAttempts);
+            return newFailedAttempts;
+          });
+        }
       } else if (response.status === 2) {
         setErrorPassword(response.error || "Incorrect password.");
         setPasswordInvalid(true);
+
+        // Only increment failed attempts if the user is not locked out
+        if (!isLockedOut) {
+          setFailedAttempts((prevAttempts) => {
+            const newFailedAttempts = prevAttempts + 1;
+            localStorage.setItem("failedAttempts", newFailedAttempts);
+            return newFailedAttempts;
+          });
+        }
       } else {
         setError(response.error || "An error occurred. Please try again.");
       }
@@ -125,6 +210,14 @@ export default function AdminLogin() {
       setError("A server error occurred. Please try again later.");
     } finally {
       setLoading(false);
+    }
+
+    // Lockout logic if more than 5 failed attempts
+    if (failedAttempts >= 4) {
+      const lockoutTime = 90; // Lockout for 10 seconds (adjust to 2 minutes in production)
+      setIsLockedOut(true);
+      setLockoutTime(lockoutTime);
+      localStorage.setItem("lockoutTime", lockoutTime);
     }
   };
 
@@ -156,7 +249,7 @@ export default function AdminLogin() {
                     className="form-control form-control-lg"
                     value={email}
                     onChange={(e) => {
-                      setEmail(e.target.value);
+                      setEmail(e.target.value.toLowerCase()); // force lowercase
                       handleInputChange();
                     }}
                     required
@@ -179,7 +272,7 @@ export default function AdminLogin() {
                   className={`input-group custom ${
                     isPasswordInvalid ? "error-border" : ""
                   }`}
-                  style={{ position: "relative",marginBottom:"10px" }}
+                  style={{ position: "relative", marginBottom: "10px" }}
                 >
                   <input
                     id="password"
@@ -231,11 +324,19 @@ export default function AdminLogin() {
                   </label>
                 </div>
 
+                {isLockedOut && (
+                  <div className="lockout-message text-danger mb-3">
+                    Too many failed attempts. Please wait {lockoutTime} seconds
+                    before trying again.
+                  </div>
+                )}
+
                 <div className="row">
                   <div className="col-sm-12">
                     <button
                       type="submit"
                       className="btn btn-primary btn-lg btn-block"
+                      disabled={isLockedOut || loading} // Disable the button if locked out or loading
                     >
                       {loading ? "Loading..." : "Login"}
                     </button>
