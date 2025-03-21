@@ -243,9 +243,13 @@ export default function DailyForecartList({ refresh1 }) {
           style={{ maxHeight: "500px", overflowY: "scroll" }}
         >
           {loading ? (
+            <>
+            <div style={{height:"50vh",overflow:"hidden"}}>
             <Loader />
+            </div>
+            </>
           ) : (
-            <div className="pd-20">
+            <div className="pd-20" style={{minHeight:"200px"}}>
               {ForecastData.filter((forecast) => {
                 if (selectedTab === "all" || selectedTab === "topLiked")
                   return true;
