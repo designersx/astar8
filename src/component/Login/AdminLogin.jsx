@@ -337,6 +337,10 @@ export default function AdminLogin() {
                       type="submit"
                       className="btn btn-primary btn-lg btn-block"
                       disabled={isLockedOut || loading} // Disable the button if locked out or loading
+                      style={{
+                        cursor: isLockedOut || loading ? 'not-allowed' : 'pointer',
+                        opacity: isLockedOut || loading ? 0.6 : 1,
+                      }}
                     >
                       {loading ? "Loading..." : "Login"}
                     </button>
