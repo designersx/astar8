@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/Style.css";
 import Header from "../../component/Dashboard/Header";
 import AddDailyForcast from "./AddDailyForcast";
@@ -24,6 +24,20 @@ export default function DailyForecast() {
       setRefresh1((prev) => !prev);
     }
   };
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showModal]);
+  
 
   return (
     <>
