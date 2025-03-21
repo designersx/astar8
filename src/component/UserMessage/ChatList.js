@@ -61,6 +61,7 @@ const ChatList = ({ users, onSelectUser }) => {
       {/* Filter Buttons */}
       <div className="d-flex my-2 ml-2 mb-1" style={{ gap: "10px" }}>
         <button
+        title="Show all messages"
           disabled={loading}
           className={`btn btn-sm rounded-pill ${
             activeFilter === "all" ? "btn-primary" : "btn-outline-secondary"
@@ -70,6 +71,7 @@ const ChatList = ({ users, onSelectUser }) => {
           All
         </button>
         <button
+        title="Show only unread messages"
           disabled={loading}
           className={`btn btn-sm rounded-pill ms-2 ${
             activeFilter === "unread" ? "btn-primary" : "btn-outline-secondary"
