@@ -2,7 +2,7 @@ import axios from "axios";
 // export const Url = "http://localhost:5234";
 export const Url = "https://dev.astar8.com"
 
-//admin login apii
+//admin login api
 export const LoginApi = async (email, password) => {
   try {
     const response = await axios.post(
@@ -39,7 +39,7 @@ export const GetUserData = async (email, token) => {
     const data = await response.data;
     return data;
   } catch (error) {
-    console.log("errorrr", error);
+    // console.log("errorrr", error);
     return error;
   }
 };
@@ -132,7 +132,7 @@ export const updateImage = async (token, formdata) => {
 //  get all user api
 
 export const getAllUsers = async (token, status = null) => {
-  console.log("dasds",status)
+  console.log("dasds", status);
   try {
     let url = `${Url}/u1r5a03ki8/usr123erd6`;
     if (status !== null) {
@@ -145,6 +145,7 @@ export const getAllUsers = async (token, status = null) => {
       },
     });
     const data = await response.data;
+    console.log("dataa");
     return data;
   } catch (error) {
     console.error(error);
@@ -153,7 +154,7 @@ export const getAllUsers = async (token, status = null) => {
 };
 
 export const getAdminUserMessages = async (finalData) => {
-  console.log("dasdsa",finalData)
+  console.log("dasdsa", finalData);
   try {
     const response = await axios.post(
       `${Url}/a3dm8k40ok/4fdfg8trc1`,
@@ -229,7 +230,7 @@ export const addDailyForecast = async (token, date, prediction, user_id) => {
 
 // get forecast
 export const getForecastData = async (token, status) => {
-  console.log("statusss",status)
+  console.log("statusss", status);
   try {
     const response = await axios.get(
       `${Url}/p1g6s9ik3n/dlyf45v3rf?status=${status}`,
@@ -743,12 +744,19 @@ export const editLifeCoackDEscription = async (finalData) => {
 //   }
 // };
 
-export const filterUsers = async (name, email, subscription, platform, pageNumber = 1, pageToken = null) => {
-  console.log("Dataa",name,email,subscription, platform,pageToken)
+export const filterUsers = async (
+  name,
+  email,
+  subscription,
+  platform,
+  pageNumber = 1,
+  pageToken = null
+) => {
+  console.log("Dataa", name, email, subscription, platform, pageToken);
   try {
     let url = `${Url}/u1r5a03ki8/ufrm8u4j8i?`;
     const params = new URLSearchParams();
-    
+
     if (name) params.append("name", name);
     if (email) params.append("email", email);
     if (subscription) params.append("subscription", subscription);
@@ -766,7 +774,7 @@ export const filterUsers = async (name, email, subscription, platform, pageNumbe
 };
 
 // dashboard count users
-export const dashboardHistory=async(req,res)=>{
+export const dashboardHistory = async (req, res) => {
   try {
     const response = await axios.get(`${Url}/history/dhm3k7m4m6`);
     const data = await response.data;
@@ -774,40 +782,69 @@ export const dashboardHistory=async(req,res)=>{
   } catch (error) {
     return error;
   }
-}
+};
 
 // Stripe payment data
-export const getPaymentSettingData = async ()=>{
-  const data = "all"
+export const getPaymentSettingData = async () => {
+  const data = "all";
   try {
-    const response = await axios.post(`${Url}/stripe/kgjhir90gu`,{data})
+    const response = await axios.post(`${Url}/stripe/kgjhir90gu`, { data });
     const datas = await response.data;
     return datas;
   } catch (error) {
     console.log(error, "error");
     return error;
   }
-}
+};
 // update version
-export const updateVersion=async(platform, version)=>{
-  console.log(version,platform,"version,platofrm")
+export const updateVersion = async (platform, version) => {
+  console.log(version, platform, "version,platofrm");
   try {
-    const response=await axios.post(`${Url}/lvp4m6m7f5/plv5mg8i3d`,{platform, version});
-    console.log(response,"response")
-    const data=await response.data;
+    const response = await axios.post(`${Url}/lvp4m6m7f5/plv5mg8i3d`, {
+      platform,
+      version,
+    });
+    console.log(response, "response");
+    const data = await response.data;
     return data;
   } catch (error) {
     return error;
   }
-}
-// get version 
- export const getLatestVersions=async(req,res)=>{
+};
+// get version
+export const getLatestVersions = async (req, res) => {
   try {
-    const response=await axios.get(`${Url}/lvp4m6m7f5/glvp3m7m5r`);
-    console.log(response,"response")
-    const data=await response.data;
+    const response = await axios.get(`${Url}/lvp4m6m7f5/glvp3m7m5r`);
+    console.log(response, "response");
+    const data = await response.data;
     return data;
   } catch (error) {
     return error;
   }
-}
+};
+
+// forget password api
+export const forgotPasswordApi = async (email) => {
+  try {
+    const response = await axios.post(`${Url}/r367jklp09i/fpw3mjk4m`, {
+      email,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.log(error, "error");
+    return error;
+  }
+};
+
+// forgot password Reset Password
+export const resetPasswordLoginPageApi = async (data1) => {
+  try {
+    const response = await axios.post(`${Url}/r367jklp09i/vofpm4mn67`, data1);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.log(error, "error");
+    return error;
+  }
+};
