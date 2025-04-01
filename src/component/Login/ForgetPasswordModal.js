@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ForgetPasswordModal.css"; // Import the CSS file
 import { forgotPasswordApi, resetPasswordLoginPageApi } from "../../lib/Store";
-import { IoIosCloseCircle } from "react-icons/io";
+import { IoIosCloseCircle, IoIosEye, IoIosEyeOff } from "react-icons/io";  // Import eye icons
 import OtpInput from "react-otp-input"; // Import react-otp-input
 
 const ForgotPasswordModal = ({ show, onClose }) => {
@@ -15,6 +15,9 @@ const ForgotPasswordModal = ({ show, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [apiOtp, setApiOtp] = useState(""); // Store OTP received from API
+
+  const [showNewPassword, setShowNewPassword] = useState(false); // To toggle visibility for newPassword
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // To toggle visibility for confirmPassword
 
   // Handle sending OTP to the email
   const handleSendOtp = async () => {
@@ -176,7 +179,7 @@ const ForgotPasswordModal = ({ show, onClose }) => {
                   onClick={handleSendOtp}
                   disabled={isLoading}
                   style={{
-                    cursor: isLoading  ? "not-allowed" : "pointer", // Disable cursor if button is disabled
+                    cursor: isLoading ? "not-allowed" : "pointer", // Disable cursor if button is disabled
                   }}
                 >
                   {isLoading ? "Sending OTP..." : "Send OTP"}
@@ -187,41 +190,44 @@ const ForgotPasswordModal = ({ show, onClose }) => {
 
             {step === 2 && otpSent && (
               <>
-                <p>We have sent an OTP to your email:-<b>{email}</b>. Please enter it below.</p>
+                <p>
+                  We have sent an OTP to your email:-<b>{email}</b>. Please
+                  enter it below.
+                </p>
                 <div className="d-flex justify-content-center">
-                <OtpInput
-                  value={otp}
-                  onChange={(newOtp) => {
-                    setOtp(newOtp);
-                    setError("");
-                  }} // Update OTP value
-                  numInputs={6} // Number of OTP input fields
-                  separator={<span>-</span>} // Separator between inputs
-                  shouldAutoFocus={true} // Auto-focus on the first input field
-                  renderInput={(props) => (
-                    <input
-                      {...props}
-                      type="text" // Set type to "text" to avoid number arrows
-                      inputMode="numeric" // Ensures numeric keyboard appears on mobile devices
-                      pattern="[0-9]*" // Ensures only numeric values are allowed
-                      onInput={(e) => {
-                        // Remove any non-numeric characters
-                        e.target.value = e.target.value.replace(/\D/g, "");
-                      }}
-                    />
-                  )} // Render custom input element
-                  inputStyle={{
-                    width: "40px",
-                    height: "40px",
-                    margin: "0 5px",
-                    border: "2px solid #ccc",
-                    textAlign: "center",
-                    fontSize: "20px",
-                    borderRadius: "5px",
-                    outline: "none",
-                    marginBottom: "5px",
-                  }}
-                />
+                  <OtpInput
+                    value={otp}
+                    onChange={(newOtp) => {
+                      setOtp(newOtp);
+                      setError("");
+                    }} // Update OTP value
+                    numInputs={6} // Number of OTP input fields
+                    separator={<span>-</span>} // Separator between inputs
+                    shouldAutoFocus={true} // Auto-focus on the first input field
+                    renderInput={(props) => (
+                      <input
+                        {...props}
+                        type="text" // Set type to "text" to avoid number arrows
+                        inputMode="numeric" // Ensures numeric keyboard appears on mobile devices
+                        pattern="[0-9]*" // Ensures only numeric values are allowed
+                        onInput={(e) => {
+                          // Remove any non-numeric characters
+                          e.target.value = e.target.value.replace(/\D/g, "");
+                        }}
+                      />
+                    )} // Render custom input element
+                    inputStyle={{
+                      width: "40px",
+                      height: "40px",
+                      margin: "0 5px",
+                      border: "2px solid #ccc",
+                      textAlign: "center",
+                      fontSize: "20px",
+                      borderRadius: "5px",
+                      outline: "none",
+                      marginBottom: "5px",
+                    }}
+                  />
                 </div>
                 <button
                   type="button"
@@ -243,9 +249,10 @@ const ForgotPasswordModal = ({ show, onClose }) => {
 
             {step === 3 && (
               <>
-                <p>Enter your new password and confirm it below.</p>
+              <p>Enter your new password and confirm it below.</p>
+              <div style={{ position: "relative" }}>
                 <input
-                  type="password"
+                  type={showNewPassword ? "text" : "password"}
                   className="form-control"
                   placeholder="New Password"
                   value={newPassword}
@@ -254,9 +261,23 @@ const ForgotPasswordModal = ({ show, onClose }) => {
                     setError("");
                   }}
                 />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    right: "10px",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setShowNewPassword(!showNewPassword)}
+                >
+                  {showNewPassword ? <IoIosEyeOff /> : <IoIosEye />}
+                </div>
+              </div>
+              <div style={{ position: "relative", marginTop: "10px" }}>
                 <input
-                  type="password"
-                  className="form-control mt-2 mb-1"
+                  type={showConfirmPassword ? "text" : "password"}
+                  className="form-control"
                   placeholder="Confirm Password"
                   value={confirmPassword}
                   onChange={(e) => {
@@ -264,16 +285,30 @@ const ForgotPasswordModal = ({ show, onClose }) => {
                     setError("");
                   }}
                 />
-                <button
-                  type="button"
-                  className="btn btn-primary mt-2"
-                  onClick={handlePasswordReset}
-                  disabled={isLoading}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    right: "10px",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
-                  {isLoading ? "Resetting..." : "Reset Password"}
-                </button>
-                {error && <div className="text-danger mt-2">{error}</div>}
-              </>
+                  {showConfirmPassword ? <IoIosEyeOff /> : <IoIosEye />}
+                </div>
+              </div>
+
+              <button
+                type="button"
+                className="btn btn-primary mt-2"
+                onClick={handlePasswordReset}
+                disabled={isLoading}
+              >
+                {isLoading ? "Resetting..." : "Reset Password"}
+              </button>
+              {error && <div className="text-danger mt-2">{error}</div>}
+            </>
             )}
           </div>
         </div>
