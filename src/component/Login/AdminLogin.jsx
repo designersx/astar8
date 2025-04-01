@@ -10,6 +10,7 @@ import {
 import { LoginApi } from "../../lib/Store";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../../ContextApi/userContext";
+import ForgotPasswordModal from "./ForgetPasswordModal";
 
 export default function AdminLogin() {
   const { data, setData } = useContext(AppContext);
@@ -25,6 +26,7 @@ export default function AdminLogin() {
   const [errorEmail, setErrorEmail] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [showModal, setShowModal] = useState(false); // Modal state
 
   // State for tracking failed attempts and lockout
   const [failedAttempts, setFailedAttempts] = useState(0);
@@ -234,7 +236,10 @@ export default function AdminLogin() {
           >
             <div className="login-box bg-white box-shadow border-radius-10">
               <div className="login-title">
-                <h2 className="text-center text-primary">Login</h2>
+                <h2 className="text-center text-primary">Welcome Back!</h2>
+                <p className="text-center">
+                  Please log in to continue your session
+                </p>
               </div>
               <form onSubmit={handleSubmit}>
                 <div
@@ -311,17 +316,26 @@ export default function AdminLogin() {
                   </div>
                 )}
 
-                <div className="form-check mb-2">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="rememberMe"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                  />
-                  <label className="form-check-label" htmlFor="rememberMe">
-                    Remember Me
-                  </label>
+                <div className="d-flex align-items-center mb-2 justify-content-between">
+                  <div className="form-check mb-0 me-3">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="rememberMe"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                    />
+                    <label className="form-check-label" htmlFor="rememberMe">
+                      Remember Me
+                    </label>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn btn-link p-0 forgot-password-btn"
+                    onClick={() => setShowModal(true)}
+                  >
+                    Forgot Password?
+                  </button>
                 </div>
 
                 {isLockedOut && (
@@ -338,7 +352,8 @@ export default function AdminLogin() {
                       className="btn btn-primary btn-lg btn-block"
                       disabled={isLockedOut || loading} // Disable the button if locked out or loading
                       style={{
-                        cursor: isLockedOut || loading ? 'not-allowed' : 'pointer',
+                        cursor:
+                          isLockedOut || loading ? "not-allowed" : "pointer",
                         opacity: isLockedOut || loading ? 0.6 : 1,
                       }}
                     >
@@ -351,6 +366,11 @@ export default function AdminLogin() {
           </div>
         </div>
       </div>
+      {/* ForgotPasswordModal with state to show/hide */}
+      <ForgotPasswordModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+      />
     </div>
   );
 }

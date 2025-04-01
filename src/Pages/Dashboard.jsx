@@ -78,6 +78,7 @@ export default function DashBoard() {
                   className="col-lg-3 col-md-6 col-sm-12 "
                   onClick={navigateUsers}
                   style={{ cursor: "pointer" }}
+                  title="Total Users in Database"
                 >
                   <div className="card-box pd-30 height-100-p">
                     <div className="progress-box text-center">
@@ -96,6 +97,7 @@ export default function DashBoard() {
                   className="col-lg-3 col-md-6 col-sm-12"
                   onClick={navigateUsers}
                   style={{ cursor: "pointer" }}
+                  title="Total Active Users in Database"
                 >
                   <div className="card-box pd-30 height-100-p">
                     <div className="progress-box text-center">
@@ -111,7 +113,7 @@ export default function DashBoard() {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-6 col-sm-12 ">
+                <div className="col-lg-3 col-md-6 col-sm-12 " title="Today's Like Predictions">
                   <div className="card-box pd-30 height-100-p">
                     <div className="progress-box text-center">
                       <h5 className="text-light-orange padding-top-10 h5">
@@ -124,7 +126,7 @@ export default function DashBoard() {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-6 col-sm-12 ">
+                <div className="col-lg-3 col-md-6 col-sm-12 " title="Today's Dislike Predictions">
                   <div className="card-box pd-30 height-100-p">
                     <div className="progress-box text-center">
                       <h5 className="text-light-orange padding-top-10 h5">

@@ -21,23 +21,16 @@ const COLORS = {
   travel: "#00ACC1",
 };
 
-const allLinesActive = Object.keys(COLORS).reduce((acc, key) => {
-  acc[key] = true;
-  return acc;
-}, {});
-
 const DashboardChart = () => {
   const [compDays, setCompDays] = useState("week");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [activeLines, setActiveLines] = useState(allLinesActive);
-  const [selectedLine, setSelectedLine] = useState(null); // Track which line is selected
+  const [selectedLine, setSelectedLine] = useState("all"); // Default selection: 'car'
 
   const fetchHistory = async () => {
     setLoading(true);
     try {
       const response = await dashboardHistory();
-      // console.log("ress",response)
       if (Array.isArray(response.data)) {
         setData(response.data);
       } else {
@@ -58,6 +51,10 @@ const DashboardChart = () => {
     setCompDays(e.target.value);
   };
 
+  const handleLineSelectionChange = (e) => {
+    setSelectedLine(e.target.value); // Update selected line
+  };
+
   const filteredData = () => {
     const rawData = compDays === "month" ? data : data.slice(-7);
     return rawData.map((item) => ({
@@ -71,31 +68,13 @@ const DashboardChart = () => {
     }));
   };
 
-  const handleLegendClick = (e) => {
-    const clickedKey = e.dataKey;
-
-    // If the same option is clicked again, show all lines
-    if (selectedLine === clickedKey) {
-      setActiveLines(allLinesActive);
-      setSelectedLine(null);
-    } else {
-      // Otherwise, highlight only the selected line
-      setActiveLines({
-        car: false,
-        business: false,
-        property: false,
-        relation: false,
-        other: false,
-        travel: false,
-        [clickedKey]: true,
-      });
-      setSelectedLine(clickedKey);
-    }
+  const handleReset = () => {
+    setSelectedLine("all"); // Reset to the default selection: 'car'
   };
 
-  const handleReset = () => {
-    setActiveLines(allLinesActive);
-    setSelectedLine(null);
+  // Function to check if a line should be shown
+  const shouldShowLine = (line) => {
+    return selectedLine === "all" || selectedLine === line;
   };
 
   return (
@@ -103,18 +82,51 @@ const DashboardChart = () => {
       <div className="col-lg-12 mb-30">
         <div className="card-box pd-30" style={{ paddingLeft: "20px" }}>
           {/* Title and Dropdown */}
-          <div className="d-flex justify-content-between align-items-center mb-2">
-            <h4 className="h5 font-weight-bold">Compatibility User Record</h4>
+          <div>
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              {/* Title on the left */}
+              <h4 className="h5 font-weight-bold">Compatibility User Record</h4>
 
-            <select
-              className="custom-select col-sm-3 col-md-2"
-              value={compDays}
-              onChange={handleSelectChange}
-              style={{ marginLeft: "10px", cursor: "pointer" }}
-            >
-              <option value="week">This Week</option>
-              <option value="month">This Month</option>
-            </select>
+              {/* Dropdowns on the right */}
+              <div className="d-flex align-items-center">
+                {/* Compatibility Type Dropdown */}
+                <select
+                  id="compatibility-select"
+                  className="custom-select col-sm-3 col-md-2"
+                  value={selectedLine}
+                  onChange={handleLineSelectionChange}
+                  style={{
+                    marginRight: "10px",
+                    cursor: "pointer",
+                    width: "auto",
+                    maxWidth: "fit-content",
+                  }} // Set a fixed width for the dropdown
+                >
+                  <option value="all">Show All Compatibility</option>
+                  {Object.keys(COLORS).map((key) => (
+                    <option key={key} value={key}>
+                      Show {key.charAt(0).toUpperCase() + key.slice(1)} Compatibility
+                    </option>
+                  ))}
+                </select>
+
+                {/* Time Period Dropdown */}
+                <select
+                  className="custom-select col-sm-3 col-md-2"
+                  value={compDays}
+                  onChange={handleSelectChange}
+                  style={{
+                    marginLeft: "10px",
+                    cursor: "pointer",
+                    width: "150px",
+                    maxWidth: "fit-content",
+                  }} // Set a fixed width for the dropdown
+                >
+                  <option value="week">This Week</option>
+                  <option value="month">This Month</option>
+                </select>
+              </div>
+            </div>
           </div>
 
           {/* Reset Button */}
@@ -177,42 +189,36 @@ const DashboardChart = () => {
                   cursor={{ stroke: "#ddd", strokeWidth: 2 }}
                 />
 
-                {Object.keys(activeLines).map(
-                  (key) =>
-                    activeLines[key] && (
-                      <Line
-                        key={key}
-                        type="monotone"
-                        dataKey={key}
-                        stroke={COLORS[key]}
-                        strokeWidth={selectedLine === key ? 4 : 2.5}
-                        dot={{
-                          r: selectedLine === key ? 6 : 4,
-                          strokeWidth: 2,
-                        }}
-                        activeDot={{ r: selectedLine === key ? 8 : 6 }}
-                        name={
-                          key === "other"
-                            ? "Other Person's Compatibility"
-                            : `${key.charAt(0).toUpperCase()}${key.slice(
-                                1
-                              )} Compatibility`
-                        }
-                      />
-                    )
+                {/* Render the selected line(s) */}
+                {Object.keys(COLORS).map((line) =>
+                  shouldShowLine(line) ? (
+                    <Line
+                      key={line}
+                      type="monotone"
+                      dataKey={line}
+                      stroke={COLORS[line]}
+                      strokeWidth={2.5}
+                      dot={false} // Disable the default dots
+                      activeDot={{ r: 6 }} // Show dot on hover
+                      name={
+                        line === "other"
+                          ? "Other Person's Compatibility"
+                          : `${line.charAt(0).toUpperCase()}${line.slice(
+                              1
+                            )} Compatibility`
+                      }
+                    />
+                  ) : null
                 )}
 
                 {/* Legend moved below */}
                 <Legend
                   verticalAlign="bottom"
-                  // height={60}
                   wrapperStyle={{
-                    // marginTop: "25px",
                     bottom: "15px",
                     left: "20px",
                     cursor: "pointer",
                   }}
-                  onClick={handleLegendClick}
                 />
               </LineChart>
             </ResponsiveContainer>
