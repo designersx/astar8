@@ -329,7 +329,7 @@ export default function AdminLogin() {
                       Remember Me
                     </label>
                   </div>
-{/*                   <button
+                  {/* <button
                     type="button"
                     className="btn btn-link p-0 forgot-password-btn"
                     onClick={() => setShowModal(true)}

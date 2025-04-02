@@ -71,29 +71,63 @@ export default function Profile() {
       }
     }
   };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
+  
       reader.onloadend = () => {
-        setImageSrc(reader.result);
-        localStorage.setItem("profilePic", reader.result);
-        const formData = new FormData();
+        const base64Image = reader.result;
+  
+        // Update state and local storage
+        setImageSrc(base64Image);
+        localStorage.setItem("profilePic", base64Image);
+  
+        // Get userId and prepare payload
         const userId = localStorage.getItem("userId");
-        if (userId) {
-          formData.append("userId", userId);
+        if (!userId) {
+          console.error("User ID not found in localStorage");
+          return;
         }
-        formData.append("image", file);
-        sendImageToAPI(formData);
+  
+        const payload = {
+          userId,
+          profile_pic: base64Image,
+        };
+  
+        // Send base64 image payload to API using helper
+        sendImageToAPI(payload);
       };
+  
       reader.readAsDataURL(file);
     }
   };
 
-  const sendImageToAPI = async (formData) => {
+  
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setImageSrc(reader.result);
+  //       localStorage.setItem("profilePic", reader.result);
+  //       const formData = new FormData();
+  //       const userId = localStorage.getItem("userId");
+  //       if (userId) {
+  //         formData.append("userId", userId);
+  //       }
+  //       formData.append("image", file);
+  //       sendImageToAPI(formData);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
+  const sendImageToAPI = async (payload) => {
     try {
       const token = localStorage.getItem("UserToken");
-      const response = await updateImage(token, formData);
+      const response = await updateImage(token, payload);
       console.log(response, "response");
     } catch (error) {
       console.log(error, "error");
