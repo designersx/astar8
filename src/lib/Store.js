@@ -111,15 +111,16 @@ export const UpdateProfile = async (id, name, token) => {
 
 //  update image api
 
-export const updateImage = async (token, formdata) => {
+export const updateImage = async (token, payload) => {
+  console.log(token,payload,"token,payload")
   try {
     const response = await axios.put(
       `${Url}/r367jklp09i/i67cjd43tf`,
-      formdata,
+      payload,
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       }
     );
