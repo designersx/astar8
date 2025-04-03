@@ -1,7 +1,7 @@
 import axios from "axios";
 // export const Url = "http://localhost:5234";
 // export const Url = "https://dev.astar8.com"
-export const Url = "https://apiv1-zt4wrywhaa-el.a.run.app"
+export const Url = "https://apiv1-zt4wrywhaa-ue.a.run.app"
 //admin login api
 export const LoginApi = async (email, password) => {
   try {
