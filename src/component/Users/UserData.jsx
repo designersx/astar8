@@ -238,9 +238,9 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
             <th>Payment Platform</th>
             <th>Subscription Action</th>
             <th>3 Month Subscription Action</th>
+            <th>Action</th>
             <th style={{ width: "9%" }}>Subscription Start Date</th>
             <th>Subscription Renewal Date</th>
-            <th>Action</th>
           </tr>
           {loading ? (
             <tr>
@@ -350,66 +350,147 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
 
                   {/* 1-Month Subscription Button */}
                   <td style={{ textAlign: "center" }}>
-                    {data.total_days > 0 && data.total_days <= 31 ? (
-                      <button
-                        type="submit"
-                        name="subscribe"
-                        className="btn btn-danger alert-subscribe"
-                        title="Click to Deactivate 1 Month Subscription"
-                        onClick={() => CancelsubscriptionspecialMonth(data.id)}
-                      >
-                        Deactivate
-                      </button>
-                    ) : (
+                    {data.subscription_status === 1 ? (
+                      // Paid Users: Disabled button
                       <button
                         type="submit"
                         name="subscribe"
                         className="btn alert-subscribe"
-                        style={{ backgroundColor: "#0199FE", color: "white" }}
-                        title="Click to Activate 1 Month Subscription"
-                        onClick={() => subscriptionspecialMonth(data.id)}
-                        disabled={
-                          data.total_days > 31 || data.subscription_status === 1
-                        }
+                        style={{
+                          backgroundColor: "#0199FE",
+                          color: "white",
+                          cursor: "not-allowed",
+                        }}
+                        title="Subscription through Stripe"
+                        disabled
                       >
                         Active
                       </button>
-                    )}
+                    ) : data.subscription_status === 0 ||
+                      data.subscription_status === null ? (
+                      // Free Users: Always active button
+                      <button
+                        type="submit"
+                        name="subscribe"
+                        className="btn alert-subscribe"
+                        style={{
+                          backgroundColor: "#0199FE",
+                          color: "white",
+                          cursor: "pointer",
+                        }}
+                        title="Click to Activate 1 Month Subscription"
+                        onClick={() => subscriptionspecialMonth(data.id)}
+                      >
+                        Active
+                      </button>
+                    ) : data.subscription_status === 9 ? (
+                      // Special Users: Use date logic
+                      data.total_days > 0 && data.total_days <= 31 ? (
+                        <button
+                          type="submit"
+                          name="subscribe"
+                          className="btn btn-danger alert-subscribe"
+                          title="Click to Deactivate 1 Month Subscription"
+                          onClick={() =>
+                            CancelsubscriptionspecialMonth(data.id)
+                          }
+                        >
+                          Deactivate
+                        </button>
+                      ) : (
+                        <button
+                          type="submit"
+                          name="subscribe"
+                          className="btn alert-subscribe"
+                          style={{
+                            backgroundColor: "#0199FE",
+                            color: "white",
+                            cursor:
+                              data.total_days > 31 ? "not-allowed" : "pointer",
+                          }}
+                          title="Click to Activate 1 Month Subscription"
+                          onClick={() => subscriptionspecialMonth(data.id)}
+                          disabled={data.total_days > 31}
+                        >
+                          Active
+                        </button>
+                      )
+                    ) : null}
                   </td>
 
                   {/* 3-Month Subscription Button */}
                   <td style={{ textAlign: "center" }}>
-                    {data.total_days > 31 ? (
-                      <button
-                        type="submit"
-                        name="subscribe"
-                        className="btn btn-danger alert-subscribe"
-                        title="Click to Deactivate 3 Month Subscription"
-                        onClick={() => cancel3Actions(data.id)}
-                      >
-                        Deactivate
-                      </button>
-                    ) : (
+                    {data.subscription_status === 1 ? (
+                      // Paid Users: Disabled button
                       <button
                         type="submit"
                         name="subscribe"
                         className="btn alert-subscribe"
-                        style={{ backgroundColor: "#0199FE", color: "white" }}
-                        title="Click to Activate 3 Month Subscription"
-                        onClick={() => subscription3Month(data.id)}
-                        disabled={
-                          (data.total_days > 0 && data.total_days <= 31) ||
-                          data.subscription_status === 1
-                        }
+                        style={{
+                          backgroundColor: "#0199FE",
+                          color: "white",
+                          cursor: "not-allowed",
+                        }}
+                        title="Subscription through Stripe"
+                        disabled
                       >
                         Active
                       </button>
-                    )}
+                    ) : data.subscription_status === 0 ||
+                      data.subscription_status === null ? (
+                      // Free Users: Always active button
+                      <button
+                        type="submit"
+                        name="subscribe"
+                        className="btn alert-subscribe"
+                        style={{
+                          backgroundColor: "#0199FE",
+                          color: "white",
+                          cursor: "pointer",
+                        }}
+                        title="Click to Activate 3 Month Subscription"
+                        onClick={() => subscription3Month(data.id)}
+                      >
+                        Active
+                      </button>
+                    ) : data.subscription_status === 9 ? (
+                      // Special Users: Use date logic
+                      data.total_days > 31 ? (
+                        <button
+                          type="submit"
+                          name="subscribe"
+                          className="btn btn-danger alert-subscribe"
+                          title="Click to Deactivate 3 Month Subscription"
+                          onClick={() => cancel3Actions(data.id)}
+                        >
+                          Deactivate
+                        </button>
+                      ) : (
+                        <button
+                          type="submit"
+                          name="subscribe"
+                          className="btn alert-subscribe"
+                          style={{
+                            backgroundColor: "#0199FE",
+                            color: "white",
+                            cursor:
+                              data.total_days > 0 && data.total_days <= 31
+                                ? "not-allowed"
+                                : "pointer",
+                          }}
+                          title="Click to Activate 3 Month Subscription"
+                          onClick={() => subscription3Month(data.id)}
+                          disabled={
+                            data.total_days > 0 && data.total_days <= 31
+                          }
+                        >
+                          Active
+                        </button>
+                      )
+                    ) : null}
                   </td>
-                  <td>{formatDate(data.start_date) || "N/A"}</td>
-                  <td>{formatDate(data.renewal_date) || "N/A"}</td>
 
-                  <td className="userTableTd">
+                  <td className="userTableTd" style={{ paddingLeft: "19px" }}>
                     <a
                       className="btn btn-info btnButton"
                       style={{ padding: "2px 12px" }}
@@ -421,6 +502,19 @@ export default function UserData({ user, currentPage, usersPerPage, loading }) {
                         style={{ fontSize: "11px" }}
                       />
                     </a>
+                  </td>
+
+                  <td>
+                    {data.subscription_status === 0 ||
+                    data.subscription_status === null
+                      ? "N/A"
+                      : formatDate(data.start_date) || "N/A"}
+                  </td>
+                  <td>
+                    {data.subscription_status === 0 ||
+                    data.subscription_status === null
+                      ? "N/A"
+                      : formatDate(data.renewal_date) || "N/A"}
                   </td>
                 </tr>
               );

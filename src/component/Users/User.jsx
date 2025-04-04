@@ -899,7 +899,9 @@ export default function User() {
                                   }`}
                                   style={{
                                     cursor:
-                                      currentPage === totalPages
+                                      currentPage === totalPages ||
+                                      !nextPageToken ||
+                                      user.length < usersPerPage
                                         ? "not-allowed"
                                         : "pointer",
                                   }}
@@ -909,7 +911,9 @@ export default function User() {
                                     style={{
                                       color: "black",
                                       cursor:
-                                        currentPage === totalPages
+                                        currentPage === totalPages ||
+                                        !nextPageToken ||
+                                        user.length < usersPerPage
                                           ? "not-allowed"
                                           : "pointer",
                                     }}
