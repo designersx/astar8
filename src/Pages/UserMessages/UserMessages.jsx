@@ -153,7 +153,7 @@ const UserMessages = () => {
           </div>
         </div>
         {/* Chat Box */}
-        <div className="pb-5">
+        <div className="">
           <div className="app-container">
             <div className="chat-interface">
               <ChatList users={usersList} onSelectUser={handleUserSelect} />

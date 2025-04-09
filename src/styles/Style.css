@@ -2100,7 +2100,7 @@ body.IE .register-page-wrap .container {
   font-size: 14px;
 }
 .main-container {
-  padding: 100px 35px 0 317px;
+  padding: 90px 35px 0 317px;
   
 }
 .page-header .dropdown-menu {
@@ -2111,7 +2111,7 @@ body.IE .register-page-wrap .container {
   border-radius: 10px;
   -webkit-box-shadow: 0 0 28px rgba(0, 0, 0, 0.08);
   box-shadow: 0 0 28px rgba(0, 0, 0, 0.08);
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   padding: 20px;
 }
 .page-header .row {
@@ -3484,7 +3484,7 @@ body.IE .register-page-wrap .container {
 .chat-list {
   border: 1px solid #ecf0f4;
   border-radius: 5px;
-  height: 72vh;
+  height: 67vh;
 }
 .chat-search {
   border-bottom: 1px solid #ccc;

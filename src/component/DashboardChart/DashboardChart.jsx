@@ -78,7 +78,7 @@ const DashboardChart = () => {
   };
 
   return (
-    <div className="row" style={{ marginTop: "35px" }}>
+    <div className="row" style={{ marginTop: "15px" }}>
       <div className="col-lg-12 mb-30">
         <div className="card-box pd-30" style={{ paddingLeft: "20px" }}>
           {/* Title and Dropdown */}
@@ -105,7 +105,8 @@ const DashboardChart = () => {
                   <option value="all">Show All Compatibility</option>
                   {Object.keys(COLORS).map((key) => (
                     <option key={key} value={key}>
-                      Show {key.charAt(0).toUpperCase() + key.slice(1)} Compatibility
+                      Show {key.charAt(0).toUpperCase() + key.slice(1)}{" "}
+                      Compatibility
                     </option>
                   ))}
                 </select>
@@ -130,19 +131,21 @@ const DashboardChart = () => {
           </div>
 
           {/* Reset Button */}
-          <div className="d-flex justify-content-end mb-1">
-            <span
-              className="text-primary"
-              style={{ cursor: "pointer", textDecoration: "none" }}
-              onClick={handleReset}
-              onMouseEnter={(e) =>
-                (e.target.style.textDecoration = "underline")
-              }
-              onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
-            >
-              Reset Chart
-            </span>
-          </div>
+          {selectedLine !== "all" && (
+            <div className="d-flex justify-content-end mb-1">
+              <span
+                className="text-primary"
+                style={{ cursor: "pointer", textDecoration: "none" }}
+                onClick={handleReset}
+                onMouseEnter={(e) =>
+                  (e.target.style.textDecoration = "underline")
+                }
+                onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
+              >
+                Reset Chart
+              </span>
+            </div>
+          )}
 
           {/* Chart or Loader */}
           {loading ? (
@@ -217,7 +220,7 @@ const DashboardChart = () => {
                   wrapperStyle={{
                     bottom: "15px",
                     left: "20px",
-                    cursor: "pointer",
+                    // cursor: "pointer",
                   }}
                 />
               </LineChart>

@@ -155,7 +155,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
   };
 
   return (
-    <div className="" style={{ flex: 2, height: "72vh" }}>
+    <div className="" style={{ flex: 2, height: "67vh" }}>
       {user ? (
         <>
           <div
@@ -230,7 +230,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
               }}
             >
               {loading ? (
-                <div className="text-center">
+                <div className="text-center" style={{overflow:"hidden",height:"130px"}}>
                   <Loader />
                 </div> // Loading indicator
               ) : (

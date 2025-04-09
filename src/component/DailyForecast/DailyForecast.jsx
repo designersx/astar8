@@ -43,7 +43,7 @@ export default function DailyForecast() {
     <>
       <Header />
       <div className="main-container pb-3">
-        <div className="pd-20 card-box mb-30">
+        <div className="pd-20 card-box" style={{marginBottom:"20px"}}>
           <div className="d-flex justify-content-between align-items-center">
             <h2 className="fw-bold mb-0">Daily Forecast</h2>
             <button className="btn btn-primary" onClick={handleModalOpen}>
@@ -52,7 +52,7 @@ export default function DailyForecast() {
           </div>
         </div>
 
-        <div className="pd-20 card-box mb-30" >
+        <div className="pd-20 card-box" >
           {activeTab === "preditionList" && <DailyForecartList refresh1={refresh1} />}
         </div>
       </div>
