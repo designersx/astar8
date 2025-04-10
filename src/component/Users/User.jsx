@@ -82,7 +82,8 @@ export default function User() {
   const fetchUsers = async (
     status = null,
     pageNumber = 1,
-    pageToken = null
+    pageToken = null,
+    limit = null
   ) => {
     setUser([]);
     setLoading(true);
@@ -108,6 +109,11 @@ export default function User() {
       // Build the URL
       let url = `/usr123erd6?page=${pageNumber}`;
       if (isActiveValue !== null) url += `&is_active=${isActiveValue}`;
+
+      // Append the limit if provided
+      if (limit !== null && pageToken === "true") {
+        url += `&limit=${limit}`;
+      }
 
       // If pageToken is 'true', we want ascending mode on the backend
       if (pageToken) {
@@ -459,7 +465,10 @@ export default function User() {
 
   const goToLastPage = () => {
     const totalUsers = count;
+    const usersPerPage = 50;
     const lastPageNumber = Math.ceil(totalUsers / usersPerPage);
+    const remainderUsers = totalUsers % usersPerPage || usersPerPage; // e.g., 2037 % 50 = 37
+
 
     // Turn on lastPageMode
     setLastPageMode(true);
@@ -468,7 +477,8 @@ export default function User() {
     fetchUsers(
       activeTab === "all" ? null : activeTab === "active" ? 1 : 0,
       lastPageNumber,
-      "true"
+      "true",
+      remainderUsers
     );
     setCurrentPage(lastPageNumber);
 
