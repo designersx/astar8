@@ -216,7 +216,7 @@ export default function AdminLogin() {
 
     // Lockout logic if more than 5 failed attempts
     if (failedAttempts >= 4) {
-      const lockoutTime = 90; // Lockout for 10 seconds (adjust to 2 minutes in production)
+      const lockoutTime = 50; // Lockout for 10 seconds (adjust to 2 minutes in production)
       setIsLockedOut(true);
       setLockoutTime(lockoutTime);
       localStorage.setItem("lockoutTime", lockoutTime);
@@ -301,6 +301,7 @@ export default function AdminLogin() {
                         top: "50%",
                         transform: "translateY(-50%)",
                         cursor: "pointer",
+                        zIndex: "10",
                       }}
                     >
                       <FontAwesomeIcon

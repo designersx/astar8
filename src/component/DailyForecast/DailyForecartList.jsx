@@ -240,16 +240,16 @@ export default function DailyForecartList({ refresh1 }) {
         {/* Forecast List */}
         <div
           className="forecast-list"
-          style={{ maxHeight: "500px", overflowY: "scroll" }}
+          style={{ maxHeight: "410px", overflowY: "scroll" }}
         >
           {loading ? (
             <>
-            <div style={{height:"50vh",overflow:"hidden"}}>
+            <div style={{height:"55vh",overflow:"hidden"}}>
             <Loader />
             </div>
             </>
           ) : (
-            <div className="pd-20" style={{minHeight:"200px"}}>
+            <div className="pd-20" style={{minHeight:"200px",paddingTop:"0px"}}>
               {ForecastData.filter((forecast) => {
                 if (selectedTab === "all" || selectedTab === "topLiked")
                   return true;
