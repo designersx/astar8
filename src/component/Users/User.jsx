@@ -642,7 +642,7 @@ export default function User() {
                         value={filterSubscription}
                         onChange={(e) => setFilterSubscription(e.target.value)} // ✅ Updates live but doesn’t affect cards
                       >
-                        <option value="">Subscription</option>
+                        <option value="">Plans</option>
                         <option value={0}>Free</option>
                         <option value={1}>Paid</option>
                         <option value={9}>Special offer</option>

@@ -1057,7 +1057,7 @@ table.dataTable > tbody > tr.child ul.dtr-details .dtr-title {
   font-weight: 600;
   font-size: 15px;
   border-bottom: 0;
-  padding-left: 1rem;
+  /* padding-left: 1rem; */
 }
 .table td,
 .table th {
@@ -5919,14 +5919,14 @@ pre code {
 
 .table td,
 .table th {
-  padding: 0.75rem;
+  padding: 10px;
   /* vertical-align: top; */
   border-top: 1px solid #dee2e6;
 }
 
 .table thead th {
   vertical-align: bottom;
-  border-bottom: 2px solid #dee2e6;
+  /* border-bottom: 2px solid #dee2e6; */
 }
 
 .table tbody + tbody {
