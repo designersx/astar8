@@ -199,7 +199,7 @@ export const addDailyForecast = async (token, date, prediction, user_id) => {
   // console.log("adtaaa",token, date, prediction, user_id)
   try {
     const response = await axios.post(
-      `https://dev.astar8.com/p1g6s9ik3n/dly12g6ui8`,
+      `${Url}/p1g6s9ik3n/dly12g6ui8`,
       { user_id, date, prediction },
       {
         headers: {
@@ -403,7 +403,7 @@ export const publishButtonScheduled = async (e) => {
   };
   try {
     const response = await axios.post(
-      `https://dev.astar8.com/p1g6s9ik3n/45dsfr684t`,
+      `${Url}/p1g6s9ik3n/45dsfr684t`,
       finalData
     );
     const data = await response.data;
