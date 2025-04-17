@@ -1,82 +1,101 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../component/Dashboard/Header";
+import Loader from "../../component/Loader/Loader";
 import { IoIosEye } from "react-icons/io";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { getHealthSuggestions } from "../../lib/Store";
 
 const HealthSuggestion = () => {
+  const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // Fetch Health Suggestions
+  const fetchSuggestions = async () => {
+    setLoading(true);
+    try {
+      const response = await getHealthSuggestions();
+      setSuggestions(response || []);
+    } catch (err) {
+      console.error("Error fetching health suggestions:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSuggestions();
+
+    const handleStorageChange = () => fetchSuggestions();
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  // Handle View and Edit
+  const handleViewClick = (item) => {
+    const newWindow = window.open("/healthsuggestion/show", "_blank");
+    localStorage.setItem("viewData", JSON.stringify(item));
+  };
+
+  const handleEditClick = (item) => {
+    const newWindow = window.open("/healthsuggestion/edit", "_blank");
+    localStorage.setItem("editData", JSON.stringify(item));
+  };
+
   return (
     <>
       <Header />
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="">
-                <h2>Health Suggestion</h2>
-              </div>
-            </div>
-          </div>
+          <h2>Health Suggestion</h2>
         </div>
-        {/* Nav tabs */}
+
         <div className="pd-20 card-box mb-30">
-          <div className="card-block table-border-style">
-            <table className="table table-striped">
-              <tbody>
-                <tr>
-                  <th>Number</th>
-                  <th>Description</th>
-                  <th width="280px">Action</th>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>January, May, October</td>
-                  <td>
-                    <div style={{ display: "flex", gap: "10px" }}>
-                      <a
-                        className="btn btn-info"
-                        href="https://be.astar8.com/dobreading/73"
-                        title="View"
-                        target="_blank"
-                      >
-                        <IoIosEye size={18} />
-                      </a>
-                      <a
-                        className="btn btn-primary"
-                        href="https://be.astar8.com/dobreading/73/edit"
-                        title="Edit"
-                        target="_blank"
-                      >
-                        <FontAwesomeIcon icon={faPencilAlt} />
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>January, April, November</td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/healthsuggestion/2"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/healthsuggestion/2/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="card-block table-border-style">
+              <table className="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Number</th>
+                    <th>Description</th>
+                    <th style={{ width: "280px" }}>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {suggestions.map(({ id, number, description }) => (
+                    <tr key={id}>
+                      <td>{number}</td>
+                      <td>
+                        {description.length > 100
+                          ? `${description.slice(0, 100)}...`
+                          : description}
+                      </td>
+                      <td>
+                        <div style={{ display: "flex", gap: "10px" }}>
+                          <button
+                            className="btn btn-info"
+                            onClick={() => handleViewClick({ id, number, description })}
+                            title="View"
+                          >
+                            <IoIosEye size={18} />
+                          </button>
+                          <button
+                            className="btn btn-primary"
+                            onClick={() => handleEditClick({ id, number, description })}
+                            title="Edit"
+                          >
+                            <FontAwesomeIcon icon={faPencilAlt} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Header from "../../component/Dashboard/Header";
 import Swal from "sweetalert2";
 import { editElementalNumber } from "../../lib/Store";
-export default function ElementalEdit() {
+
+const HealthReadingEdit = () => {
   const initialData = JSON.parse(localStorage.getItem("editData")) || {
     id: "",
     number: "",
@@ -118,7 +119,6 @@ export default function ElementalEdit() {
       </>
     );
   }
-
   return (
     <>
       <Header />
@@ -172,4 +172,6 @@ export default function ElementalEdit() {
       </div>
     </>
   );
-}
+};
+
+export default HealthReadingEdit;

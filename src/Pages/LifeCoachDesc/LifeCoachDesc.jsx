@@ -39,14 +39,14 @@ const LifeCoachDesc = () => {
   }, []);
 
   // Filter data based on the selected tab
-  const filteredData = data.filter((item) =>
+  const filteredData = data?.filter((item) =>
     selectedTab === "day" ? item.type === 1 : item.type === 2
   );
   console.log(filteredData, "filtereddata");
 
   // Paginate data
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-  const paginatedData = filteredData.slice(
+  const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
+  const paginatedData = filteredData?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -147,7 +147,7 @@ const LifeCoachDesc = () => {
                               </tr>
                             </thead>
                             <tbody>
-                              {paginatedData.map((item, index) => (
+                              {paginatedData?.map((item, index) => (
                                 <tr key={item.id || index}>
                                   <td>
                                     {(currentPage - 1) * itemsPerPage +

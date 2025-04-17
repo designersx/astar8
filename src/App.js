@@ -77,6 +77,14 @@ import AddVideo from "./Pages/VideosPage/AddVideo";
 import LifeCoachDescriptionShow from "./Pages/LifeCoachDesc/LifeCoachDescriptionShow"
 import LifeCoachDescriptionEdit from './Pages/LifeCoachDesc/LifeCoachDescriptionEdit';
 import Version from './component/Versions/Version';
+import HealthReadingShow from './Pages/HealthReading/HealthReadingShow';
+import HealthReadingEdit from './Pages/HealthReading/HealthReadingEdit';
+import HealthPrecautionShow from './Pages/HealthPrecaution/HealthPrecautionShow';
+import HealthPrecautionEdit from './Pages/HealthPrecaution/HealthPrecautionEdit';
+import HealthSuggestionShow from './Pages/HealthSuggestion/HealthSuggestionShow';
+import HealthSuggestionEdit from './Pages/HealthSuggestion/HealthSuggestionEdit';
+import HealthCycleShow from './Pages/HealthCycle/HealthCycleShow';
+import HealthCycleEdit from './Pages/HealthCycle/HealthCycleEdit';
 function App() {
   return (
     <AppProvider>
@@ -134,10 +142,26 @@ function App() {
         <Route path="/lifecoach_descriptions/edit" element={<PrivateRoute element={LifeCoachDescriptionEdit} />} />
 
         <Route path="/subscription_price" element={<PrivateRoute element={SubscriptionPirce} />} />
+
         <Route path="/healthreading" element={<PrivateRoute element={HealthReading} />} />
+        <Route path="/healthreading/show" element={<PrivateRoute element={HealthReadingShow} />} />
+        <Route path="/healthreading/edit" element={<PrivateRoute element={HealthReadingEdit} />} />
+
         <Route path="/healthprecaution" element={<PrivateRoute element={HealthPrecaution} />} />
+        <Route path="/healthprecaution/show" element={<PrivateRoute element={HealthPrecautionShow} />} />
+        <Route path="/healthprecaution/edit" element={<PrivateRoute element={HealthPrecautionEdit} />} />
+
+
         <Route path="/healthsuggestion" element={<PrivateRoute element={HealthSuggestion} />} />
+        <Route path="/healthsuggestion/show" element={<PrivateRoute element={HealthSuggestionShow} />} />
+        <Route path="/healthsuggestion/edit" element={<PrivateRoute element={HealthSuggestionEdit} />} />
+
+
         <Route path="/healthcycle" element={<PrivateRoute element={HealthCycle} />} />
+        <Route path="/healthcycle/show" element={<PrivateRoute element={HealthCycleShow} />} />
+        <Route path="/healthcycle/edit" element={<PrivateRoute element={HealthCycleEdit} />} />
+
+
         <Route path="/personalyear" element={<PrivateRoute element={PersonalYear} />} />
         <Route path="/personalmonth" element={<PrivateRoute element={PersonalMonth} />} />
         <Route path="/personalweek" element={<PrivateRoute element={PersonalWeek} />} />
