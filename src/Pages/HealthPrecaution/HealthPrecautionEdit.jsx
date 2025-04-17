@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../component/Dashboard/Header";
 import Swal from "sweetalert2";
-import { editElementalNumber } from "../../lib/Store";
-export default function ElementalEdit() {
+import { editHealthPrecautions } from "../../lib/Store";
+const HealthPrecautionEdit = () => {
   const initialData = JSON.parse(localStorage.getItem("editData")) || {
     id: "",
     number: "",
@@ -66,7 +66,7 @@ export default function ElementalEdit() {
             description: e.target.description.value,
           };
 
-          const response = await editElementalNumber(updatedData);
+          const response = await editHealthPrecautions(updatedData);
           console.log("ress", response);
           if (response.status === true) {
             const newData = {
@@ -118,7 +118,6 @@ export default function ElementalEdit() {
       </>
     );
   }
-
   return (
     <>
       <Header />
@@ -172,4 +171,6 @@ export default function ElementalEdit() {
       </div>
     </>
   );
-}
+};
+
+export default HealthPrecautionEdit;

@@ -58,8 +58,8 @@ const VideosPage = () => {
   };
 
   // Pagination logic
-  const totalPages = Math.ceil(video.length / itemsPerPage);
-  const paginatedVideos = video.slice(
+  const totalPages = Math.ceil(video?.length / itemsPerPage);
+  const paginatedVideos = video?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -101,7 +101,7 @@ const VideosPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedVideos.map((item, index) => (
+                {paginatedVideos?.map((item, index) => (
                   <tr key={item.id || index}>
                     <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                     <td>{item?.video_title}</td>

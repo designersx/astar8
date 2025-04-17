@@ -9,7 +9,6 @@ import { getNameReading } from "../../lib/Store";
 
 const NameReading = () => {
   const [nameReadings, setNameReadings] = useState([]);
-  console.log("nameR", nameReadings);
   const [loading, setLoading] = useState(false);
 
   // Fetch Name Readings

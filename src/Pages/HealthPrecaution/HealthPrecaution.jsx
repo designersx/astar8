@@ -1,87 +1,108 @@
-import React from "react";
-import Header from "../../component/Dashboard/Header";
+import React, { useEffect, useState } from "react";
 import { IoIosEye } from "react-icons/io";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import Header from "../../component/Dashboard/Header";
+import Loader from "../../component/Loader/Loader";
+import { getHealthPrecautions } from "../../lib/Store";
+
 
 const HealthPrecaution = () => {
+  const [precautions, setPrecautions] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // Fetch Health Precautions
+  const fetchPrecautions = async () => {
+    setLoading(true);
+    try {
+      const response = await getHealthPrecautions();
+      setPrecautions(response || []);
+    } catch (err) {
+      console.error("Error fetching health precautions:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPrecautions();
+
+    const handleStorageChange = () => {
+      fetchPrecautions();
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  // Handle View Click
+  const handleViewClick = (item) => {
+    const newWindow = window.open("/healthprecaution/show", "_blank");
+    localStorage.setItem("viewData", JSON.stringify(item));
+  };
+
+  // Handle Edit Click
+  const handleEditClick = (item) => {
+    const newWindow = window.open("/healthprecaution/edit", "_blank");
+    localStorage.setItem("editData", JSON.stringify(item));
+  };
+
   return (
     <>
       <Header />
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
-          <div className="row">
-            <div className="col-md-6">
-              <div className="">
-                <h2>Health Precautions</h2>
-              </div>
-            </div>
-          </div>
+          <h2>Health Precautions</h2>
         </div>
+
         <div className="pd-20 card-box mb-30">
-          <div className="card-block table-border-style">
-            <table className="table table-striped">
-              <tbody>
-                <tr>
-                  <th>Number</th>
-                  <th>Description</th>
-                  <th width="280px">Action</th>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>
-                    The following herbs and fruits are good Bay leaves, Oranges,
-                    Lemons, Apples, Figs, Raisins...
-                  </td>
-                  <td>
-                    <div style={{ display: "flex", gap: "10px" }}>
-                      <a
-                        className="btn btn-info"
-                        href="https://be.astar8.com/dobreading/73"
-                        title="View"
-                        target="_blank"
-                      >
-                        <IoIosEye size={18} />
-                      </a>
-                      <a
-                        className="btn btn-primary"
-                        href="https://be.astar8.com/dobreading/73/edit"
-                        title="Edit"
-                        target="_blank"
-                      >
-                        <FontAwesomeIcon icon={faPencilAlt} />
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>
-                    The following foods are for you Lettuce, Plenty of fresh
-                    water, Melons of all kinds, Cucum...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/healthprecaution/65"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/healthprecaution/65/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="card-block table-border-style">
+              <table className="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Number</th>
+                    <th>Description</th>
+                    <th style={{ width: "280px" }}>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {precautions.map(({ id, number, description }) => (
+                    <tr key={id}>
+                      <td>{number}</td>
+                      <td>
+                        {description.length > 100
+                          ? `${description.slice(0, 100)}...`
+                          : description}
+                      </td>
+                      <td>
+                        <div style={{ display: "flex", gap: "10px" }}>
+                          <button
+                            className="btn btn-info"
+                            onClick={() => handleViewClick({ id, number, description })}
+                            title="View"
+                          >
+                            <IoIosEye size={18} />
+                          </button>
+                          <button
+                            className="btn btn-primary"
+                            onClick={() => handleEditClick({ id, number, description })}
+                            title="Edit"
+                          >
+                            <FontAwesomeIcon icon={faPencilAlt} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </>

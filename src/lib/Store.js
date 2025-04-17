@@ -2,6 +2,7 @@ import axios from "axios";
 // export const Url = "http://localhost:5234";
 // export const Url = "https://dev.astar8.com"
 export const Url = "https://us-central1-astar8-llc.cloudfunctions.net/apiv1"
+// export const Url = "http://127.0.0.1:5001/astar8-llc/us-central1/apiv1" // testing url
 
 //admin login api
 export const LoginApi = async (email, password) => {
@@ -848,5 +849,116 @@ export const resetPasswordLoginPageApi = async (data1) => {
   } catch (error) {
     console.log(error, "error");
     return error;
+  }
+};
+
+
+// get Health Reading
+export const getHealthReading = async () => {
+  try {
+    const response = await axios.get(`${Url}/hj76m4dgm4/h7u2zbhm90`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// edit Health Reading
+export const editHealthReading = async (finalData) => {
+  try {
+    const response = await axios.put(`${Url}/hj76m4dgm4/eh65mki980`, {
+      finalData,
+    });
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// get Health Precautions
+export const getHealthPrecautions = async () => {
+  try {
+    const response = await axios.get(`${Url}/hj76m4dgm4/gpli895213`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// edit Health Precautions
+export const editHealthPrecautions = async (finalData) => {
+  try {
+    const response = await axios.put(`${Url}/hj76m4dgm4/ehj6545654`, {
+      finalData,
+    });
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// get Health Suggestions
+export const getHealthSuggestions = async () => {
+  try {
+    const response = await axios.get(`${Url}/hj76m4dgm4/hsu62mi90o`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// edit Health Suggestions
+export const editHealthSuggestions = async (finalData) => {
+  try {
+    const response = await axios.put(`${Url}/hj76m4dgm4/hse78234nj`, {
+      finalData,
+    });
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+
+// get Health Cycle
+export const getHealthCycle = async () => {
+  try {
+    const response = await axios.get(`${Url}/hj76m4dgm4/hc34mkjilo`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// edit Health Cycle
+export const editHealthCycle = async (finalData) => {
+  try {
+    const response = await axios.put(`${Url}/hj76m4dgm4/hcek879605`, {
+      finalData,
+    });
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+// Delete Health Cycle
+export const deleteHealthCycle = async (finalData) => {
+  try {
+    const response = await axios.put(`${Url}/hj76m4dgm4/hcd657jmki`, {
+      finalData,
+    });
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
   }
 };
