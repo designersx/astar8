@@ -17,7 +17,7 @@ const SubscriptionPirce = () => {
               <div className="text-right">
                 <a
                   className="btn btn-success"
-                  href="https://be.astar8.com/subscription_prize/create"
+                  // href="https://be.astar8.com/subscription_prize/create"
                 >
                   {" "}
                   Create New Prediction{" "}

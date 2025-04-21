@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../component/Dashboard/Header";
 import Swal from "sweetalert2";
-import { editHealthSuggestions } from "../../lib/Store";
-const HealthSuggestionEdit = () => {
+import { editParameters } from "../../lib/Store";
+
+const FavParametersEdit = () => {
   const initialData = JSON.parse(localStorage.getItem("editData")) || {
     id: "",
-    number: "",
-    description: "",
+    date: "",
+    numbers: "",
+    days: "",
+    months: "",
   };
+
   const [data, setData] = useState(initialData);
+
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("editData"));
     if (storedData) {
@@ -19,33 +24,16 @@ const HealthSuggestionEdit = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const countWords = (text) => {
-      return text
-        .trim()
-        .split(/\s+/)
-        .filter((word) => word.length > 0).length;
+    const updatedData = {
+      numbers: e.target.numbers.value,
+      days: e.target.days.value,
+      months: e.target.months.value,
     };
-
-    // Validation rules
-    const MIN_WORDS = 5;
-    const MAX_WORDS = 500;
-
-    // Perform validation
-    if (
-      countWords(data.description) < MIN_WORDS ||
-      countWords(data.description) > MAX_WORDS
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Validation Error",
-        text: `Description must have between ${MIN_WORDS} and ${MAX_WORDS} words.`,
-      });
-      return;
-    }
+    console.log("UpdatedData", updatedData);
 
     Swal.fire({
       title: "Are you sure?",
-      text: "Do you want to update Description",
+      text: "Do you want to update these parameters?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, update it!",
@@ -61,25 +49,20 @@ const HealthSuggestionEdit = () => {
             },
           });
 
-          const updatedData = {
-            id: data.id,
-            description: e.target.description.value,
-          };
+          const id = data.id;
+          const monthId = data.month_id;
+          const response = await editParameters(id, monthId, updatedData);
+          console.log("ress",response)
 
-          const response = await editHealthSuggestions(updatedData);
-          console.log("ress", response);
           if (response.status === true) {
-            const newData = {
-              ...data,
-              description: response.data.description,
-            };
+            const newData = { ...data, ...updatedData };
             setData(newData);
             localStorage.setItem("editData", JSON.stringify(newData));
 
             Swal.fire({
               icon: "success",
               title: "Success!",
-              text: "Description updated successfully!",
+              text: "Parameters updated successfully!",
             }).then(() => {
               window.close();
             });
@@ -87,17 +70,17 @@ const HealthSuggestionEdit = () => {
             Swal.fire({
               icon: "warning",
               title: "Warning!",
-              text: result?.message || "Unexpected response from the server.",
+              text: response?.message || "Unexpected server response.",
             });
           }
         } catch (err) {
-          console.error("Error executing API:", err);
+          console.error("API Error:", err);
           Swal.fire({
             icon: "error",
             title: "API Error",
             text:
               err.response?.data?.message ||
-              "Failed to execute API. Please check your network or try again later.",
+              "Failed to execute API. Please check your network.",
           });
         }
       } else {
@@ -118,50 +101,71 @@ const HealthSuggestionEdit = () => {
       </>
     );
   }
+
   return (
     <>
       <Header />
       <div className="main-container pb-3">
         <div className="pd-20 card-box mb-30">
-          <div className="row">
-            <div className="col-md-6">
-              <div>
-                <h2>Edit Number {data?.number}</h2>
-              </div>
-            </div>
-          </div>
+          <h2>Edit Date {data?.date}</h2>
         </div>
         <div className="pd-20 card-box mb-30">
           <form onSubmit={handleSubmit}>
             <div className="row">
-              <div className="col-xs-12 col-sm-12 col-md-12">
+              <div className="col-md-12">
                 <div className="form-group">
-                  <strong>Number:</strong>
+                  <strong>Date:</strong>
                   <input
-                    placeholder="Number"
+                    type="text"
                     className="form-control"
+                    name="date"
+                    value={data.date}
                     disabled
-                    name="number"
-                    type="number"
-                    value={data.number}
                   />
                 </div>
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-12">
+
+              <div className="col-md-12">
                 <div className="form-group">
-                  <strong>Description:</strong>
-                  <textarea
-                    placeholder="Description"
-                    className="form-control description"
-                    name="description"
-                    cols={40}
-                    rows={10}
-                    defaultValue={data.description}
+                  <strong>Numbers:</strong>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="numbers"
+                    defaultValue={data.numbers}
+                    placeholder="e.g. 1,4,8"
                   />
                 </div>
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-12 text-center">
-                <button type="submit" className="btn btn-primary">
+
+              <div className="col-md-12">
+                <div className="form-group">
+                  <strong>Days:</strong>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="days"
+                    defaultValue={data.days}
+                    placeholder="e.g. Sun,Sat"
+                  />
+                </div>
+              </div>
+
+              <div className="col-md-12">
+                <div className="form-group">
+                  <strong>Months:</strong>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="months"
+                    defaultValue={data.months}
+                    placeholder="e.g. Jan,Feb,Aug"
+                  />
+                </div>
+              </div>
+
+              <div className="col-md-12 text-center">
+                <button type="submit" className="btn btn-primary mt-3">
                   Submit
                 </button>
               </div>
@@ -173,4 +177,4 @@ const HealthSuggestionEdit = () => {
   );
 };
 
-export default HealthSuggestionEdit;
+export default FavParametersEdit;

@@ -170,7 +170,7 @@ export default function DestinyEdit() {
                     className="form-control description"
                     name="description"
                     cols={50}
-                    rows={10}
+                    rows={5}
                     value={positive}
                     onChange={(e) => setPositive(e.target.value)}
                   />
@@ -184,7 +184,7 @@ export default function DestinyEdit() {
                     className="form-control description"
                     name="description"
                     cols={50}
-                    rows={10}
+                    rows={5}
                     value={negative}
                     onChange={(e) => setNegative(e.target.value)}
                   />

@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../component/Dashboard/Header";
 import Swal from "sweetalert2";
-import { editHealthSuggestions } from "../../lib/Store";
-const HealthSuggestionEdit = () => {
+import { editPersonal } from "../../lib/Store";
+
+const PersonalMonthEdit = () => {
   const initialData = JSON.parse(localStorage.getItem("editData")) || {
     id: "",
     number: "",
     description: "",
+    love_relationship: "",
+    health: "",
+    career: "",
+    travel: "",
   };
   const [data, setData] = useState(initialData);
   useEffect(() => {
@@ -62,12 +67,14 @@ const HealthSuggestionEdit = () => {
           });
 
           const updatedData = {
-            id: data.id,
             description: e.target.description.value,
+            love_relationship: e.target.relationship.value,
+            career: e.target.career.value,
           };
 
-          const response = await editHealthSuggestions(updatedData);
-          console.log("ress", response);
+          const id = data.id;
+
+          const response = await editPersonal(id, updatedData);
           if (response.status === true) {
             const newData = {
               ...data,
@@ -155,11 +162,39 @@ const HealthSuggestionEdit = () => {
                     className="form-control description"
                     name="description"
                     cols={40}
-                    rows={10}
+                    rows={4}
                     defaultValue={data.description}
                   />
                 </div>
               </div>
+              <div className="col-xs-12 col-sm-12 col-md-12">
+                <div className="form-group">
+                  <strong>Love Relationship:</strong>
+                  <textarea
+                    placeholder="Relationship"
+                    className="form-control relationship"
+                    name="relationship"
+                    cols={40}
+                    rows={4}
+                    defaultValue={data.love_relationship}
+                  />
+                </div>
+              </div>
+
+              <div className="col-xs-12 col-sm-12 col-md-12">
+                <div className="form-group">
+                  <strong>Career:</strong>
+                  <textarea
+                    placeholder="Career"
+                    className="form-control career"
+                    name="career"
+                    cols={40}
+                    rows={4}
+                    defaultValue={data.career}
+                  />
+                </div>
+              </div>
+
               <div className="col-xs-12 col-sm-12 col-md-12 text-center">
                 <button type="submit" className="btn btn-primary">
                   Submit
@@ -173,4 +208,4 @@ const HealthSuggestionEdit = () => {
   );
 };
 
-export default HealthSuggestionEdit;
+export default PersonalMonthEdit;

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../component/Dashboard/Header";
 import Swal from "sweetalert2";
-import { editHealthSuggestions } from "../../lib/Store";
-const HealthSuggestionEdit = () => {
+import { editPersonal } from "../../lib/Store";
+const PersonalDayEdit = () => {
   const initialData = JSON.parse(localStorage.getItem("editData")) || {
     id: "",
     number: "",
     description: "",
+    love_relationship: "",
+    health: "",
+    career: "",
+    travel: "",
   };
   const [data, setData] = useState(initialData);
   useEffect(() => {
@@ -62,12 +66,12 @@ const HealthSuggestionEdit = () => {
           });
 
           const updatedData = {
-            id: data.id,
             description: e.target.description.value,
           };
 
-          const response = await editHealthSuggestions(updatedData);
-          console.log("ress", response);
+          const id = data.id;
+
+          const response = await editPersonal(id, updatedData);
           if (response.status === true) {
             const newData = {
               ...data,
@@ -160,6 +164,7 @@ const HealthSuggestionEdit = () => {
                   />
                 </div>
               </div>
+
               <div className="col-xs-12 col-sm-12 col-md-12 text-center">
                 <button type="submit" className="btn btn-primary">
                   Submit
@@ -173,4 +178,4 @@ const HealthSuggestionEdit = () => {
   );
 };
 
-export default HealthSuggestionEdit;
+export default PersonalDayEdit;

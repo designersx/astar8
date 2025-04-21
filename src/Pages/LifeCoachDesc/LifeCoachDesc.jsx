@@ -139,8 +139,8 @@ const LifeCoachDesc = () => {
                             <thead>
                               <tr>
                                 <th>S.No</th>
-                                <th>Star Type</th>
-                                <th>Star Count</th>
+                                <th width="120px">Star Type</th>
+                                <th width="110px">Star Count</th>
                                 <th>Number</th>
                                 <th>Description</th>
                                 <th width="280px">Action</th>
@@ -193,7 +193,7 @@ const LifeCoachDesc = () => {
                                         onClick={() => handleViewClick(item)}
                                         title="View"
                                       >
-                                        <IoIosEye size={18} />
+                                        <IoIosEye size={18} color="white" />
                                       </a>
                                       <a
                                         className="btn btn-primary"
@@ -202,7 +202,7 @@ const LifeCoachDesc = () => {
                                         target="_blank"
                                         rel="noreferrer"
                                       >
-                                        <FontAwesomeIcon icon={faPencilAlt} />
+                                        <FontAwesomeIcon icon={faPencilAlt} color="white" />
                                       </a>
                                     </div>
                                   </td>
@@ -262,7 +262,7 @@ const LifeCoachDesc = () => {
                             <thead>
                               <tr>
                                 <th>S.No</th>
-                                <th>Star Type</th>
+                                <th width="110px">Star Type</th>
                                 <th>Number</th>
                                 <th>Description</th>
                                 <th width="280px">Action</th>

@@ -5,6 +5,7 @@ import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { getModuleTypes } from "../../lib/Store";
 import Loader from "../../component/Loader/Loader"; // Assuming you have a Loader component
+import { FaEdit } from "react-icons/fa";
 
 const SystemModules = () => {
   const [modulesData, setmodulesData] = useState([]);

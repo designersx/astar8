@@ -1,7 +1,7 @@
 import axios from "axios";
 // export const Url = "http://localhost:5234";
 // export const Url = "https://dev.astar8.com"
-export const Url = "https://us-central1-astar8-llc.cloudfunctions.net/apiv1"
+export const Url = "https://us-central1-astar8-llc.cloudfunctions.net/apiv1";
 // export const Url = "http://127.0.0.1:5001/astar8-llc/us-central1/apiv1" // testing url
 
 //admin login api
@@ -114,18 +114,14 @@ export const UpdateProfile = async (id, name, token) => {
 //  update image api
 
 export const updateImage = async (token, payload) => {
-  console.log(token,payload,"token,payload")
+  console.log(token, payload, "token,payload");
   try {
-    const response = await axios.put(
-      `${Url}/r367jklp09i/i67cjd43tf`,
-      payload,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.put(`${Url}/r367jklp09i/i67cjd43tf`, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     return error;
@@ -852,7 +848,6 @@ export const resetPasswordLoginPageApi = async (data1) => {
   }
 };
 
-
 // get Health Reading
 export const getHealthReading = async () => {
   try {
@@ -889,10 +884,9 @@ export const getHealthPrecautions = async () => {
 };
 // edit Health Precautions
 export const editHealthPrecautions = async (finalData) => {
+  console.log("dadsa", finalData);
   try {
-    const response = await axios.put(`${Url}/hj76m4dgm4/ehj6545654`, {
-      finalData,
-    });
+    const response = await axios.put(`${Url}/hj76m4dgm4/ehj6545654`, finalData);
     const data = await response.data;
     return data;
   } catch (err) {
@@ -914,9 +908,7 @@ export const getHealthSuggestions = async () => {
 // edit Health Suggestions
 export const editHealthSuggestions = async (finalData) => {
   try {
-    const response = await axios.put(`${Url}/hj76m4dgm4/hse78234nj`, {
-      finalData,
-    });
+    const response = await axios.put(`${Url}/hj76m4dgm4/hse78234nj`, finalData);
     const data = await response.data;
     return data;
   } catch (err) {
@@ -924,7 +916,6 @@ export const editHealthSuggestions = async (finalData) => {
     return err;
   }
 };
-
 
 // get Health Cycle
 export const getHealthCycle = async () => {
@@ -960,5 +951,123 @@ export const deleteHealthCycle = async (finalData) => {
   } catch (err) {
     console.log(err, "error");
     return err;
+  }
+};
+
+// get Personal Year
+export const getPersonalYear = async () => {
+  try {
+    const response = await axios.get(`${Url}/gpymk5krmd`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// edit Health Suggestions
+export const editPersonal = async (id, finalData) => {
+  console.log("finalData", finalData);
+  try {
+    const response = await axios.put(`${Url}/edpymk5mkd/${id}`, finalData);
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// get Personal Month
+export const getPersonalMonth = async () => {
+  try {
+    const response = await axios.get(`${Url}/gpmk5kwmkd`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get Personal Week
+export const getPersonalWeek = async () => {
+  try {
+    const response = await axios.get(`${Url}/gpwk5mcdks`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get Personal Day
+export const getPersonalDay = async () => {
+  try {
+    const response = await axios.get(`${Url}/gpwk5mcdks`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get Fav Parameters
+export const getFavParameters = async (month) => {
+  try {
+    const response = await axios.get(`${Url}/gfpk5mks4m?month=${month}`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get unFav Parameters
+export const getUnFavParameters = async (month) => {
+  try {
+    const response = await axios.get(`${Url}/gufmpl09j7?month=${month}`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// edit Parameters
+export const editParameters = async (id, month_id, updateFields) => {
+  try {
+    const response = await axios.put(`${Url}/ufpk5mk7m3`, {
+      id,
+      month_id,
+      ...updateFields,
+    });
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
+// get Zodiac Sign
+export const getZodiacSign = async () => {
+  try {
+    const response = await axios.get(`${Url}/gzsimk4msg`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// Edit Zodiac Sign
+export const editZodiacSign = async (id, finaldata) => {
+  try {
+    const response = await axios.put(`${Url}/uzsk5mo8m2`, {
+      id,
+      ...finaldata,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
   }
 };

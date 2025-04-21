@@ -71,7 +71,7 @@ const HealthCycleEdit = () => {
           if (response.status === true) {
             const newData = {
               ...data,
-              description: response.updatedFields.description,
+              description: response.data.description,
             };
             setData(newData);
             localStorage.setItem("editData", JSON.stringify(newData));

@@ -85,6 +85,17 @@ import HealthSuggestionShow from './Pages/HealthSuggestion/HealthSuggestionShow'
 import HealthSuggestionEdit from './Pages/HealthSuggestion/HealthSuggestionEdit';
 import HealthCycleShow from './Pages/HealthCycle/HealthCycleShow';
 import HealthCycleEdit from './Pages/HealthCycle/HealthCycleEdit';
+import PersonalYearShow from './Pages/PersonalYear/PersonalYearShow';
+import PersonalYearEdit from './Pages/PersonalYear/PersonalYearEdit';
+import PersonalMonthShow from './Pages/PersonalMonth/PersonalMonthShow';
+import PersonalMonthEdit from './Pages/PersonalMonth/PersonalMonthEdit';
+import PersonalWeekShow from './Pages/PersonalWeek/PersonalWeekShow';
+import PersonalWeekEdit from './Pages/PersonalWeek/PersonalWeekEdit';
+import PersonalDayShow from './Pages/PersonalDay/PersonalDayShow';
+import PersonalDayEdit from './Pages/PersonalDay/PersonalDayEdit';
+import FavParametersEdit from './Pages/FavParameters/FavParametersEdit';
+import UnfavParametersEdit from './Pages/UnfavParameters/UnfavParametersEdit';
+import ZodiacSignEdit from './Pages/ZodiacSign/ZodiacSignEdit';
 function App() {
   return (
     <AppProvider>
@@ -163,15 +174,42 @@ function App() {
 
 
         <Route path="/personalyear" element={<PrivateRoute element={PersonalYear} />} />
+        <Route path="/personalyear/show" element={<PrivateRoute element={PersonalYearShow} />} />
+        <Route path="/personalyear/edit" element={<PrivateRoute element={PersonalYearEdit} />} />
+
+
         <Route path="/personalmonth" element={<PrivateRoute element={PersonalMonth} />} />
+        <Route path="/personalmonth/show" element={<PrivateRoute element={PersonalMonthShow} />} />
+        <Route path="/personalmonth/edit" element={<PrivateRoute element={PersonalMonthEdit} />} />
+
+
         <Route path="/personalweek" element={<PrivateRoute element={PersonalWeek} />} />
+        <Route path="/personalweek/show" element={<PrivateRoute element={PersonalWeekShow} />} />
+        <Route path="/personalweek/edit" element={<PrivateRoute element={PersonalWeekEdit} />} />
+
+
         <Route path="/personalday" element={<PrivateRoute element={PersonalDay} />} />
+        <Route path="/personalday/show" element={<PrivateRoute element={PersonalDayShow} />} />
+        <Route path="/personalday/edit" element={<PrivateRoute element={PersonalDayEdit} />} />
+
+
         <Route path="/universalyear" element={<PrivateRoute element={UniversalYear} />} />
         <Route path="/universalmonth" element={<PrivateRoute element={UniversalMonth} />} />
         <Route path="/universalday" element={<PrivateRoute element={UniversalDay} />} />
+
+
         <Route path="/fav_parameters" element={<PrivateRoute element={FavParameters} />} />
+        <Route path="/fav_parameters/edit" element={<PrivateRoute element={FavParametersEdit} />} />
+
+
         <Route path="/unfav_parameters" element={<PrivateRoute element={UnfavParamaters} />} />
+        <Route path="/unfav_parameters/edit" element={<PrivateRoute element={UnfavParametersEdit} />} />
+
+
         <Route path="/zodic_signs" element={<PrivateRoute element={ZodiacSign} />} />
+        <Route path="/zodic_signs/edit" element={<PrivateRoute element={ZodiacSignEdit} />} />
+
+
         <Route path="/planet_numbers" element={<PrivateRoute element={PlanetNumbers} />} />
         <Route path="/life_cycles" element={<PrivateRoute element={LifeCycle} />} />
         <Route path="/life_changes" element={<PrivateRoute element={LifeChanges} />} />

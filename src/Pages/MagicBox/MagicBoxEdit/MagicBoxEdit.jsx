@@ -110,7 +110,7 @@ const MagicBoxEdit = () => {
             Swal.fire({
               icon: "success",
               title: "Success!",
-              text: "Primary number details updated successfully!",
+              text: "Magic Box details updated successfully!",
             }).then(() => {
               window.close();
             });
