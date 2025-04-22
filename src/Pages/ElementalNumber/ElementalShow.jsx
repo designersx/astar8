@@ -17,7 +17,7 @@ export default function ElementalShow() {
   }, []);
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         {loading ? (
           <Loader />

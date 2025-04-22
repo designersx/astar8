@@ -18,7 +18,7 @@ export default function VideoShow() {
   }, []);
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         {loading ? (
           <Loader />

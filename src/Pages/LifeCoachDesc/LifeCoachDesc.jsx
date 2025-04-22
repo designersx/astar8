@@ -75,7 +75,7 @@ const LifeCoachDesc = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         <div className="min-height-200px">
           <div className="page-header">

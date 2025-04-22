@@ -96,12 +96,24 @@ import PersonalDayEdit from './Pages/PersonalDay/PersonalDayEdit';
 import FavParametersEdit from './Pages/FavParameters/FavParametersEdit';
 import UnfavParametersEdit from './Pages/UnfavParameters/UnfavParametersEdit';
 import ZodiacSignEdit from './Pages/ZodiacSign/ZodiacSignEdit';
+import DashBoardLayout from './component/DashBoardLayout/DashBoardLayout';
+import PlanetNumbersShow from './Pages/PlanetNumbers/PlanetNumbersShow';
+import PlanetNumbersEdit from './Pages/PlanetNumbers/PlanetNumbersEdit';
+import LifeCycleShow from './Pages/LifeCycle/LifeCycleShow';
+import LifeCycleEdit from './Pages/LifeCycle/LifeCycleEdit';
+import LifeChangesShow from './Pages/LifeChanges/LifeChangesShow';
+import LifeChangesEdit from './Pages/LifeChanges/LifeChangesEdit';
+import CompaitablePartnerShow from './Pages/CompaitablePartner/CompaitablePartnerShow';
+import CompaitablePartnerEdit from './Pages/CompaitablePartner/CompaitablePartnerEdit';
+import PartnerRelationshipShow from './Pages/PartnerRelationships/PartnerRelationshipShow';
+import PartnerRelationshipEdit from './Pages/PartnerRelationships/PartnerRelationshipEdit';
 function App() {
   return (
     <AppProvider>
     <Router>
       <Routes>
         <Route path="/" element={<AdminLogin />} />
+        <Route element={<DashBoardLayout />}>
         <Route path="/dashboard" element={<PrivateRoute element={DashBoard} />} />
         <Route path="/profile" element={<PrivateRoute element={Profile} />} />
         <Route path="/reset" element={<PrivateRoute element={ResetPassword} />} />
@@ -211,10 +223,30 @@ function App() {
 
 
         <Route path="/planet_numbers" element={<PrivateRoute element={PlanetNumbers} />} />
+        <Route path="/planet_numbers/show" element={<PrivateRoute element={PlanetNumbersShow} />} />
+        <Route path="/planet_numbers/edit" element={<PrivateRoute element={PlanetNumbersEdit} />} />
+
+
         <Route path="/life_cycles" element={<PrivateRoute element={LifeCycle} />} />
+        <Route path="/life_cycles/show" element={<PrivateRoute element={LifeCycleShow} />} />
+        <Route path="/life_cycles/edit" element={<PrivateRoute element={LifeCycleEdit} />} />
+
+
         <Route path="/life_changes" element={<PrivateRoute element={LifeChanges} />} />
+        <Route path="/life_changes/show" element={<PrivateRoute element={LifeChangesShow} />} />
+        <Route path="/life_changes/edit" element={<PrivateRoute element={LifeChangesEdit} />} />
+
+
         <Route path="/compatible_partners" element={<PrivateRoute element={CompaitablePartner} />} />
+        <Route path="/compatible_partners/show" element={<PrivateRoute element={CompaitablePartnerShow} />} />
+        <Route path="/compatible_partners/edit" element={<PrivateRoute element={CompaitablePartnerEdit} />} />
+
+
         <Route path="/partner_relationships" element={<PrivateRoute element={PartnerRelationships} />} />
+        <Route path="/partner_relationships/show" element={<PrivateRoute element={PartnerRelationshipShow} />} />
+        <Route path="/partner_relationships/edit" element={<PrivateRoute element={PartnerRelationshipEdit} />} />
+
+
         <Route path="/childrens" element={<PrivateRoute element={ChildrenPage} />} />
         <Route path="/basicparenting" element={<PrivateRoute element={BasicParenting} />} />
         <Route path="/detailparenting" element={<PrivateRoute element={DetailParenting} />} />
@@ -229,6 +261,7 @@ function App() {
         <Route path="/payment" element={<PrivateRoute element={PaymentSetting} />} />
         <Route path="/userDetailedData" element={<PrivateRoute element={UserDetailedData} />} />
         <Route path="/Version" element={<PrivateRoute element={Version} />} />
+        </Route>
         </Routes>
       </Router>
     </AppProvider>

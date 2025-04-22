@@ -16,7 +16,7 @@ const HealthCycleShow = () => {
   }, []);
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         {loading ? (
           <Loader />

@@ -10,7 +10,6 @@ import Loader from "../../component/Loader/Loader";
 
 export default function MasterNumber() {
   const [masterNumbers, setMasterNumbers] = useState([]);
-  console.log("numberrr", masterNumbers);
   const [loading, setLoading] = useState(false);
 
   const fetchMasterNumbers = async () => {
@@ -53,7 +52,7 @@ export default function MasterNumber() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
           <div className="row">

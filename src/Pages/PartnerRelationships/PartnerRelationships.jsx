@@ -1,357 +1,169 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { IoIosEye } from "react-icons/io";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { getPartnerRelationship } from "../../lib/Store";
 import Header from "../../component/Dashboard/Header";
+import Loader from "../../component/Loader/Loader";
 
 const PartnerRelationships = () => {
+  const [partnerRelationship, setpartnerRelationship] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const fetchpartnerRelationship = async () => {
+    setLoading(true);
+    try {
+      const response = await getPartnerRelationship();
+      setpartnerRelationship(response.data || []);
+      setCurrentPage(1); // Reset to first page on fetch
+    } catch (err) {
+      console.error("Error fetching partner relationships:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchpartnerRelationship();
+    const handleStorageChange = () => fetchpartnerRelationship();
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  const handleView = (item) => {
+    window.open("/partner_relationships/show", "_blank");
+    localStorage.setItem("viewData", JSON.stringify(item));
+  };
+
+  const handleEdit = (item) => {
+    window.open("/partner_relationships/edit", "_blank");
+    localStorage.setItem("editData", JSON.stringify(item));
+  };
+
+  // Pagination logic
+  const totalPages = Math.ceil(partnerRelationship.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = partnerRelationship.slice(indexOfFirstItem, indexOfLastItem);
+
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
-          <div className="row">
-            <div className="col-md-6">
-              <div className="">
-                <h2>Partner Relationship</h2>
-              </div>
-            </div>
-          </div>
+          <h2>Partner Relationship</h2>
         </div>
+
         <div className="pd-20 card-box mb-30">
-          <table className="table table-striped">
-            <tbody>
-              <tr>
-                <th>Number</th>
-                <th>Mate Number</th>
-                <th>Description</th>
-                <th width="280px">Action</th>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>1</td>
-                <td>
-                  With this set of birth numbers, you'll more than meet your
-                  match that's for sure. You like...
-                </td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/partner_relationships/1"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/partner_relationships/1/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>
-                  This is an ideal combination from the standpoint your mate
-                  knows who's the boss right away...
-                </td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/partner_relationships/2"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/partner_relationships/2/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>3</td>
-                <td>
-                  Since both of you tend to be work alcoholics by numerical
-                  nature, you would be able to und...
-                </td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/partner_relationships/3"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/partner_relationships/3/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>4</td>
-                <td>
-                  According to the laws of numbers, there is a strong affinity
-                  between the both of you. In m...
-                </td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/partner_relationships/4"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/partner_relationships/4/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>5</td>
-                <td>
-                  Excitement and adventure await the both of you when you come
-                  together. You're both fiercel...
-                </td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/partner_relationships/5"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/partner_relationships/5/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>6</td>
-                <td>
-                  This is a situation where control issues may eventually become
-                  a problem if not caught ear...
-                </td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/partner_relationships/6"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/partner_relationships/6/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>7</td>
-                <td>
-                  In a sense, you can become very involved in the beginning. But
-                  you'd have to have some of...
-                </td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/partner_relationships/7"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/partner_relationships/7/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>8</td>
-                <td>
-                  Here, we have a combination where the business side of the
-                  relationship actually becomes s...
-                </td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/partner_relationships/8"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/partner_relationships/8/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>9</td>
-                <td>
-                  This is usually a set of numbers that click right away. It's
-                  like the beginning (that's yo...
-                </td>
-                <td>
-                  <a
-                    className="btn btn-info"
-                    href="https://be.astar8.com/partner_relationships/9"
-                    title="View"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ion-eye" />
-                  </a>
-                  <a
-                    className="btn btn-primary"
-                    href="https://be.astar8.com/partner_relationships/9/edit"
-                    title="Edit"
-                    target="_blank"
-                  >
-                    <i className="icon-copy ti-pencil-alt" />
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div className="custom-pagination">
-            <nav>
-              <ul className="pagination">
-                <li
-                  className="page-item disabled"
-                  aria-disabled="true"
-                  aria-label="« Previous"
-                >
-                  <span className="page-link" aria-hidden="true">
-                    ‹
-                  </span>
-                </li>
-                <li className="page-item active" aria-current="page">
-                  <span className="page-link">1</span>
-                </li>
-                <li className="page-item">
-                  <a
-                    className="page-link"
-                    href="https://be.astar8.com/partner_relationships?page=2"
-                  >
-                    2
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a
-                    className="page-link"
-                    href="https://be.astar8.com/partner_relationships?page=3"
-                  >
-                    3
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a
-                    className="page-link"
-                    href="https://be.astar8.com/partner_relationships?page=4"
-                  >
-                    4
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a
-                    className="page-link"
-                    href="https://be.astar8.com/partner_relationships?page=5"
-                  >
-                    5
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a
-                    className="page-link"
-                    href="https://be.astar8.com/partner_relationships?page=6"
-                  >
-                    6
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a
-                    className="page-link"
-                    href="https://be.astar8.com/partner_relationships?page=7"
-                  >
-                    7
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a
-                    className="page-link"
-                    href="https://be.astar8.com/partner_relationships?page=8"
-                  >
-                    8
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a
-                    className="page-link"
-                    href="https://be.astar8.com/partner_relationships?page=9"
-                  >
-                    9
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a
-                    className="page-link"
-                    href="https://be.astar8.com/partner_relationships?page=2"
-                    rel="next"
-                    aria-label="Next »"
-                  >
-                    ›
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="card-block table-border-style">
+              <table className="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Numbers</th>
+                    <th width="120px">Mate Number</th>
+                    <th>Description</th>
+                    <th style={{ width: "280px" }}>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentItems.map(({ id, number, mate_number, description, general_desc }) => (
+                    <tr key={id}>
+                      <td>{number}</td>
+                      <td>{mate_number}</td>
+                      <td>
+                        {description.length > 100
+                          ? `${description.slice(0, 100)}...`
+                          : description}
+                      </td>
+                      <td>
+                        <div style={{ display: "flex", gap: "10px" }}>
+                          <button
+                            className="btn btn-info"
+                            onClick={() =>
+                              handleView({
+                                id,
+                                number,
+                                mate_number,
+                                description,
+                                general_desc,
+                              })
+                            }
+                            title="View"
+                          >
+                            <IoIosEye size={18} />
+                          </button>
+                          <button
+                            className="btn btn-primary"
+                            onClick={() =>
+                              handleEdit({
+                                id,
+                                number,
+                                mate_number,
+                                description,
+                                general_desc,
+                              })
+                            }
+                            title="Edit"
+                          >
+                            <FontAwesomeIcon icon={faPencilAlt} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  {partnerRelationship.length === 0 && (
+                    <tr>
+                      <td colSpan={4} style={{ textAlign: "center" }}>
+                        No records found.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+
+              {/* Bootstrap-style Pagination */}
+              {partnerRelationship.length > itemsPerPage && (
+                <nav aria-label="Partner Relationship Pagination">
+                  <ul className="pagination m-0 ">
+                    <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                      <button className="page-link" onClick={() => goToPage(currentPage - 1)}>
+                        Previous
+                      </button>
+                    </li>
+                    {[...Array(totalPages)].map((_, idx) => {
+                      const page = idx + 1;
+                      return (
+                        <li
+                          key={page}
+                          className={`page-item ${page === currentPage ? "active" : ""}`}
+                        >
+                          <button className="page-link" onClick={() => goToPage(page)}>
+                            {page}
+                          </button>
+                        </li>
+                      );
+                    })}
+                    <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                      <button className="page-link" onClick={() => goToPage(currentPage + 1)}>
+                        Next
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>

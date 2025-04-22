@@ -35,7 +35,7 @@ const MagicBoxShow = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container pb-3">
         {loading ? (
           <Loader />

@@ -53,7 +53,7 @@ export default function DashBoard() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       {loading ? (
         <>
           <div className="main-container">

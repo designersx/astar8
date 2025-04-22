@@ -91,7 +91,7 @@ const UserMessages = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         {/* Header Section */}
         <div className="page-header">

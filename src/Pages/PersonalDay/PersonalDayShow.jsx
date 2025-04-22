@@ -16,7 +16,7 @@ const PersonalDayShow = () => {
   }, []);
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container pb-2">
         {loading ? (
           <Loader />

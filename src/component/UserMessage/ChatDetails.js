@@ -21,7 +21,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
   );
   const [userRole, setuserRole] = useState(localStorage.getItem("Role") || "");
   // console.log("userROleee", userRole);
-  const llyadId = "5mywqbuSYUPveHLmD0Df";
+  const llyadId = "6";
   const llyodProfilePic = "https://dev.astar8.com/uploads/1737091948321.png";
   const [handleSocketError, sethandleSocketError] = useState();
 

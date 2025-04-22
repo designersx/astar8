@@ -30,7 +30,7 @@ export default function DestinyShow() {
   }, []);
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         {loading ? (
           <Loader />

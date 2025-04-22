@@ -40,7 +40,7 @@ export default function DailyForecast() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container pb-3">
         <div className="pd-20 card-box" style={{ marginBottom: "20px" }}>
           <div className="d-flex justify-content-between align-items-center">

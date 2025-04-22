@@ -1071,3 +1071,123 @@ export const editZodiacSign = async (id, finaldata) => {
     return error;
   }
 };
+
+// get plannet numbers
+export const getPlanetNumbers = async () => {
+  try {
+    const response = await axios.get(`${Url}/gpnl6m4l5m`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// Edit plannet numbers
+export const editPlanetNumbers = async (id, finaldata) => {
+  try {
+    const response = await axios.put(`${Url}/upnm5k3mvv`, {
+      id,
+      ...finaldata,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get Life Cycle
+export const getLifeCycle = async () => {
+  try {
+    const response = await axios.get(`${Url}/glcm5kdm6f`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// Edit Life Cycle
+export const editLifeCycle = async (id, finaldata) => {
+  try {
+    const response = await axios.put(`${Url}/ulcm5k3mr5`, {
+      id,
+      ...finaldata,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get Life Changes
+export const getLifeChanges = async () => {
+  try {
+    const response = await axios.get(`${Url}/glcm5k3m4d`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// Edit Life Cycle
+export const editLifeChanges = async (id, finaldata) => {
+  try {
+    const response = await axios.put(`${Url}/ulch3mck5f`, {
+      id,
+      ...finaldata,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get Compatible partner
+export const getCompatiblePartner = async () => {
+  try {
+    const response = await axios.get(`${Url}/gcprtm3km5`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// Edit Compatible partner
+export const editCompatiblePartner = async (id, finaldata) => {
+  try {
+    const response = await axios.put(`${Url}/ucprtm4n5f`, {
+      id,
+      ...finaldata,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get Partner relationship
+export const getPartnerRelationship = async () => {
+  try {
+    const response = await axios.get(`${Url}/gprmk53mvb`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// Edit Partner relationship
+export const editPartnerRelationship = async (id, finaldata) => {
+  try {
+    const response = await axios.put(`${Url}/kfuri99roi`, {
+      id,
+      ...finaldata,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};

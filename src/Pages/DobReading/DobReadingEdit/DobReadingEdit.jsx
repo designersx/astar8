@@ -114,7 +114,7 @@ const DobReadingEdit = () => {
   if (!data || !data.id) {
     return (
       <>
-        <Header />
+        {/* <Header /> */}
         <div className="main-container">
           <div className="pd-20 card-box mb-30">
             <h2>No data available to edit.</h2>
@@ -126,7 +126,7 @@ const DobReadingEdit = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
           <div className="row">

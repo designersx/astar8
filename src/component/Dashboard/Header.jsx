@@ -45,22 +45,28 @@ export default function Dashboard() {
   const img = localStorage.getItem("profilePic");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [dropdownStates, setDropdownStates] = useState({
-    health: false,
-    personal: false,
-    systems: false,
+  const initialDropdownStates = {
+    health:    false,
+    personal:  false,
+    systems:   false,
     universal: false,
-    fav: false,
+    fav:       false,
     parenting: false,
-  });
+    money:     false,  // you also reference money below
+  };
+  
+  const [dropdownStates, setDropdownStates] = useState(initialDropdownStates);
 
   const [userRole, setUserRole] = useState(localStorage.getItem("Role") || "");
 
   const toggleDropdowns = (dropdownName) => {
-    setDropdownStates((prevState) => ({
-      ...prevState,
-      [dropdownName]: !prevState[dropdownName],
-    }));
+    setDropdownStates((prevState) => {
+      const isOpening = !prevState[dropdownName]; // will we open this one?
+      return Object.keys(prevState).reduce((nextState, key) => {
+        nextState[key] = key === dropdownName ? isOpening : false;
+        return nextState;
+      }, {});
+    });
   };
 
   const toggleSidebar = () => {
@@ -140,7 +146,6 @@ export default function Dashboard() {
     }
   }, [navigate]);
 
-  //
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
@@ -170,7 +175,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="header-right">
-          <div className="user-notification">
+          {/* <div className="user-notification">
             <div className="dropdown">
               <div className="dropdown-menu dropdown-menu-right">
                 <div className="notification-list mx-h-350 customscroll mCustomScrollbar _mCS_1 mCS_no_scrollbar">
@@ -244,7 +249,7 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="user-info-dropdown" ref={dropdownRef}>
             <div className="dropdown">
               <a
@@ -290,16 +295,27 @@ export default function Dashboard() {
                   isDropdownOpen ? "show animated-dropdown" : "hide"
                 }`}
               >
-                <NavLink className="dropdown-item" to="/profile">
+                <NavLink
+                  className="dropdown-item"
+                  to="/profile"
+                  onClick={() => setDropdownOpen(false)}
+                >
                   <i className="fa fa-user-circle mr-2" /> Profile
                 </NavLink>
-                <NavLink className="dropdown-item" to="/reset">
+                <NavLink
+                  className="dropdown-item"
+                  to="/reset"
+                  onClick={() => setDropdownOpen(false)}
+                >
                   <i className="fa fa-cogs mr-2" /> Reset Password
                 </NavLink>
                 <a
                   className="dropdown-item"
                   style={{ cursor: "pointer" }}
-                  onClick={onHandleLogout}
+                  onClick={() => {
+                    onHandleLogout();
+                    setDropdownOpen(false);
+                  }}
                 >
                   <i className="fa fa-sign-out mr-2" />
                   Logout
@@ -342,6 +358,7 @@ export default function Dashboard() {
                     <NavLink
                       to="/dashboard"
                       className="dropdown-toggle no-arrow"
+                      onClick={() => setDropdownStates(initialDropdownStates)}
                     >
                       <span>
                         {" "}
@@ -357,6 +374,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/usermessages"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon
@@ -371,6 +389,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/DailyForecast"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon
@@ -403,7 +422,11 @@ export default function Dashboard() {
                       </NavLink>
                     </li> */}
                     <li className="dropdown">
-                      <NavLink to="/users" className="dropdown-toggle no-arrow">
+                      <NavLink
+                        to="/users"
+                        className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
+                      >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon
                             icon={faUser}
@@ -419,6 +442,7 @@ export default function Dashboard() {
                     <NavLink
                       to="/dashboard"
                       className="dropdown-toggle no-arrow"
+                      onClick={() => setDropdownStates(initialDropdownStates)}
                     >
                       <span>
                         {" "}
@@ -427,7 +451,11 @@ export default function Dashboard() {
                       <span className="mtext">Home</span>
                     </NavLink>
                     <li className="dropdown">
-                      <NavLink to="/roles" className="dropdown-toggle no-arrow">
+                      <NavLink
+                        to="/roles"
+                        className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
+                      >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faPencilAlt} />
                         </span>
@@ -519,6 +547,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/Master"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faList} />
@@ -530,6 +559,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/namereading"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faUser} />
@@ -541,6 +571,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/dobreading"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span>
                           {" "}
@@ -553,6 +584,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/luckiest_parameters"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faDesktop} />
@@ -564,6 +596,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/primaryno_types"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faList} />
@@ -575,6 +608,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/magicbox"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faBox} />
@@ -586,6 +620,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/usermessages"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faComment} />
@@ -597,6 +632,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/DailyForecast"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faBook} />
@@ -608,6 +644,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/elementalno"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faClock} />
@@ -619,6 +656,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/destinyno"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faSitemap} />
@@ -630,6 +668,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/videos"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faVideo} />
@@ -641,6 +680,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/lifecoach_descriptions"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faFile} />
@@ -652,6 +692,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/subscription_price"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faWallet} />
@@ -1090,6 +1131,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/zodic_signs"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faChartLine} />
@@ -1101,6 +1143,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/planet_numbers"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faGlobe} />
@@ -1112,6 +1155,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/life_cycles"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faRecycle} />
@@ -1123,6 +1167,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/life_changes"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faRecycle} />
@@ -1134,6 +1179,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/compatible_partners"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span>
                           <FontAwesomeIcon icon={faUser} />
@@ -1145,6 +1191,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/partner_relationships"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faHeart} />
@@ -1156,6 +1203,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/childrens"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faUser} />
@@ -1330,6 +1378,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/compatibility_percentage"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(false)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faChartBar} />
@@ -1346,6 +1395,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/compatibility_description"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faBook} />
@@ -1357,6 +1407,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/general-settings"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faCog} />
@@ -1368,6 +1419,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/payment"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faDollarSign} />
@@ -1376,7 +1428,11 @@ export default function Dashboard() {
                       </NavLink>
                     </li>
                     <li className="dropdown">
-                      <NavLink to="/users" className="dropdown-toggle no-arrow">
+                      <NavLink
+                        to="/users"
+                        className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
+                      >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faUser} />
                         </span>
@@ -1387,6 +1443,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/Version"
                         className="dropdown-toggle no-arrow"
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faCodeBranch} />
