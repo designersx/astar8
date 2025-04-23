@@ -2,7 +2,7 @@ import axios from "axios";
 // export const Url = "http://localhost:5234";
 // export const Url = "https://dev.astar8.com"
 export const Url = "https://us-central1-astar8-llc.cloudfunctions.net/apiv1";
-// export const Url = "http://127.0.0.1:5001/astar8-llc/us-central1/apiv1" // testing url
+// export const Url = "http://127.0.0.1:5001/astar8-llc/us-central1/apiv1"; // testing url
 
 //admin login api
 export const LoginApi = async (email, password) => {
@@ -1192,7 +1192,6 @@ export const editPartnerRelationship = async (id, finaldata) => {
   }
 };
 
-
 // get Children
 export const getChildren = async () => {
   try {
@@ -1217,7 +1216,7 @@ export const editChildren = async (id, finaldata) => {
   }
 };
 
-// get Basic Parenting 
+// get Basic Parenting
 export const getBasicParenting = async () => {
   try {
     const response = await axios.get(`${Url}/gbprm53mfd`);
@@ -1241,7 +1240,7 @@ export const editBasicParenting = async (id, finaldata) => {
   }
 };
 
-// get Detailed Parenting 
+// get Detailed Parenting
 export const getDetailedParenting = async () => {
   try {
     const response = await axios.get(`${Url}/gdpm4kb5ff`);
@@ -1266,7 +1265,7 @@ export const editDetailedParenting = async (id, finaldata) => {
 };
 
 // get Basic Money Matters
-export const getbasicMoney= async () => {
+export const getbasicMoney = async () => {
   try {
     const response = await axios.get(`${Url}/loooff782g`);
     const data = await response.data;
@@ -1290,7 +1289,7 @@ export const editbasicMoney = async (id, finaldata) => {
 };
 
 // get Detailed Money Matters
-export const getDetailedMoney= async () => {
+export const getDetailedMoney = async () => {
   try {
     const response = await axios.get(`${Url}/nmvv99vv2e`);
     const data = await response.data;
@@ -1303,6 +1302,54 @@ export const getDetailedMoney= async () => {
 export const editDetailedMoney = async (id, finaldata) => {
   try {
     const response = await axios.put(`${Url}/paosyd98d7`, {
+      id,
+      ...finaldata,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get Compaitibilty Scale
+export const getCompaitibiltyScale = async () => {
+  try {
+    const response = await axios.get(`${Url}/lododo2203`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// Edit Compaitibilty Scale
+export const editCompaitibiltyScale = async (id, finaldata) => {
+  try {
+    const response = await axios.put(`${Url}/ft78r9f5r4`, {
+      id,
+      ...finaldata,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get Compaitibilty Desc
+export const getCompaitibiltyDesc = async () => {
+  try {
+    const response = await axios.get(`${Url}/dfg00g00ss`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// Edit Compaitibilty Scale
+export const editCompaitibiltyDesc = async (id, finaldata) => {
+  try {
+    const response = await axios.put(`${Url}/xcdfgr69r8`, {
       id,
       ...finaldata,
     });
