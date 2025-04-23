@@ -18,7 +18,7 @@ const LuckiestShow = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         {loading ? (
           <Loader /> // Display loader if loading is true

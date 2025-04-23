@@ -105,7 +105,7 @@ export default function UserDetailedData() {
         <p className="text-center">No user details available.</p>
       ) : (
         <>
-          <Header />
+          {/* <Header /> */}
           <div className="main-container" style={{ paddingBottom: "40px" }}>
             <div className="pd-ltr-20 xs-pd-20-10">
               <div className="min-height-200px">
@@ -163,7 +163,9 @@ export default function UserDetailedData() {
                           </li>
                           <li>
                             <span>Phone Number:</span>
-                            {userDetails.userdetails.phoneno || "N/A"}
+                            {userDetails.userdetails.phoneno ??
+                              userDetails.userdetails.phone ??
+                              "N/A"}
                           </li>
                           <li>
                             <span>Relationship:</span>

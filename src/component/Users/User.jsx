@@ -493,7 +493,7 @@ export default function User() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Toaster />
 
       <div className="main-container pb-5">

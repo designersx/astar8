@@ -4,7 +4,7 @@ import Header from "../../component/Dashboard/Header";
 const SubscriptionPirce = () => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
           <div className="row">
@@ -17,7 +17,7 @@ const SubscriptionPirce = () => {
               <div className="text-right">
                 <a
                   className="btn btn-success"
-                  href="https://be.astar8.com/subscription_prize/create"
+                  // href="https://be.astar8.com/subscription_prize/create"
                 >
                   {" "}
                   Create New Prediction{" "}

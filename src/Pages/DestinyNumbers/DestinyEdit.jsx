@@ -123,7 +123,7 @@ export default function DestinyEdit() {
   if (!data || !data.id) {
     return (
       <>
-        <Header />
+        {/* <Header /> */}
         <div className="main-container pb-3">
           <div className="pd-20 card-box mb-30">
             <h2>No data available to edit.</h2>
@@ -135,7 +135,7 @@ export default function DestinyEdit() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container pb-3">
         <div className="pd-20 card-box mb-30">
           <div className="row">
@@ -170,7 +170,7 @@ export default function DestinyEdit() {
                     className="form-control description"
                     name="description"
                     cols={50}
-                    rows={10}
+                    rows={5}
                     value={positive}
                     onChange={(e) => setPositive(e.target.value)}
                   />
@@ -184,7 +184,7 @@ export default function DestinyEdit() {
                     className="form-control description"
                     name="description"
                     cols={50}
-                    rows={10}
+                    rows={5}
                     value={negative}
                     onChange={(e) => setNegative(e.target.value)}
                   />

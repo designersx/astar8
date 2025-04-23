@@ -170,7 +170,7 @@ const PaymentSetting = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
           <div className="row">

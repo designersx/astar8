@@ -1,88 +1,125 @@
-import React from "react";
-import Header from "../../component/Dashboard/Header";
+import React, { useEffect, useState } from "react";
 import { IoIosEye } from "react-icons/io";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { FaUnlock } from "react-icons/fa6";
+import {
+  getBasicParenting,
+  getChildren,
+  getDetailedParenting,
+  getPersonalYear,
+  getPlanetNumbers,
+} from "../../lib/Store";
+import Header from "../../component/Dashboard/Header";
+import Loader from "../../component/Loader/Loader";
 
 const DetailParenting = () => {
+  const [detailParent, setdetailParent] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // Fetch Children
+  const fetchDetailParent = async () => {
+    setLoading(true);
+    try {
+      const response = await getDetailedParenting();
+      setdetailParent(response.data || []);
+    } catch (err) {
+      console.error("Error fetching personal years:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDetailParent();
+    const handleStorageChange = () => fetchDetailParent();
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  const handleView = (item) => {
+    window.open("/detailparenting/show", "_blank");
+    localStorage.setItem("viewData", JSON.stringify(item));
+  };
+
+  const handleEdit = (item) => {
+    window.open("/detailparenting/edit", "_blank");
+    localStorage.setItem("editData", JSON.stringify(item));
+  };
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="">
-                <h2>Detailed Parenting Reading</h2>
-              </div>
-            </div>
-          </div>
+          <h2>Detailed Parenting Reading </h2>
         </div>
-        {/* Nav tabs */}
+
         <div className="pd-20 card-box mb-30">
-          <div className="card-block table-border-style">
-            <table className="table table-striped">
-              <tbody>
-                <tr>
-                  <th>Number</th>
-                  <th>Description</th>
-                  <th width="280px">Action</th>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>
-                    If your children were born on dates adding up to a 1, 4, or
-                    9, chances are you'll have har...
-                  </td>
-                  <td>
-                    <div style={{ display: "flex", gap: "10px" }}>
-                      <a
-                        className="btn btn-info"
-                        href="https://be.astar8.com/dobreading/73"
-                        title="View"
-                        target="_blank"
-                      >
-                        <IoIosEye size={18} />
-                      </a>
-                      <a
-                        className="btn btn-primary"
-                        href="https://be.astar8.com/dobreading/73/edit"
-                        title="Edit"
-                        target="_blank"
-                      >
-                        <FontAwesomeIcon icon={faPencilAlt} />
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>
-                    Children born on dates adding up to 2, 7, or 6 are generally
-                    harmonious. The reverse is tr...
-                  </td>
-                  <td>
-                    <a
-                      className="btn btn-info"
-                      href="https://be.astar8.com/detailparenting/47"
-                      title="View"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ion-eye" />
-                    </a>
-                    <a
-                      className="btn btn-primary"
-                      href="https://be.astar8.com/detailparenting/47/edit"
-                      title="Edit"
-                      target="_blank"
-                    >
-                      <i className="icon-copy ti-pencil-alt" />
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="card-block table-border-style">
+              <table className="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Number</th>
+                    <th>Description</th>
+                    <th style={{ width: "280px" }}>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detailParent.map(({ id, number, description }) => (
+                    <tr key={id}>
+                      <td>{number}</td>
+                      <td>
+                        {description.length > 100
+                          ? `${description.slice(0, 100)}...`
+                          : description}
+                      </td>
+
+                      <td>
+                        <div style={{ display: "flex", gap: "10px" }}>
+                          <button
+                            className="btn btn-info"
+                            onClick={() =>
+                              handleView({
+                                id,
+                                number,
+                                description,
+                              })
+                            }
+                            title="View"
+                          >
+                            <IoIosEye size={18} />
+                          </button>
+                          <button
+                            className="btn btn-primary"
+                            onClick={() =>
+                              handleEdit({
+                                id,
+                                number,
+                                description,
+                              })
+                            }
+                            title="Edit"
+                          >
+                            <FontAwesomeIcon icon={faPencilAlt} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  {detailParent.length === 0 && (
+                    <tr>
+                      <td colSpan={3} style={{ textAlign: "center" }}>
+                        No records found.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </>

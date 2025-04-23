@@ -85,12 +85,45 @@ import HealthSuggestionShow from './Pages/HealthSuggestion/HealthSuggestionShow'
 import HealthSuggestionEdit from './Pages/HealthSuggestion/HealthSuggestionEdit';
 import HealthCycleShow from './Pages/HealthCycle/HealthCycleShow';
 import HealthCycleEdit from './Pages/HealthCycle/HealthCycleEdit';
+import PersonalYearShow from './Pages/PersonalYear/PersonalYearShow';
+import PersonalYearEdit from './Pages/PersonalYear/PersonalYearEdit';
+import PersonalMonthShow from './Pages/PersonalMonth/PersonalMonthShow';
+import PersonalMonthEdit from './Pages/PersonalMonth/PersonalMonthEdit';
+import PersonalWeekShow from './Pages/PersonalWeek/PersonalWeekShow';
+import PersonalWeekEdit from './Pages/PersonalWeek/PersonalWeekEdit';
+import PersonalDayShow from './Pages/PersonalDay/PersonalDayShow';
+import PersonalDayEdit from './Pages/PersonalDay/PersonalDayEdit';
+import FavParametersEdit from './Pages/FavParameters/FavParametersEdit';
+import UnfavParametersEdit from './Pages/UnfavParameters/UnfavParametersEdit';
+import ZodiacSignEdit from './Pages/ZodiacSign/ZodiacSignEdit';
+import DashBoardLayout from './component/DashBoardLayout/DashBoardLayout';
+import PlanetNumbersShow from './Pages/PlanetNumbers/PlanetNumbersShow';
+import PlanetNumbersEdit from './Pages/PlanetNumbers/PlanetNumbersEdit';
+import LifeCycleShow from './Pages/LifeCycle/LifeCycleShow';
+import LifeCycleEdit from './Pages/LifeCycle/LifeCycleEdit';
+import LifeChangesShow from './Pages/LifeChanges/LifeChangesShow';
+import LifeChangesEdit from './Pages/LifeChanges/LifeChangesEdit';
+import CompaitablePartnerShow from './Pages/CompaitablePartner/CompaitablePartnerShow';
+import CompaitablePartnerEdit from './Pages/CompaitablePartner/CompaitablePartnerEdit';
+import PartnerRelationshipShow from './Pages/PartnerRelationships/PartnerRelationshipShow';
+import PartnerRelationshipEdit from './Pages/PartnerRelationships/PartnerRelationshipEdit';
+import ChildrenPageShow from './Pages/ChildrenPage/ChildrenPageShow';
+import ChildrenPageEdit from './Pages/ChildrenPage/ChildrenPageEdit';
+import BasicParentingShow from './Pages/BasicParenting/BasicParentingShow';
+import BasicParentingEdit from './Pages/BasicParenting/BasicParentingEdit';
+import DetailParentingShow from './Pages/DetailParenting/DetailParentingShow';
+import DetailPareningEdit from './Pages/DetailParenting/DetailPareningEdit';
+import BasicMoneyShow from './Pages/BasicMoney/BasicMoneyShow';
+import BasicMoneyEdit from './Pages/BasicMoney/BasicMoneyEdit';
+import DetailedMoneyShow from './Pages/DetailedMoney/DetailedMoneyShow';
+import DetailedMoneyEdit from './Pages/DetailedMoney/DetailedMoneyEdit';
 function App() {
   return (
     <AppProvider>
     <Router>
       <Routes>
         <Route path="/" element={<AdminLogin />} />
+        <Route element={<DashBoardLayout />}>
         <Route path="/dashboard" element={<PrivateRoute element={DashBoard} />} />
         <Route path="/profile" element={<PrivateRoute element={Profile} />} />
         <Route path="/reset" element={<PrivateRoute element={ResetPassword} />} />
@@ -163,25 +196,92 @@ function App() {
 
 
         <Route path="/personalyear" element={<PrivateRoute element={PersonalYear} />} />
+        <Route path="/personalyear/show" element={<PrivateRoute element={PersonalYearShow} />} />
+        <Route path="/personalyear/edit" element={<PrivateRoute element={PersonalYearEdit} />} />
+
+
         <Route path="/personalmonth" element={<PrivateRoute element={PersonalMonth} />} />
+        <Route path="/personalmonth/show" element={<PrivateRoute element={PersonalMonthShow} />} />
+        <Route path="/personalmonth/edit" element={<PrivateRoute element={PersonalMonthEdit} />} />
+
+
         <Route path="/personalweek" element={<PrivateRoute element={PersonalWeek} />} />
+        <Route path="/personalweek/show" element={<PrivateRoute element={PersonalWeekShow} />} />
+        <Route path="/personalweek/edit" element={<PrivateRoute element={PersonalWeekEdit} />} />
+
+
         <Route path="/personalday" element={<PrivateRoute element={PersonalDay} />} />
+        <Route path="/personalday/show" element={<PrivateRoute element={PersonalDayShow} />} />
+        <Route path="/personalday/edit" element={<PrivateRoute element={PersonalDayEdit} />} />
+
+
         <Route path="/universalyear" element={<PrivateRoute element={UniversalYear} />} />
         <Route path="/universalmonth" element={<PrivateRoute element={UniversalMonth} />} />
         <Route path="/universalday" element={<PrivateRoute element={UniversalDay} />} />
+
+
         <Route path="/fav_parameters" element={<PrivateRoute element={FavParameters} />} />
+        <Route path="/fav_parameters/edit" element={<PrivateRoute element={FavParametersEdit} />} />
+
+
         <Route path="/unfav_parameters" element={<PrivateRoute element={UnfavParamaters} />} />
+        <Route path="/unfav_parameters/edit" element={<PrivateRoute element={UnfavParametersEdit} />} />
+
+
         <Route path="/zodic_signs" element={<PrivateRoute element={ZodiacSign} />} />
+        <Route path="/zodic_signs/edit" element={<PrivateRoute element={ZodiacSignEdit} />} />
+
+
         <Route path="/planet_numbers" element={<PrivateRoute element={PlanetNumbers} />} />
+        <Route path="/planet_numbers/show" element={<PrivateRoute element={PlanetNumbersShow} />} />
+        <Route path="/planet_numbers/edit" element={<PrivateRoute element={PlanetNumbersEdit} />} />
+
+
         <Route path="/life_cycles" element={<PrivateRoute element={LifeCycle} />} />
+        <Route path="/life_cycles/show" element={<PrivateRoute element={LifeCycleShow} />} />
+        <Route path="/life_cycles/edit" element={<PrivateRoute element={LifeCycleEdit} />} />
+
+
         <Route path="/life_changes" element={<PrivateRoute element={LifeChanges} />} />
+        <Route path="/life_changes/show" element={<PrivateRoute element={LifeChangesShow} />} />
+        <Route path="/life_changes/edit" element={<PrivateRoute element={LifeChangesEdit} />} />
+
+
         <Route path="/compatible_partners" element={<PrivateRoute element={CompaitablePartner} />} />
+        <Route path="/compatible_partners/show" element={<PrivateRoute element={CompaitablePartnerShow} />} />
+        <Route path="/compatible_partners/edit" element={<PrivateRoute element={CompaitablePartnerEdit} />} />
+
+
         <Route path="/partner_relationships" element={<PrivateRoute element={PartnerRelationships} />} />
+        <Route path="/partner_relationships/show" element={<PrivateRoute element={PartnerRelationshipShow} />} />
+        <Route path="/partner_relationships/edit" element={<PrivateRoute element={PartnerRelationshipEdit} />} />
+
+
         <Route path="/childrens" element={<PrivateRoute element={ChildrenPage} />} />
+        <Route path="/childrens/show" element={<PrivateRoute element={ChildrenPageShow} />} />
+        <Route path="/childrens/edit" element={<PrivateRoute element={ChildrenPageEdit} />} />
+
+
         <Route path="/basicparenting" element={<PrivateRoute element={BasicParenting} />} />
+        <Route path="/basicparenting/show" element={<PrivateRoute element={BasicParentingShow} />} />
+        <Route path="/basicparenting/edit" element={<PrivateRoute element={BasicParentingEdit} />} />
+
+
         <Route path="/detailparenting" element={<PrivateRoute element={DetailParenting} />} />
+        <Route path="/detailparenting/show" element={<PrivateRoute element={DetailParentingShow} />} />
+        <Route path="/detailparenting/edit" element={<PrivateRoute element={DetailPareningEdit} />} />
+
+
         <Route path="/basicmoney" element={<PrivateRoute element={BasicMoney} />} />
+        <Route path="/basicmoney/show" element={<PrivateRoute element={BasicMoneyShow} />} />
+        <Route path="/basicmoney/edit" element={<PrivateRoute element={BasicMoneyEdit} />} />
+
+
         <Route path="/detailedmoney" element={<PrivateRoute element={DetailedMoney} />} />
+        <Route path="/detailedmoney/show" element={<PrivateRoute element={DetailedMoneyShow} />} />
+        <Route path="/detailedmoney/edit" element={<PrivateRoute element={DetailedMoneyEdit} />} />
+
+
         <Route path="/compatibility_percentage" element={<PrivateRoute element={CompatibilityPercentage} />} />
         <Route path="/compatibility_description" element={<PrivateRoute element={CompatibiltyDesc} />} />
         <Route path="/DailyForecast" element={<PrivateRoute element={DailyForecast} />} />
@@ -191,6 +291,7 @@ function App() {
         <Route path="/payment" element={<PrivateRoute element={PaymentSetting} />} />
         <Route path="/userDetailedData" element={<PrivateRoute element={UserDetailedData} />} />
         <Route path="/Version" element={<PrivateRoute element={Version} />} />
+        </Route>
         </Routes>
       </Router>
     </AppProvider>

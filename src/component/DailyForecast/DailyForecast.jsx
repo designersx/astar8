@@ -7,9 +7,9 @@ import DailyForecartList from "./DailyForecartList";
 export default function DailyForecast() {
   const [activeTab, setActiveTab] = useState("preditionList");
   const [userRole, setuserRole] = useState(localStorage.getItem("Role"));
+  console.log("userRole", userRole);
   const [showModal, setShowModal] = useState(false);
   const [refresh1, setRefresh1] = useState(false);
-
 
   const handleModalOpen = () => {
     setShowModal(true);
@@ -31,33 +31,39 @@ export default function DailyForecast() {
     } else {
       document.body.style.overflow = "auto";
     }
-  
+
     // Cleanup on unmount
     return () => {
       document.body.style.overflow = "auto";
     };
   }, [showModal]);
-  
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container pb-3">
-        <div className="pd-20 card-box" style={{marginBottom:"20px"}}>
+        <div className="pd-20 card-box" style={{ marginBottom: "20px" }}>
           <div className="d-flex justify-content-between align-items-center">
             <h2 className="fw-bold mb-0">Daily Forecast</h2>
-            <button className="btn btn-primary" onClick={handleModalOpen}>
-              Add Forecast
-            </button>
+            {userRole === "2" ? (
+              ""
+            ) : (
+              <button className="btn btn-primary" onClick={handleModalOpen}>
+                Add Forecast
+              </button>
+            )}
           </div>
         </div>
 
-        <div className="pd-20 card-box" >
-          {activeTab === "preditionList" && <DailyForecartList refresh1={refresh1} />}
+        <div className="pd-20 card-box">
+          {activeTab === "preditionList" && (
+            <DailyForecartList refresh1={refresh1} />
+          )}
         </div>
       </div>
 
       {/* Add Forecast Modal */}
+
       {showModal && (
         <AddDailyForcast onClose={handleModalClose} onSuccess={handleRefresh} />
       )}

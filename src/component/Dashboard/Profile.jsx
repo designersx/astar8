@@ -163,7 +163,7 @@ export default function Profile() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       {loading ? (
         <div className="main-container">
           <DashBoardLoader />

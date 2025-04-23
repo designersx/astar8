@@ -5,6 +5,7 @@ import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { getModuleTypes } from "../../lib/Store";
 import Loader from "../../component/Loader/Loader"; // Assuming you have a Loader component
+import { FaEdit } from "react-icons/fa";
 
 const SystemModules = () => {
   const [modulesData, setmodulesData] = useState([]);
@@ -44,7 +45,7 @@ const SystemModules = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="main-container pb-3">
         <div className="pd-20 card-box mb-30">
           <div className="row">

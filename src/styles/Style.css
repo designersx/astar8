@@ -276,7 +276,7 @@ p {
 }
 .device-manage-progress-chart ul li,
 .mb-30 {
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 .mb-20 {
   margin-bottom: 20px;
@@ -2100,7 +2100,7 @@ body.IE .register-page-wrap .container {
   font-size: 14px;
 }
 .main-container {
-  padding: 90px 35px 0 317px;
+  padding: 90px 35px 10px 317px;
   
 }
 .page-header .dropdown-menu {
@@ -20348,4 +20348,9 @@ select.selectpicker {
 
 .header-dropdown:hover .hover-minus {
   margin-left: -15px; /* Adjust the value as needed */
+}
+
+.custom-active5 {
+  background-color: #2a3146 !important;
+  color: white !important; /* Optional: Ensure text is readable */
 }

@@ -72,7 +72,7 @@ export default function Version() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
 
       <div className="main-container">
         <div
