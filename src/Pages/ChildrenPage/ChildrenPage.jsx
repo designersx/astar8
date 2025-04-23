@@ -1,263 +1,123 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { IoIosEye } from "react-icons/io";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { FaUnlock } from "react-icons/fa6";
+import { getChildren, getPersonalYear, getPlanetNumbers } from "../../lib/Store";
 import Header from "../../component/Dashboard/Header";
-
+import Loader from "../../component/Loader/Loader";
 
 const ChildrenPage = () => {
+  const [children, setchildren] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // Fetch Children
+  const fetchChildren = async () => {
+    setLoading(true);
+    try {
+      const response = await getChildren();
+      setchildren(response.data || []);
+    } catch (err) {
+      console.error("Error fetching personal years:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchChildren();
+    const handleStorageChange = () => fetchChildren();
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  const handleView = (item) => {
+    window.open("/childrens/show", "_blank");
+    localStorage.setItem("viewData", JSON.stringify(item));
+  };
+
+  const handleEdit = (item) => {
+    window.open("/childrens/edit", "_blank");
+    localStorage.setItem("editData", JSON.stringify(item));
+  };
   return (
     <>
       {/* <Header /> */}
       <div className="main-container">
-  <div className="pd-20 card-box mb-30">
-    <div className="row">
-      <div className="col-md-12">
-        <div className="">
+        <div className="pd-20 card-box mb-30">
           <h2>Children</h2>
         </div>
+
+        <div className="pd-20 card-box mb-30">
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="card-block table-border-style">
+              <table className="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Number</th>
+                    <th>Description</th>
+                    <th style={{ width: "280px" }}>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {children.map(({ id, number, description }) => (
+                    <tr key={id}>
+                      <td>{number}</td>
+                      <td>
+                        {description.length > 100
+                          ? `${description.slice(0, 100)}...`
+                          : description}
+                      </td>
+
+                      <td>
+                        <div style={{ display: "flex", gap: "10px" }}>
+                          <button
+                            className="btn btn-info"
+                            onClick={() =>
+                              handleView({
+                                id,
+                                number,
+                                description,
+                              })
+                            }
+                            title="View"
+                          >
+                            <IoIosEye size={18} />
+                          </button>
+                          <button
+                            className="btn btn-primary"
+                            onClick={() =>
+                              handleEdit({
+                                id,
+                                number,
+                                description,
+                              })
+                            }
+                            title="Edit"
+                          >
+                            <FontAwesomeIcon icon={faPencilAlt} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  {children.length === 0 && (
+                    <tr>
+                      <td colSpan={3} style={{ textAlign: "center" }}>
+                        No records found.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  </div>
-  <div className="pd-20 card-box mb-30">
-    <div className="card-block table-border-style">
-      <table className="table table-striped">
-        <tbody>
-          <tr>
-            <th>Number</th>
-            <th>Description</th>
-            <th width="280px">Action</th>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>
-              These children are basically forceful, determined, and likely to
-              have their own way. Becau...
-            </td>
-            <td>
-              <a
-                className="btn btn-info"
-                href="https://be.astar8.com/childrens/116"
-                title="View"
-                target="_blank"
-              >
-                <i className="icon-copy ion-eye" />
-              </a>
-              <a
-                className="btn btn-primary"
-                href="https://be.astar8.com/childrens/116/edit"
-                title="Edit"
-                target="_blank"
-              >
-                <i className="icon-copy ti-pencil-alt" />
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>
-              The 2 child is shy, gentle, imaginative, and very sensitive to
-              others and their surroundin...
-            </td>
-            <td>
-              <a
-                className="btn btn-info"
-                href="https://be.astar8.com/childrens/117"
-                title="View"
-                target="_blank"
-              >
-                <i className="icon-copy ion-eye" />
-              </a>
-              <a
-                className="btn btn-primary"
-                href="https://be.astar8.com/childrens/117/edit"
-                title="Edit"
-                target="_blank"
-              >
-                <i className="icon-copy ti-pencil-alt" />
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>
-              They are expressive, ambitious, and generally popular among their
-              peers. The 3 children ar...
-            </td>
-            <td>
-              <a
-                className="btn btn-info"
-                href="https://be.astar8.com/childrens/118"
-                title="View"
-                target="_blank"
-              >
-                <i className="icon-copy ion-eye" />
-              </a>
-              <a
-                className="btn btn-primary"
-                href="https://be.astar8.com/childrens/118/edit"
-                title="Edit"
-                target="_blank"
-              >
-                <i className="icon-copy ti-pencil-alt" />
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>
-              At first, they may appear to be antisocial or rebellious since 4
-              children like to do thing...
-            </td>
-            <td>
-              <a
-                className="btn btn-info"
-                href="https://be.astar8.com/childrens/119"
-                title="View"
-                target="_blank"
-              >
-                <i className="icon-copy ion-eye" />
-              </a>
-              <a
-                className="btn btn-primary"
-                href="https://be.astar8.com/childrens/119/edit"
-                title="Edit"
-                target="_blank"
-              >
-                <i className="icon-copy ti-pencil-alt" />
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>
-              Because of their mental gifts, they usually become the first to
-              walk, talk, read, and writ...
-            </td>
-            <td>
-              <a
-                className="btn btn-info"
-                href="https://be.astar8.com/childrens/120"
-                title="View"
-                target="_blank"
-              >
-                <i className="icon-copy ion-eye" />
-              </a>
-              <a
-                className="btn btn-primary"
-                href="https://be.astar8.com/childrens/120/edit"
-                title="Edit"
-                target="_blank"
-              >
-                <i className="icon-copy ti-pencil-alt" />
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>
-              A 6 child often turns out to be a crowd pleaser or the teacher's
-              pet. They generally like...
-            </td>
-            <td>
-              <a
-                className="btn btn-info"
-                href="https://be.astar8.com/childrens/121"
-                title="View"
-                target="_blank"
-              >
-                <i className="icon-copy ion-eye" />
-              </a>
-              <a
-                className="btn btn-primary"
-                href="https://be.astar8.com/childrens/121/edit"
-                title="Edit"
-                target="_blank"
-              >
-                <i className="icon-copy ti-pencil-alt" />
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>
-              They appear to be loners who keep to themselves, but it's only
-              because they're shy. They'r...
-            </td>
-            <td>
-              <a
-                className="btn btn-info"
-                href="https://be.astar8.com/childrens/122"
-                title="View"
-                target="_blank"
-              >
-                <i className="icon-copy ion-eye" />
-              </a>
-              <a
-                className="btn btn-primary"
-                href="https://be.astar8.com/childrens/122/edit"
-                title="Edit"
-                target="_blank"
-              >
-                <i className="icon-copy ti-pencil-alt" />
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>
-              They seem, from the beginning, to have an old person's head on
-              their shoulders. Because th...
-            </td>
-            <td>
-              <a
-                className="btn btn-info"
-                href="https://be.astar8.com/childrens/123"
-                title="View"
-                target="_blank"
-              >
-                <i className="icon-copy ion-eye" />
-              </a>
-              <a
-                className="btn btn-primary"
-                href="https://be.astar8.com/childrens/123/edit"
-                title="Edit"
-                target="_blank"
-              >
-                <i className="icon-copy ti-pencil-alt" />
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td>
-              By nature, they're forceful, energetic, and want to take the lead
-              in group situations. A 9...
-            </td>
-            <td>
-              <a
-                className="btn btn-info"
-                href="https://be.astar8.com/childrens/124"
-                title="View"
-                target="_blank"
-              >
-                <i className="icon-copy ion-eye" />
-              </a>
-              <a
-                className="btn btn-primary"
-                href="https://be.astar8.com/childrens/124/edit"
-                title="Edit"
-                target="_blank"
-              >
-                <i className="icon-copy ti-pencil-alt" />
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
     </>
-  )
-}
+  );
+};
 
-export default ChildrenPage
+export default ChildrenPage;

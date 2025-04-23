@@ -1191,3 +1191,124 @@ export const editPartnerRelationship = async (id, finaldata) => {
     return error;
   }
 };
+
+
+// get Children
+export const getChildren = async () => {
+  try {
+    const response = await axios.get(`${Url}/gchl5mdm4g`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// Edit Children
+export const editChildren = async (id, finaldata) => {
+  try {
+    const response = await axios.put(`${Url}/ldoies587g`, {
+      id,
+      ...finaldata,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get Basic Parenting 
+export const getBasicParenting = async () => {
+  try {
+    const response = await axios.get(`${Url}/gbprm53mfd`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// Edit Basic Parenting
+export const editBasicParenting = async (id, finaldata) => {
+  try {
+    const response = await axios.put(`${Url}/ubprn5mvfd`, {
+      id,
+      ...finaldata,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get Detailed Parenting 
+export const getDetailedParenting = async () => {
+  try {
+    const response = await axios.get(`${Url}/gdpm4kb5ff`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// Edit Detailed Parenting
+export const editDetailedParenting = async (id, finaldata) => {
+  try {
+    const response = await axios.put(`${Url}/lkiopfg44r`, {
+      id,
+      ...finaldata,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get Basic Money Matters
+export const getbasicMoney= async () => {
+  try {
+    const response = await axios.get(`${Url}/loooff782g`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// Edit Basic Money Matters
+export const editbasicMoney = async (id, finaldata) => {
+  try {
+    const response = await axios.put(`${Url}/qqii3377ee`, {
+      id,
+      ...finaldata,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// get Detailed Money Matters
+export const getDetailedMoney= async () => {
+  try {
+    const response = await axios.get(`${Url}/nmvv99vv2e`);
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+// Edit Detailed Money Matters
+export const editDetailedMoney = async (id, finaldata) => {
+  try {
+    const response = await axios.put(`${Url}/paosyd98d7`, {
+      id,
+      ...finaldata,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+};

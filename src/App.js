@@ -107,6 +107,16 @@ import CompaitablePartnerShow from './Pages/CompaitablePartner/CompaitablePartne
 import CompaitablePartnerEdit from './Pages/CompaitablePartner/CompaitablePartnerEdit';
 import PartnerRelationshipShow from './Pages/PartnerRelationships/PartnerRelationshipShow';
 import PartnerRelationshipEdit from './Pages/PartnerRelationships/PartnerRelationshipEdit';
+import ChildrenPageShow from './Pages/ChildrenPage/ChildrenPageShow';
+import ChildrenPageEdit from './Pages/ChildrenPage/ChildrenPageEdit';
+import BasicParentingShow from './Pages/BasicParenting/BasicParentingShow';
+import BasicParentingEdit from './Pages/BasicParenting/BasicParentingEdit';
+import DetailParentingShow from './Pages/DetailParenting/DetailParentingShow';
+import DetailPareningEdit from './Pages/DetailParenting/DetailPareningEdit';
+import BasicMoneyShow from './Pages/BasicMoney/BasicMoneyShow';
+import BasicMoneyEdit from './Pages/BasicMoney/BasicMoneyEdit';
+import DetailedMoneyShow from './Pages/DetailedMoney/DetailedMoneyShow';
+import DetailedMoneyEdit from './Pages/DetailedMoney/DetailedMoneyEdit';
 function App() {
   return (
     <AppProvider>
@@ -248,10 +258,30 @@ function App() {
 
 
         <Route path="/childrens" element={<PrivateRoute element={ChildrenPage} />} />
+        <Route path="/childrens/show" element={<PrivateRoute element={ChildrenPageShow} />} />
+        <Route path="/childrens/edit" element={<PrivateRoute element={ChildrenPageEdit} />} />
+
+
         <Route path="/basicparenting" element={<PrivateRoute element={BasicParenting} />} />
+        <Route path="/basicparenting/show" element={<PrivateRoute element={BasicParentingShow} />} />
+        <Route path="/basicparenting/edit" element={<PrivateRoute element={BasicParentingEdit} />} />
+
+
         <Route path="/detailparenting" element={<PrivateRoute element={DetailParenting} />} />
+        <Route path="/detailparenting/show" element={<PrivateRoute element={DetailParentingShow} />} />
+        <Route path="/detailparenting/edit" element={<PrivateRoute element={DetailPareningEdit} />} />
+
+
         <Route path="/basicmoney" element={<PrivateRoute element={BasicMoney} />} />
+        <Route path="/basicmoney/show" element={<PrivateRoute element={BasicMoneyShow} />} />
+        <Route path="/basicmoney/edit" element={<PrivateRoute element={BasicMoneyEdit} />} />
+
+
         <Route path="/detailedmoney" element={<PrivateRoute element={DetailedMoney} />} />
+        <Route path="/detailedmoney/show" element={<PrivateRoute element={DetailedMoneyShow} />} />
+        <Route path="/detailedmoney/edit" element={<PrivateRoute element={DetailedMoneyEdit} />} />
+
+
         <Route path="/compatibility_percentage" element={<PrivateRoute element={CompatibilityPercentage} />} />
         <Route path="/compatibility_description" element={<PrivateRoute element={CompatibiltyDesc} />} />
         <Route path="/DailyForecast" element={<PrivateRoute element={DailyForecast} />} />

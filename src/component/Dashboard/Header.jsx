@@ -46,15 +46,15 @@ export default function Dashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const initialDropdownStates = {
-    health:    false,
-    personal:  false,
-    systems:   false,
+    health: false,
+    personal: false,
+    systems: false,
     universal: false,
-    fav:       false,
+    fav: false,
     parenting: false,
-    money:     false,  // you also reference money below
+    money: false, // you also reference money below
   };
-  
+
   const [dropdownStates, setDropdownStates] = useState(initialDropdownStates);
 
   const [userRole, setUserRole] = useState(localStorage.getItem("Role") || "");
@@ -1378,7 +1378,7 @@ export default function Dashboard() {
                       <NavLink
                         to="/compatibility_percentage"
                         className="dropdown-toggle no-arrow"
-                        onClick={() => setDropdownStates(false)}
+                        onClick={() => setDropdownStates(initialDropdownStates)}
                       >
                         <span className="sideBarIcon">
                           <FontAwesomeIcon icon={faChartBar} />
