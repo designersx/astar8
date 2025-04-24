@@ -1345,7 +1345,7 @@ export const getCompaitibiltyDesc = async () => {
     return error;
   }
 };
-// Edit Compaitibilty Scale
+// Edit Compaitibilty Desc
 export const editCompaitibiltyDesc = async (id, finaldata) => {
   try {
     const response = await axios.put(`${Url}/xcdfgr69r8`, {
