@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import Header from "../../component/Dashboard/Header";
 import Loader from "../../component/Loader/Loader";
-import { getCompaitibiltyDesc, getCompaitibiltyScale } from "../../lib/Store";
+import { getCompaitibiltyDesc } from "../../lib/Store";
 
 const CompatibiltyDesc = () => {
   const [compaitableDesc, setCompaitableDesc] = useState([]);

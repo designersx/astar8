@@ -688,7 +688,7 @@ export default function Dashboard() {
                         <span className="mtext">Lifecoach Descriptions</span>
                       </NavLink>
                     </li>
-                    <li className="dropdown">
+                    {/* <li className="dropdown">
                       <NavLink
                         to="/subscription_price"
                         className="dropdown-toggle no-arrow"
@@ -699,7 +699,7 @@ export default function Dashboard() {
                         </span>
                         <span className="mtext">Subscription Prices</span>
                       </NavLink>
-                    </li>
+                    </li> */}
                     {/* Helath */}
 
                     <li
@@ -948,7 +948,7 @@ export default function Dashboard() {
 
                     {/* Universal */}
 
-                    <li
+                    {/* <li
                       className="dropdown"
                       style={{ cursor: "pointer", transition: "all 0.3s ease" }}
                     >
@@ -1046,7 +1046,7 @@ export default function Dashboard() {
                           </NavLink>
                         </li>
                       </ul>
-                    </li>
+                    </li> */}
 
                     {/* Fav unfav */}
 
@@ -1403,7 +1403,7 @@ export default function Dashboard() {
                         <span className="mtext">Compatibility Description</span>
                       </NavLink>
                     </li>
-                    <li className="dropdown">
+                    {/* <li className="dropdown">
                       <NavLink
                         to="/general-settings"
                         className="dropdown-toggle no-arrow"
@@ -1414,7 +1414,7 @@ export default function Dashboard() {
                         </span>
                         <span className="mtext">General Setting</span>
                       </NavLink>
-                    </li>
+                    </li> */}
                     <li className="dropdown">
                       <NavLink
                         to="/payment"
