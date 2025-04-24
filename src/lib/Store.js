@@ -1347,6 +1347,8 @@ export const getCompaitibiltyDesc = async () => {
 };
 // Edit Compaitibilty Desc
 export const editCompaitibiltyDesc = async (id, finaldata) => {
+  console.log("dasd",id)
+  console.log("data",finaldata)
   try {
     const response = await axios.put(`${Url}/xcdfgr69r8`, {
       id,

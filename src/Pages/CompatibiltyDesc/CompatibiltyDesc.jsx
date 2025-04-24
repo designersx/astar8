@@ -46,7 +46,7 @@ const CompatibiltyDesc = () => {
   };
 
   // Pagination math
-  const totalItems = compaitableDesc.length;
+  const totalItems = compaitableDesc?.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const startIdx = (currentPage - 1) * itemsPerPage;
   const currentSlice = compaitableDesc.slice(startIdx, startIdx + itemsPerPage);
@@ -72,32 +72,33 @@ const CompatibiltyDesc = () => {
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th>S.No</th>
-                    <th>Name</th>
                     <th>Number</th>
-                    <th>Description</th>
+                    <th width="120px">Mate Number</th>
+                    <th>Regular/Spouce Description</th>
+                    <th>Other Person Description</th>
+                    <th>Name Reading Description</th>
                     <th style={{ width: "280px" }}>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {currentSlice.map((item) => (
                     <tr key={item.id}>
-                      <td>{item.id}</td>
-                      <td>
-                        {{
-                          1: "Car/Vehicle",
-                          2: "Business",
-                          3: "Property",
-                          4: "Other Person",
-                          5: "Spouse/Partner",
-                          6: "Name Reading",
-                        }[item.type] || "Unknown"}
-                      </td>
                       <td>{item.number}</td>
+                      <td>{item.mate_number}</td>
                       <td>
-                        {item.description.length > 100
-                          ? `${item.description.slice(0, 100)}...`
-                          : item.description}
+                        {item?.regular_or_spouse_desc?.length > 100
+                          ? `${item?.regular_or_spouse_desc?.slice(0, 100)}...`
+                          : item?.regular_or_spouse_desc}
+                      </td>
+                      <td>
+                        {item?.withOtherPerson?.length > 100
+                          ? `${item?.withOtherPerson?.slice(0, 100)}...`
+                          : item?.withOtherPerson}
+                      </td>
+                      <td>
+                        {item?.withOtherPerson?.length > 100
+                          ? `${item?.withOtherPerson?.slice(0, 100)}...`
+                          : item?.withOtherPerson}
                       </td>
                       <td>
                         <div style={{ display: "flex", gap: "10px" }}>

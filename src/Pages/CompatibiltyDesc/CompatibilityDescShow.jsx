@@ -28,7 +28,10 @@ const CompatibilityDescShow = () => {
               <div className="row">
                 <div className="col-md-6">
                   <div className="">
-                    <h2>Compatibility Description</h2>
+                    <h2>
+                      Number {showData?.number} | Mate Number{" "}
+                      {showData?.mate_number}
+                    </h2>
                   </div>
                 </div>
               </div>
@@ -37,26 +40,37 @@ const CompatibilityDescShow = () => {
               <div className="row" style={{ gap: "8px" }}>
                 <div className="col-xs-12 col-sm-12 col-md-12">
                   <div className="form-group">
-                    <strong>Type:</strong> {{
-                          1: "Car/Vehicle",
-                          2: "Business",
-                          3: "Property",
-                          4: "Other Person",
-                          5: "Spouse/Partner",
-                          6: "Name Reading",
-                        }[showData?.type] || "Unknown"}
-                  </div>
-                </div>
-                <div className="col-xs-12 col-sm-12 col-md-12">
-                  <div className="form-group">
-                    <strong>Number:</strong>{" "}
-                    <span>{showData.number}</span>
+                    <strong>Number:</strong> <span>{showData.number}</span>
                   </div>
                   <div className="form-group">
-                    <strong>Description :</strong>{" "}
-                    <span>{showData.description}</span>
+                    <strong>Mate Number :</strong>{" "}
+                    <span>{showData.mate_number || "N/A"}</span>
+                  </div>
+                  <div className="form-group">
+                    <strong>Regular / Spousal Description:</strong>{" "}
+                    <span>{showData.regular_or_spouse_desc || "N/A"}</span>
+                  </div>
+                  <div className="form-group">
+                    <strong>Other Person Description:</strong>{" "}
+                    <span>{showData.withOtherPerson || "N/A"}</span>
                   </div>
                   
+                  <div className="form-group">
+                    <strong>Name Reading Description:</strong>{" "}
+                    <span>{showData.forNameReading || "N/A"}</span>
+                  </div>
+                  <div className="form-group">
+                    <strong>Car/Vehicle Description:</strong>{" "}
+                    <span>{showData.forCarOrVehicle || "N/A"}</span>
+                  </div>
+                  <div className="form-group">
+                    <strong>House/Property Description:</strong>{" "}
+                    <span>{showData.forHouseOrProperty || "N/A"}</span>
+                  </div>
+                  <div className="form-group">
+                    <strong>Business Description:</strong>{" "}
+                    <span>{showData.forBusiness || "N/A"}</span>
+                  </div>
                 </div>
               </div>
             </div>
