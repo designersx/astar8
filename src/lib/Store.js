@@ -953,7 +953,6 @@ export const deleteHealthCycle = async (finalData) => {
     return err;
   }
 };
-
 // get Personal Year
 export const getPersonalYear = async () => {
   try {
