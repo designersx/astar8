@@ -9,7 +9,7 @@ import { getAdminUserMessages } from "../../lib/Store";
 
 const UserMessages = () => {
   const [usersList, setUsersList] = useState();
-  // console.log("userListtt", usersList);
+  console.log("userListtt", usersList);
   const [selectedUser, setSelectedUser] = useState(null);
   const [sample, setsample] = useState(0);
   const [userId, setuserId] = useState(localStorage.getItem("userId") || "");
@@ -38,6 +38,7 @@ const UserMessages = () => {
       to: toDate,
     };
     const response = await getAdminUserMessages(finalDate);
+    // console.log("ress",response)
     setUsersList(response?.data);
   };
 

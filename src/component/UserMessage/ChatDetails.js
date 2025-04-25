@@ -11,7 +11,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
   const url = "https://dev.astar8.com"
   // const url = "http://localhost:5234";
   const [userChatMessages, setUserChatMessages] = useState([]);
-  // console.log("userrr", user);
+  console.log("userrr", user);
   const [messageInput, setMessageInput] = useState("");
   const [socket, setSocket] = useState(null);
   const [loading, setLoading] = useState(true); // Add loading state
@@ -184,7 +184,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
                   <img
                     src={
                       user.user_profile_pic
-                        ? user.user_profile_pic
+                        ? `data:image/png;base64,${user.user_profile_pic}`
                         : "https://be.astar8.com/img/default-profile-img.png"
                     }
                     onError={(e) => {
@@ -251,7 +251,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
                           <img
                             src={
                               user.user_profile_pic
-                                ? user.user_profile_pic
+                                ? `data:image/png;base64,${user.user_profile_pic}`
                                 : "https://be.astar8.com/img/default-profile-img.png"
                             }
                             onError={(e) => {
