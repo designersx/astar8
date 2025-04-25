@@ -662,12 +662,7 @@ export const addVideo = async (formData) => {
   try {
     const response = await axios.post(
       `${Url}/v1qaz2wsx3e/c23emki8zl`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
+      formData
     );
     return response.data;
   } catch (err) {
@@ -1347,8 +1342,8 @@ export const getCompaitibiltyDesc = async () => {
 };
 // Edit Compaitibilty Desc
 export const editCompaitibiltyDesc = async (id, finaldata) => {
-  console.log("dasd",id)
-  console.log("data",finaldata)
+  console.log("dasd", id);
+  console.log("data", finaldata);
   try {
     const response = await axios.put(`${Url}/xcdfgr69r8`, {
       id,

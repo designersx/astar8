@@ -3,6 +3,7 @@ import Header from "../../component/Dashboard/Header";
 export default function LifeCoachDescriptionShow() {
   const [showData, setshowData] = useState(null);
   const [loading, setLoading] = useState(true);
+  console.log("ShoWdata", showData);
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("viewData"));
@@ -55,20 +56,24 @@ export default function LifeCoachDescriptionShow() {
                   : "Unknown"}
               </div>
             </div>
-            <div className="col-xs-12 col-sm-12 col-md-12">
-              <div className="form-group">
-                <strong>Star Count: </strong>
-                {showData?.star_number === 1
-                  ? "One Star"
-                  : showData?.star_number === 2
-                  ? "Two Star"
-                  : showData?.star_number === 3
-                  ? "Three Star"
-                  : showData?.star_number === 0
-                  ? "Neutral"
-                  : "Unknown"}
+            {showData?.type === 1 ? (
+              <div className="col-xs-12 col-sm-12 col-md-12">
+                <div className="form-group">
+                  <strong>Star Count: </strong>
+                  {showData?.star_number === 1
+                    ? "One Star"
+                    : showData?.star_number === 2
+                    ? "Two Star"
+                    : showData?.star_number === 3
+                    ? "Three Star"
+                    : showData?.star_number === 0
+                    ? "Neutral"
+                    : "Unknown"}
+                </div>
               </div>
-            </div>
+            ) : (
+              ""
+            )}
             <div className="col-xs-12 col-sm-12 col-md-12">
               <div className="form-group">
                 <strong>Number: </strong> {showData?.number}
@@ -76,8 +81,8 @@ export default function LifeCoachDescriptionShow() {
             </div>
             <div className="col-xs-12 col-sm-12 col-md-12">
               <div className="form-group">
-                <strong>Description: </strong> 
-               {showData?.description}
+                <strong>Description: </strong>
+                {showData?.description}
               </div>
             </div>
           </div>

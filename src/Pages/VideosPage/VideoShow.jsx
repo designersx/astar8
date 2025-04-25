@@ -46,23 +46,33 @@ export default function VideoShow() {
                     {showData.video_title}
                   </div>
                 </div>
-                <div className="col-xs-12 col-sm-12 col-md-12">
-                  <div className="form-group">
-                    <strong>Video Thumbnail: </strong>
-                    <img
-                      src={showData.video_thumbnail || default_thumbnail}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = default_thumbnail;
-                      }}
-                      alt="Video Thumbnail"
-                    />
-                  </div>
-                </div>
+
                 <div className="col-xs-12 col-sm-12 col-md-12">
                   <div className="form-group">
                     <strong>Video link: </strong>
                     {showData.video_link}
+                  </div>
+                </div>
+                <div className="col-xs-12 col-sm-12 col-md-12">
+                  <div className="form-group">
+                    <div style={{ fontWeight: "bold" }}>Video Thumbnail: </div>
+                    <img
+                      src={
+                        showData?.video_link
+                          ? `https://img.youtube.com/vi/${showData.video_link
+                              .split("/")
+                              .pop()}/hqdefault.jpg`
+                          : default_thumbnail
+                      }
+                      alt="Video Thumbnail"
+                      width="20%"
+                      height="20%"
+                      style={{ borderRadius: "10px", marginTop: "10px" }}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = default_thumbnail;
+                      }}
+                    />
                   </div>
                 </div>
               </div>

@@ -292,7 +292,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
                         {message.senderId !== user?.user_id && (
                           <img
                             src={
-                              userRole === "1"
+                              userRole === "1" || userRole === "2"
                                 ? llyodProfilePic
                                 : user.user_profile_pic
                                 ? user.user_profile_pic

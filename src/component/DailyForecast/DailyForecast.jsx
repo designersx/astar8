@@ -7,9 +7,9 @@ import DailyForecartList from "./DailyForecartList";
 export default function DailyForecast() {
   const [activeTab, setActiveTab] = useState("preditionList");
   const [userRole, setuserRole] = useState(localStorage.getItem("Role"));
-  console.log("userRole", userRole);
   const [showModal, setShowModal] = useState(false);
   const [refresh1, setRefresh1] = useState(false);
+
 
   const handleModalOpen = () => {
     setShowModal(true);

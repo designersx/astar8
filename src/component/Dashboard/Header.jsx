@@ -327,7 +327,10 @@ export default function Dashboard() {
       </div>
 
       <div className={`left-side-bar ${isSidebarOpen ? "open" : ""}`}>
-        <div className="brand-logo" style={{ marginTop: "24px" }}>
+        <div
+          className="brand-logo"
+          style={{ marginTop: "24px", marginBottom: "12px" }}
+        >
           <a>
             <img
               src="https://be.astar8.com/img/Logo.png"
@@ -349,7 +352,12 @@ export default function Dashboard() {
             <div
               id="mCSB_2_container"
               className="mCSB_container"
-              style={{ position: "relative", top: 0, left: 0 }}
+              style={{
+                position: "relative",
+                top: 0,
+                left: 0,
+                marginTop: "0px",
+              }}
               dir="ltr"
             >
               <div className="sidebar-menu">

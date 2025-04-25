@@ -90,7 +90,6 @@ export default function LifeCoachDescriptionEdit() {
   if (!data || !data.id) {
     return (
       <>
-        {/* <Header /> */}
         <div className="main-container">
           <div className="pd-20 card-box mb-30">
             <h2>No data available to edit.</h2>
@@ -101,7 +100,6 @@ export default function LifeCoachDescriptionEdit() {
   }
   return (
     <>
-      {/* <Header /> */}
       <div className="main-container pb-3">
         <div className="pd-20 card-box mb-30">
           <div className="row">
@@ -111,9 +109,7 @@ export default function LifeCoachDescriptionEdit() {
               </div>
             </div>
             <div className="col-md-6">
-              <div className="text-right">
-                {/* <a class="btn btn-primary" href="https://be.astar8.com/lifecoach_descriptions"> Back </a> */}
-              </div>
+              <div className="text-right"></div>
             </div>
           </div>
         </div>
@@ -161,30 +157,34 @@ export default function LifeCoachDescriptionEdit() {
                   />
                 </div>
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-12">
-                <div className="form-group">
-                  <strong>Star Count:</strong>
+              {data?.type === 1 ? (
+                <div className="col-xs-12 col-sm-12 col-md-12">
+                  <div className="form-group">
+                    <strong>Star Count:</strong>
 
-                  <input
-                    placeholder="Number"
-                    className="form-control"
-                    disabled
-                    name="number"
-                    type="text"
-                    defaultValue={
-                      data?.star_number === 1
-                        ? "One Star"
-                        : data?.star_number === 2
-                        ? "Two Star"
-                        : data?.star_number === 3
-                        ? "Three Star"
-                        : data?.star_number === 0
-                        ? "Neutral"
-                        : "Unknown"
-                    }
-                  />
+                    <input
+                      placeholder="Number"
+                      className="form-control"
+                      disabled
+                      name="number"
+                      type="text"
+                      defaultValue={
+                        data?.star_number === 1
+                          ? "One Star"
+                          : data?.star_number === 2
+                          ? "Two Star"
+                          : data?.star_number === 3
+                          ? "Three Star"
+                          : data?.star_number === 0
+                          ? "Neutral"
+                          : "Unknown"
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                " "
+              )}
               <div className="col-xs-12 col-sm-12 col-md-12">
                 <div className="form-group">
                   <strong>Number</strong>
@@ -206,7 +206,7 @@ export default function LifeCoachDescriptionEdit() {
                     className="form-control description"
                     name="description"
                     cols={50}
-                    rows={10}
+                    rows={5}
                     value={data.description}
                     onChange={(e) =>
                       setData((prev) => ({

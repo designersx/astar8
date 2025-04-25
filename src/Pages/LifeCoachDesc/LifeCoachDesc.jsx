@@ -11,7 +11,7 @@ const LifeCoachDesc = () => {
   const [selectedTab, setSelectedTab] = useState("day");
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const itemsPerPage = 7;
+  const itemsPerPage = 10;
 
   const getDescription = async () => {
     try {
@@ -42,7 +42,6 @@ const LifeCoachDesc = () => {
   const filteredData = data?.filter((item) =>
     selectedTab === "day" ? item.type === 1 : item.type === 2
   );
-  console.log(filteredData, "filtereddata");
 
   // Paginate data
   const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
@@ -127,6 +126,7 @@ const LifeCoachDesc = () => {
                     </ul>
                     {/* Tab panes */}
                     <div className="tab-content">
+                      {/* Dat Column */}
                       <div
                         className={`tab-pane fade ${
                           selectedTab === "day" ? "active show" : ""
@@ -202,7 +202,10 @@ const LifeCoachDesc = () => {
                                         target="_blank"
                                         rel="noreferrer"
                                       >
-                                        <FontAwesomeIcon icon={faPencilAlt} color="white" />
+                                        <FontAwesomeIcon
+                                          icon={faPencilAlt}
+                                          color="white"
+                                        />
                                       </a>
                                     </div>
                                   </td>
@@ -212,44 +215,67 @@ const LifeCoachDesc = () => {
                           </table>
                           {/* Pagination */}
                           <div className="custom-pagination">
-                            <nav>
+                            <nav aria-label="FavParameters pagination">
                               <ul className="pagination">
+                                {/* Previous */}
                                 <li
                                   className={`page-item ${
                                     currentPage === 1 ? "disabled" : ""
                                   }`}
-                                  onClick={() =>
-                                    handlePageChange(currentPage - 1)
-                                  }
                                 >
-                                  <span className="page-link">‹</span>
-                                </li>
-                                {Array.from({ length: totalPages }, (_, i) => (
-                                  <li
-                                    key={i}
-                                    className={`page-item ${
-                                      currentPage === i + 1 ? "active" : ""
-                                    }`}
-                                    onClick={() => handlePageChange(i + 1)}
+                                  <button
+                                    className="page-link"
+                                    onClick={() =>
+                                      handlePageChange(currentPage - 1)
+                                    }
+                                    disabled={currentPage === 1}
                                   >
-                                    <span className="page-link">{i + 1}</span>
-                                  </li>
-                                ))}
+                                    Previous
+                                  </button>
+                                </li>
+
+                                {/* Page numbers */}
+                                {Array.from({ length: totalPages }, (_, i) => {
+                                  const page = i + 1;
+                                  return (
+                                    <li
+                                      key={page}
+                                      className={`page-item ${
+                                        currentPage === page ? "active" : ""
+                                      }`}
+                                    >
+                                      <button
+                                        className="page-link"
+                                        onClick={() => handlePageChange(page)}
+                                      >
+                                        {page}
+                                      </button>
+                                    </li>
+                                  );
+                                })}
+
+                                {/* Next */}
                                 <li
                                   className={`page-item ${
                                     currentPage === totalPages ? "disabled" : ""
                                   }`}
-                                  onClick={() =>
-                                    handlePageChange(currentPage + 1)
-                                  }
                                 >
-                                  <span className="page-link">›</span>
+                                  <button
+                                    className="page-link"
+                                    onClick={() =>
+                                      handlePageChange(currentPage + 1)
+                                    }
+                                    disabled={currentPage === totalPages}
+                                  >
+                                    Next
+                                  </button>
                                 </li>
                               </ul>
                             </nav>
                           </div>
                         </div>
                       </div>
+                      {/* Week Column */}
                       <div
                         className={`tab-pane fade ${
                           selectedTab === "week" ? "active show" : ""
@@ -301,21 +327,22 @@ const LifeCoachDesc = () => {
                                     >
                                       <a
                                         className="btn btn-info"
-                                        href={`https://be.astar8.com/lifecoach_descriptions/${item.id}`}
+                                        onClick={() => handleViewClick(item)}
                                         title="View"
-                                        target="_blank"
-                                        rel="noreferrer"
                                       >
-                                        <IoIosEye size={18} />
+                                        <IoIosEye size={18} color="white" />
                                       </a>
                                       <a
                                         className="btn btn-primary"
-                                        href={`https://be.astar8.com/lifecoach_descriptions/${item.id}/edit`}
+                                        onClick={() => handleEditClick(item)}
                                         title="Edit"
                                         target="_blank"
                                         rel="noreferrer"
                                       >
-                                        <FontAwesomeIcon icon={faPencilAlt} />
+                                        <FontAwesomeIcon
+                                          icon={faPencilAlt}
+                                          color="white"
+                                        />
                                       </a>
                                     </div>
                                   </td>
@@ -325,38 +352,60 @@ const LifeCoachDesc = () => {
                           </table>
                           {/* Pagination */}
                           <div className="custom-pagination">
-                            <nav>
+                            <nav aria-label="FavParameters pagination">
                               <ul className="pagination">
+                                {/* Previous */}
                                 <li
                                   className={`page-item ${
                                     currentPage === 1 ? "disabled" : ""
                                   }`}
-                                  onClick={() =>
-                                    handlePageChange(currentPage - 1)
-                                  }
                                 >
-                                  <span className="page-link">‹</span>
-                                </li>
-                                {Array.from({ length: totalPages }, (_, i) => (
-                                  <li
-                                    key={i}
-                                    className={`page-item ${
-                                      currentPage === i + 1 ? "active" : ""
-                                    }`}
-                                    onClick={() => handlePageChange(i + 1)}
+                                  <button
+                                    className="page-link"
+                                    onClick={() =>
+                                      handlePageChange(currentPage - 1)
+                                    }
+                                    disabled={currentPage === 1}
                                   >
-                                    <span className="page-link">{i + 1}</span>
-                                  </li>
-                                ))}
+                                    Previous
+                                  </button>
+                                </li>
+
+                                {/* Page numbers */}
+                                {Array.from({ length: totalPages }, (_, i) => {
+                                  const page = i + 1;
+                                  return (
+                                    <li
+                                      key={page}
+                                      className={`page-item ${
+                                        currentPage === page ? "active" : ""
+                                      }`}
+                                    >
+                                      <button
+                                        className="page-link"
+                                        onClick={() => handlePageChange(page)}
+                                      >
+                                        {page}
+                                      </button>
+                                    </li>
+                                  );
+                                })}
+
+                                {/* Next */}
                                 <li
                                   className={`page-item ${
                                     currentPage === totalPages ? "disabled" : ""
                                   }`}
-                                  onClick={() =>
-                                    handlePageChange(currentPage + 1)
-                                  }
                                 >
-                                  <span className="page-link">›</span>
+                                  <button
+                                    className="page-link"
+                                    onClick={() =>
+                                      handlePageChange(currentPage + 1)
+                                    }
+                                    disabled={currentPage === totalPages}
+                                  >
+                                    Next
+                                  </button>
                                 </li>
                               </ul>
                             </nav>

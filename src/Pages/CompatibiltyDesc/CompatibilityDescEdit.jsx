@@ -68,19 +68,19 @@ const CompatibilityDescEdit = () => {
     e.preventDefault();
 
     // 3. Validate only the fields the user actually filled in
-    for (let { key, label } of descFields) {
-      const text = (data[key] || "").trim();
-      if (text) {
-        const wordCount = text.split(/\s+/).filter(Boolean).length;
-        if (wordCount < 5 || wordCount > 500) {
-          return Swal.fire({
-            icon: "error",
-            title: "Validation Error",
-            text: `${label} must be between 5 and 500 words if provided.`,
-          });
-        }
-      }
-    }
+    // for (let { key, label } of descFields) {
+    //   const text = (data[key] || "").trim();
+    //   if (text) {
+    //     const wordCount = text.split(/\s+/).filter(Boolean).length;
+    //     if (wordCount < 5 || wordCount > 500) {
+    //       return Swal.fire({
+    //         icon: "error",
+    //         title: "Validation Error",
+    //         text: `${label} must be between 5 and 500 words if provided.`,
+    //       });
+    //     }
+    //   }
+    // }
 
     // 4. Confirm
     const { isConfirmed } = await Swal.fire({
