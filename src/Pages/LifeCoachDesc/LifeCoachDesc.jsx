@@ -87,10 +87,10 @@ const LifeCoachDesc = () => {
           <div className="row clearfix">
             {/* Nav tabs */}
             <div className="col-lg-12 col-md-12 col-sm-12 mb-30">
-              {loading ? (
-                <Loader />
-              ) : (
-                <div className="pd-20 card-box">
+              <div className="pd-20 card-box">
+                {loading ? (
+                  <Loader />
+                ) : (
                   <div className="tab">
                     <ul className="nav nav-tabs" role="tablist">
                       <li className="nav-item">
@@ -414,8 +414,8 @@ const LifeCoachDesc = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>

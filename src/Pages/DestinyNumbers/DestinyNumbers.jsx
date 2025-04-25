@@ -66,11 +66,12 @@ const DestinyNumbers = () => {
             </div>
           </div>
         </div>
-        {loading ? (
-          <Loader />
-        ) : (
-          <div className="pd-20 card-box mb-30">
-            <div className="card-block table-border-style">
+
+        <div className="pd-20 card-box mb-30">
+          <div className="card-block table-border-style">
+            {loading ? (
+              <Loader />
+            ) : (
               <table className="table table-striped">
                 <tbody>
                   <tr>
@@ -106,9 +107,9 @@ const DestinyNumbers = () => {
                   ))}
                 </tbody>
               </table>
-            </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </>
   );
