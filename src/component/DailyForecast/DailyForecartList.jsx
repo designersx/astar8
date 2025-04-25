@@ -20,6 +20,8 @@ export default function DailyForecartList({ refresh1 }) {
   const [userPhoto, setuserPhoto] = useState(
     localStorage.getItem("profilePic")
   );
+  const llyodProfilePic = "https://dev.astar8.com/uploads/1737091948321.png";
+  const userRole = localStorage.getItem("Role");
 
   const name = localStorage.getItem("name");
   const token = localStorage.getItem("UserToken");
@@ -244,12 +246,15 @@ export default function DailyForecartList({ refresh1 }) {
         >
           {loading ? (
             <>
-            <div style={{height:"55vh",overflow:"hidden"}}>
-            <Loader />
-            </div>
+              <div style={{ height: "55vh", overflow: "hidden" }}>
+                <Loader />
+              </div>
             </>
           ) : (
-            <div className="pd-20" style={{minHeight:"200px",paddingTop:"0px"}}>
+            <div
+              className="pd-20"
+              style={{ minHeight: "200px", paddingTop: "0px" }}
+            >
               {ForecastData.filter((forecast) => {
                 if (selectedTab === "all" || selectedTab === "topLiked")
                   return true;
@@ -305,7 +310,9 @@ export default function DailyForecartList({ refresh1 }) {
                         <div style={{ flex: "0 0 80px" }}>
                           <img
                             src={
-                              userPhoto
+                              userRole === "2"
+                                ? llyodProfilePic
+                                : userPhoto
                                 ? userPhoto
                                 : "https://be.astar8.com/img/default-profile-img.png"
                             }
@@ -348,24 +355,24 @@ export default function DailyForecartList({ refresh1 }) {
                                 color: "#44aeff",
                               }}
                             >
-                              {name
-                                .split(" ")
-                                .map(
-                                  (word) =>
-                                    word.charAt(0).toUpperCase() +
-                                    word.slice(1).toLowerCase()
-                                )
-                                .join(" ")}
-
-                              
+                              {userRole === "2"
+                                ? "Lloyd Strayhorn"
+                                : name
+                                    .split(" ")
+                                    .map(
+                                      (word) =>
+                                        word.charAt(0).toUpperCase() +
+                                        word.slice(1).toLowerCase()
+                                    )
+                                    .join(" ")}
                             </h5>
 
                             <span
                               style={{
                                 fontSize: "15px",
                                 color: "#888",
-                                display:"flex",
-                                gap:"10px"
+                                display: "flex",
+                                gap: "10px",
                               }}
                             >
                               {selectedTab === "topLiked" && index === 0 && (

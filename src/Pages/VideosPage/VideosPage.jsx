@@ -13,8 +13,8 @@ const VideosPage = () => {
   const navigate = useNavigate();
   const [video, setVideo] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1); 
-  const itemsPerPage = 7; 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 7;
 
   const getAllVideoList = async () => {
     try {
@@ -80,7 +80,11 @@ const VideosPage = () => {
               <h2>Video List</h2>
             </div>
             <div className="col-md-6 text-right">
-              <a className="btn btn-primary" onClick={goNewAddVideo}>
+              <a
+                className="btn btn-primary"
+                style={{ color: "white" }}
+                onClick={goNewAddVideo}
+              >
                 Add Video
               </a>
             </div>
@@ -107,17 +111,33 @@ const VideosPage = () => {
                     <td>{item?.video_title}</td>
                     <td>
                       <img
-                        src={item?.video_thumbnail || default_thumbnail}
+                        src={
+                          item?.video_link
+                            ? `https://img.youtube.com/vi/${item.video_link
+                                .split("/")
+                                .pop()}/hqdefault.jpg`
+                            : default_thumbnail
+                        }
                         alt="Video Thumbnail"
                         width="100%"
                         height="100%"
+                        style={{borderRadius:"10px"}}
                         onError={(e) => {
                           e.target.onerror = null;
                           e.target.src = default_thumbnail;
                         }}
                       />
                     </td>
-                    <td>{item?.video_link}</td>
+
+                    <td>
+                      <a
+                        href={item?.video_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {item?.video_link}
+                      </a>
+                    </td>
                     <td>
                       <div style={{ display: "flex", gap: "10px" }}>
                         <a
@@ -126,7 +146,7 @@ const VideosPage = () => {
                           target="_blank"
                           onClick={() => handleViewClick(item)}
                         >
-                          <IoIosEye size={18} />
+                          <IoIosEye color="white" size={18} />
                         </a>
                         <a
                           className="btn btn-primary"
@@ -134,7 +154,7 @@ const VideosPage = () => {
                           target="_blank"
                           onClick={() => handleEditClick(item)}
                         >
-                          <FontAwesomeIcon icon={faPencilAlt} />
+                          <FontAwesomeIcon color="white" icon={faPencilAlt} />
                         </a>
                       </div>
                     </td>
@@ -143,39 +163,48 @@ const VideosPage = () => {
               </tbody>
             </table>
             {/* Pagination */}
-            <div className="custom-pagination">
-              <nav>
-                <ul className="pagination">
-                  <li
-                    className={`page-item ${
-                      currentPage === 1 ? "disabled" : ""
-                    }`}
-                    onClick={() => handlePageChange(currentPage - 1)}
-                  >
-                    <span className="page-link">‹</span>
-                  </li>
-                  {Array.from({ length: totalPages }, (_, i) => (
+            {totalPages > 2 ? (
+              <div className="custom-pagination">
+                <nav>
+                  <ul className="pagination">
+                    {/* Previous */}
                     <li
-                      key={i}
                       className={`page-item ${
-                        currentPage === i + 1 ? "active" : ""
+                        currentPage === 1 ? "disabled" : ""
                       }`}
-                      onClick={() => handlePageChange(i + 1)}
+                      onClick={() => handlePageChange(currentPage - 1)}
                     >
-                      <span className="page-link">{i + 1}</span>
+                      <span className="page-link">Previous</span>
                     </li>
-                  ))}
-                  <li
-                    className={`page-item ${
-                      currentPage === totalPages ? "disabled" : ""
-                    }`}
-                    onClick={() => handlePageChange(currentPage + 1)}
-                  >
-                    <span className="page-link">›</span>
-                  </li>
-                </ul>
-              </nav>
-            </div>
+
+                    {/* Page numbers */}
+                    {Array.from({ length: totalPages }, (_, i) => (
+                      <li
+                        key={i}
+                        className={`page-item ${
+                          currentPage === i + 1 ? "active" : ""
+                        }`}
+                        onClick={() => handlePageChange(i + 1)}
+                      >
+                        <span className="page-link">{i + 1}</span>
+                      </li>
+                    ))}
+
+                    {/* Next */}
+                    <li
+                      className={`page-item ${
+                        currentPage === totalPages ? "disabled" : ""
+                      }`}
+                      onClick={() => handlePageChange(currentPage + 1)}
+                    >
+                      <span className="page-link">Next</span>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         )}
       </div>

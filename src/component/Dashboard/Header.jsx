@@ -327,7 +327,10 @@ export default function Dashboard() {
       </div>
 
       <div className={`left-side-bar ${isSidebarOpen ? "open" : ""}`}>
-        <div className="brand-logo" style={{ marginTop: "24px" }}>
+        <div
+          className="brand-logo"
+          style={{ marginTop: "24px", marginBottom: "12px" }}
+        >
           <a>
             <img
               src="https://be.astar8.com/img/Logo.png"
@@ -349,7 +352,12 @@ export default function Dashboard() {
             <div
               id="mCSB_2_container"
               className="mCSB_container"
-              style={{ position: "relative", top: 0, left: 0 }}
+              style={{
+                position: "relative",
+                top: 0,
+                left: 0,
+                marginTop: "0px",
+              }}
               dir="ltr"
             >
               <div className="sidebar-menu">
@@ -688,7 +696,7 @@ export default function Dashboard() {
                         <span className="mtext">Lifecoach Descriptions</span>
                       </NavLink>
                     </li>
-                    <li className="dropdown">
+                    {/* <li className="dropdown">
                       <NavLink
                         to="/subscription_price"
                         className="dropdown-toggle no-arrow"
@@ -699,7 +707,7 @@ export default function Dashboard() {
                         </span>
                         <span className="mtext">Subscription Prices</span>
                       </NavLink>
-                    </li>
+                    </li> */}
                     {/* Helath */}
 
                     <li
@@ -948,7 +956,7 @@ export default function Dashboard() {
 
                     {/* Universal */}
 
-                    <li
+                    {/* <li
                       className="dropdown"
                       style={{ cursor: "pointer", transition: "all 0.3s ease" }}
                     >
@@ -1046,7 +1054,7 @@ export default function Dashboard() {
                           </NavLink>
                         </li>
                       </ul>
-                    </li>
+                    </li> */}
 
                     {/* Fav unfav */}
 
@@ -1403,7 +1411,7 @@ export default function Dashboard() {
                         <span className="mtext">Compatibility Description</span>
                       </NavLink>
                     </li>
-                    <li className="dropdown">
+                    {/* <li className="dropdown">
                       <NavLink
                         to="/general-settings"
                         className="dropdown-toggle no-arrow"
@@ -1414,7 +1422,7 @@ export default function Dashboard() {
                         </span>
                         <span className="mtext">General Setting</span>
                       </NavLink>
-                    </li>
+                    </li> */}
                     <li className="dropdown">
                       <NavLink
                         to="/payment"

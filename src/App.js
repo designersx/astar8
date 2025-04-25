@@ -117,6 +117,10 @@ import BasicMoneyShow from './Pages/BasicMoney/BasicMoneyShow';
 import BasicMoneyEdit from './Pages/BasicMoney/BasicMoneyEdit';
 import DetailedMoneyShow from './Pages/DetailedMoney/DetailedMoneyShow';
 import DetailedMoneyEdit from './Pages/DetailedMoney/DetailedMoneyEdit';
+import CompatibilityPercentageShow from './Pages/CompatibilityPercentage/CompatibilityPercentageShow';
+import CompatibilityPercentageEdit from './Pages/CompatibilityPercentage/CompatibilityPercentageEdit';
+import CompatibilityDescShow from './Pages/CompatibiltyDesc/CompatibilityDescShow';
+import CompatibilityDescEdit from './Pages/CompatibiltyDesc/CompatibilityDescEdit';
 function App() {
   return (
     <AppProvider>
@@ -283,7 +287,15 @@ function App() {
 
 
         <Route path="/compatibility_percentage" element={<PrivateRoute element={CompatibilityPercentage} />} />
+        <Route path="/compatibility_percentage/show" element={<PrivateRoute element={CompatibilityPercentageShow} />} />
+        <Route path="/compatibility_percentage/edit" element={<PrivateRoute element={CompatibilityPercentageEdit} />} />
+
+
         <Route path="/compatibility_description" element={<PrivateRoute element={CompatibiltyDesc} />} />
+        <Route path="/compatibility_description/show" element={<PrivateRoute element={CompatibilityDescShow} />} />
+        <Route path="/compatibility_description/edit" element={<PrivateRoute element={CompatibilityDescEdit} />} />
+
+
         <Route path="/DailyForecast" element={<PrivateRoute element={DailyForecast} />} />
         <Route path="/users" element={<PrivateRoute element={User} />} />
         <Route path="/usermessages" element={<PrivateRoute element={UserMessages} />} />
