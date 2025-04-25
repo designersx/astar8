@@ -75,7 +75,7 @@ const ChatItem = ({ user, onSelectUser }) => {
             <img
               src={
                 user.user_profile_pic
-                  ? user.user_profile_pic
+                  ? `data:image/png;base64,${user.user_profile_pic}`
                   : "https://be.astar8.com/img/default-profile-img.png"
               }
               onError={(e) => {

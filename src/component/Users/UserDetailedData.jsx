@@ -8,7 +8,7 @@ import DashBoardLoader from "../Loader/DashBoardLoader";
 export default function UserDetailedData() {
   const location = useLocation();
   const [userDetails, setUserDetails] = useState(null);
-  console.log("userDetailss", userDetails);
+  // console.log("userDetailss", userDetails);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [formattedDate, setFormattedDate] = useState(null);
@@ -130,7 +130,7 @@ export default function UserDetailedData() {
                         <img
                           src={
                             userDetails.userdetails.profile_pic
-                              ? userDetails.userdetails.profile_pic
+                              ? `data:image/png;base64,${userDetails.userdetails.profile_pic}`
                               : "https://be.astar8.com/img/default-profile-img.png"
                           }
                           onError={(e) => {
