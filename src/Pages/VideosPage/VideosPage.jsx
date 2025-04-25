@@ -90,10 +90,11 @@ const VideosPage = () => {
             </div>
           </div>
         </div>
-        {loading ? (
-          <Loader />
-        ) : (
-          <div className="pd-20 card-box mb-30">
+
+        <div className="pd-20 card-box mb-30">
+          {loading ? (
+            <Loader />
+          ) : (
             <table className="table table-striped">
               <thead>
                 <tr>
@@ -121,7 +122,7 @@ const VideosPage = () => {
                         alt="Video Thumbnail"
                         width="100%"
                         height="100%"
-                        style={{borderRadius:"10px"}}
+                        style={{ borderRadius: "10px" }}
                         onError={(e) => {
                           e.target.onerror = null;
                           e.target.src = default_thumbnail;
@@ -162,51 +163,51 @@ const VideosPage = () => {
                 ))}
               </tbody>
             </table>
-            {/* Pagination */}
-            {totalPages > 2 ? (
-              <div className="custom-pagination">
-                <nav>
-                  <ul className="pagination">
-                    {/* Previous */}
-                    <li
-                      className={`page-item ${
-                        currentPage === 1 ? "disabled" : ""
-                      }`}
-                      onClick={() => handlePageChange(currentPage - 1)}
-                    >
-                      <span className="page-link">Previous</span>
-                    </li>
+          )}
+          {/* Pagination */}
+          {totalPages > 2 ? (
+            <div className="custom-pagination">
+              <nav>
+                <ul className="pagination">
+                  {/* Previous */}
+                  <li
+                    className={`page-item ${
+                      currentPage === 1 ? "disabled" : ""
+                    }`}
+                    onClick={() => handlePageChange(currentPage - 1)}
+                  >
+                    <span className="page-link">Previous</span>
+                  </li>
 
-                    {/* Page numbers */}
-                    {Array.from({ length: totalPages }, (_, i) => (
-                      <li
-                        key={i}
-                        className={`page-item ${
-                          currentPage === i + 1 ? "active" : ""
-                        }`}
-                        onClick={() => handlePageChange(i + 1)}
-                      >
-                        <span className="page-link">{i + 1}</span>
-                      </li>
-                    ))}
-
-                    {/* Next */}
+                  {/* Page numbers */}
+                  {Array.from({ length: totalPages }, (_, i) => (
                     <li
+                      key={i}
                       className={`page-item ${
-                        currentPage === totalPages ? "disabled" : ""
+                        currentPage === i + 1 ? "active" : ""
                       }`}
-                      onClick={() => handlePageChange(currentPage + 1)}
+                      onClick={() => handlePageChange(i + 1)}
                     >
-                      <span className="page-link">Next</span>
+                      <span className="page-link">{i + 1}</span>
                     </li>
-                  </ul>
-                </nav>
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-        )}
+                  ))}
+
+                  {/* Next */}
+                  <li
+                    className={`page-item ${
+                      currentPage === totalPages ? "disabled" : ""
+                    }`}
+                    onClick={() => handlePageChange(currentPage + 1)}
+                  >
+                    <span className="page-link">Next</span>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </>
   );
