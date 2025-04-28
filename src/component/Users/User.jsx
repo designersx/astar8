@@ -702,7 +702,7 @@ export default function User() {
                             className="card-block table-border-style alluserlist"
                             style={{
                               overflow: "auto",
-                              minWidth: "1000px",
+                              minWidth: "962px",
                               marginBottom: "17px",
                             }}
                           >
