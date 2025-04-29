@@ -61,7 +61,7 @@ const CompatibiltyDesc = () => {
       {/* <Header /> */}
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
-          <h2>Compatibility Descriptions</h2>
+          <h2>Relationship Compatibility Descriptions</h2>
         </div>
 
         <div className="pd-20 card-box mb-30">
@@ -74,7 +74,7 @@ const CompatibiltyDesc = () => {
                   <tr>
                     <th>Number</th>
                     <th width="120px">Mate Number</th>
-                    <th>Regular/Spouce Description</th>
+                    <th>Regular/Spouse Description</th>
                     <th>Other Person Description</th>
                     <th>Name Reading Description</th>
                     <th style={{ width: "280px" }}>Action</th>

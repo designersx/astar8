@@ -823,12 +823,10 @@ export default function User() {
                                   <span
                                     className="page-link"
                                     style={{
-                                      color: "black",
-                                      cursor:
-                                        currentPage === 1
-                                          ? "not-allowed"
-                                          : "pointer",
-                                    }}
+  color: currentPage === 1 ? "gray" : "",
+  backgroundColor: currentPage === 1 ? "#f0f0f0" : "",
+  cursor: currentPage === 1 ? "not-allowed" : "pointer",
+}}
                                     onClick={() =>
                                       currentPage > 1 &&
                                       paginate(currentPage - 1)
@@ -919,14 +917,20 @@ export default function User() {
                                   <span
                                     className="page-link"
                                     style={{
-                                      color: "black",
+                                      color:
+                                        currentPage === totalPages || !nextPageToken || user.length < usersPerPage
+                                          ? "gray"
+                                          : "",
+                                      backgroundColor:
+                                        currentPage === totalPages || !nextPageToken || user.length < usersPerPage
+                                          ? "#f0f0f0"
+                                          : "",
                                       cursor:
-                                        currentPage === totalPages ||
-                                        !nextPageToken ||
-                                        user.length < usersPerPage
+                                        currentPage === totalPages || !nextPageToken || user.length < usersPerPage
                                           ? "not-allowed"
                                           : "pointer",
                                     }}
+                                    
                                     onClick={() => {
                                       if (
                                         currentPage !== totalPages &&

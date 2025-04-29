@@ -5,6 +5,7 @@ import { IoIosEye } from "react-icons/io";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { FaUnlock } from "react-icons/fa6";
+import { MdDelete } from "react-icons/md";
 import {
   getHealthCycle,
   deleteHealthCycle,
@@ -104,12 +105,12 @@ const HealthCycle = () => {
                             <FontAwesomeIcon icon={faPencilAlt} />
                           </button>
                           <button
-                            className="btn"
-                            style={{ background: "#28a745" }}
+                            className="btn delete-btn"
+                            // style={{ background: "#28a745" }}
                             onClick={() => handleDelete(id)}
                             title="Delete"
                           >
-                            <FaUnlock size={15} color="white" />
+                            <MdDelete size={19} color="white" />
                           </button>
                         </div>
                       </td>

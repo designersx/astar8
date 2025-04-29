@@ -2,20 +2,22 @@ import React, { useEffect, useState } from "react";
 import Header from "../../component/Dashboard/Header";
 import { getFavParameters, getUnFavParameters } from "../../lib/Store";
 import { FaEdit } from "react-icons/fa";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const monthNames = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
+  "January",
+  "February",
+  "March",
+  "April",
   "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 const FavParameters = () => {
@@ -26,9 +28,7 @@ const FavParameters = () => {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // adjust as needed
-
-  
+  const itemsPerPage = 5; // adjust as needed
 
   // Whenever favParameters changes, reset to page 1
   useEffect(() => {
@@ -85,19 +85,16 @@ const FavParameters = () => {
             console.error("Failed to refetch after edit:", error);
           }
         };
-  
+
         fetchParameters();
       }
     };
-  
+
     window.addEventListener("storage", handleStorageChange);
     return () => {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, [activeMonth]);
-  
-
-  
 
   // Calculate pagination
   const totalItems = favParameters.length;
@@ -127,8 +124,11 @@ const FavParameters = () => {
         <div className="card shadow-sm" style={{ marginBottom: "20px" }}>
           <div className="row no-gutters">
             {/* Month Selector */}
-            <div className="col-md-3 border-right">
-              <div className="list-group list-group-flush">
+            <div className="col-md-2 border-right">
+              <div
+                className="list-group list-group-flush"
+                style={{ maxHeight: "470px", overflowY: "auto" }}
+              >
                 {monthNames.map((name, idx) => {
                   const monthId = idx + 1;
                   return (
@@ -149,7 +149,7 @@ const FavParameters = () => {
             </div>
 
             {/* Data Pane */}
-            <div className="col-md-9">
+            <div className="col-md-10">
               <div className="card-body">
                 <h5 className="card-title">
                   Month of {monthNames[activeMonth - 1]}
@@ -169,7 +169,7 @@ const FavParameters = () => {
                   <>
                     <div className="table-responsive">
                       <table className="table table-striped table-hover">
-                        <thead className="thead-light">
+                        <thead className="">
                           <tr>
                             <th>Date</th>
                             <th>Numbers</th>
@@ -195,14 +195,9 @@ const FavParameters = () => {
                                 <button
                                   onClick={() => handleEdit(item)}
                                   title="Edit"
-                                  style={{
-                                    background: "none",
-                                    border: "none",
-                                    cursor: "pointer",
-                                    padding: 0,
-                                  }}
+                                  className="btn btn-primary"
                                 >
-                                  <FaEdit size={20} />
+                                  <FontAwesomeIcon icon={faPencilAlt} />
                                 </button>
                               </td>
                             </tr>

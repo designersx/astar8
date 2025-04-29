@@ -27,7 +27,7 @@ const HealthSuggestionEdit = () => {
     };
 
     // Validation rules
-    const MIN_WORDS = 5;
+    const MIN_WORDS = 2;
     const MAX_WORDS = 500;
 
     // Perform validation

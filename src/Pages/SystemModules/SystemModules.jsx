@@ -84,7 +84,7 @@ const SystemModules = () => {
                         <Link
                           className="btn btn-primary"
                           onClick={() => handleEditClick(module)}
-                          title="View"
+                          title="Edit"
                         >
                           <FontAwesomeIcon icon={faPencilAlt} />
                         </Link>

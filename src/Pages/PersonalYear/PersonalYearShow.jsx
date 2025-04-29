@@ -47,7 +47,7 @@ const PersonalYearShow = () => {
                     <span>{showData.description}</span>
                   </div>
                   <div className="form-group">
-                    <strong>Love/Realationship:</strong>{" "}
+                    <strong>Love/Relationship:</strong>{" "}
                     <span>{showData.love_relationship}</span>
                   </div>
                   <div className="form-group">

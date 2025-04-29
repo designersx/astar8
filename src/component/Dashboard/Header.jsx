@@ -1382,7 +1382,7 @@ export default function Dashboard() {
                       </ul>
                     </li>
 
-                    <li className="dropdown">
+                    {/* <li className="dropdown">
                       <NavLink
                         to="/compatibility_percentage"
                         className="dropdown-toggle no-arrow"
@@ -1393,7 +1393,7 @@ export default function Dashboard() {
                         </span>
                         <span className="mtext">Compatibility Scale</span>
                       </NavLink>
-                    </li>
+                    </li> */}
                     {/* <li class="dropdown">
               <a href="https://be.astar8.com/commons" class="dropdown-toggle no-arrow">
                   <span class="micon dw dw-library"></span><span class="mtext">common</span>
@@ -1423,7 +1423,7 @@ export default function Dashboard() {
                         <span className="mtext">General Setting</span>
                       </NavLink>
                     </li> */}
-                    <li className="dropdown">
+                    {/* <li className="dropdown">
                       <NavLink
                         to="/payment"
                         className="dropdown-toggle no-arrow"
@@ -1434,7 +1434,7 @@ export default function Dashboard() {
                         </span>
                         <span className="mtext">Payment Setting</span>
                       </NavLink>
-                    </li>
+                    </li> */}
                     <li className="dropdown">
                       <NavLink
                         to="/users"

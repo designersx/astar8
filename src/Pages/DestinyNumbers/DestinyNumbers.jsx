@@ -14,7 +14,7 @@ const DestinyNumbers = () => {
     setLoading(true);
     try {
       const response = await getDestinyNumbers();
-      console.log("response", response);
+      // console.log("response", response);
       showDestinyNumber(response || []);
     } catch (err) {
       console.error("Error fetching elemental numbers:", err);
@@ -91,7 +91,7 @@ const DestinyNumbers = () => {
                             title="View"
                             target="_blank"
                           >
-                            <IoIosEye size={18} />
+                            <IoIosEye color="white" size={18} />
                           </a>
                           <a
                             className="btn btn-primary"
@@ -99,7 +99,7 @@ const DestinyNumbers = () => {
                             target="_blank"
                             onClick={() => handleEditClick(item)}
                           >
-                            <FontAwesomeIcon icon={faPencilAlt} />
+                            <FontAwesomeIcon color="white" icon={faPencilAlt} />
                           </a>
                         </div>
                       </td>
