@@ -11,7 +11,7 @@ const ChatDetails = ({ user, onMessageSent }) => {
   const url = "https://dev.astar8.com"
   // const url = "http://localhost:5234";
   const [userChatMessages, setUserChatMessages] = useState([]);
-  console.log("userrr", user);
+  // console.log("userrr", user);
   const [messageInput, setMessageInput] = useState("");
   const [socket, setSocket] = useState(null);
   const [loading, setLoading] = useState(true); // Add loading state
@@ -44,6 +44,9 @@ const ChatDetails = ({ user, onMessageSent }) => {
       userId: id,
       isSeen: 1,
     };
+    if (userRole == "2") {
+      return;
+    }
     const response = await setSeenMessages(finalDate);
     // console.log("ress",response)
   };
@@ -82,6 +85,9 @@ const ChatDetails = ({ user, onMessageSent }) => {
           formattedMessage,
         ]);
         // console.log("asdsadadsd",user?.user_id)
+        if (userRole == "2") {
+          return;
+        }
         setSeenMessage(user?.user_id);
       }
       onMessageSent();
@@ -138,6 +144,9 @@ const ChatDetails = ({ user, onMessageSent }) => {
         };
 
         try {
+          if (userRole == "2") {
+            return;
+          }
           const response = await setSeenMessages(finalDate);
           // console.log("Message seen response:", response);
         } catch (error) {

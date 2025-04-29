@@ -26,10 +26,10 @@ const CompatibilityPercentageShow = () => {
           <>
             <div className="pd-20 card-box mb-30">
               <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-12">
                   <div className="">
                     <h2>
-                      Number: {showData?.number} Mate Number:
+                      Compatibility for Number: {showData?.number} and Mate Number:
                       {showData?.mate_number}
                     </h2>
                   </div>

@@ -3,9 +3,11 @@ import Header from "../../component/Dashboard/Header";
 import { IoIosEye } from "react-icons/io";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
-import { Videos } from "../../lib/Store";
+import { deleteVideo, Videos } from "../../lib/Store";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../component/Loader/Loader";
+import { MdDelete } from "react-icons/md";
+import Swal from "sweetalert2";
 
 const default_thumbnail = require("../../../src/Assests/img/video_thumbnail.png");
 
@@ -69,6 +71,59 @@ const VideosPage = () => {
       setCurrentPage(page);
     }
   };
+
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (result.isConfirmed) {
+      // Show loading alert
+      Swal.fire({
+        title: "Deleting...",
+        text: "Please wait while we delete the video.",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      try {
+        const response = await deleteVideo(id);
+
+        if (response.status === true) {
+          await Swal.fire(
+            "Deleted!",
+            "Your video has been deleted.",
+            "success"
+          );
+          
+          // getAllVideoList();
+          window.location.reload();
+        } else {
+          await Swal.fire(
+            "Error!",
+            response.message || "Something went wrong.",
+            "error"
+          );
+        }
+      } catch (err) {
+        console.error("Error deleting video:", err);
+        await Swal.fire(
+          "Error!",
+          "Something went wrong. Please try again.",
+          "error"
+        );
+      }
+    }
+  };
+
 
   return (
     <>
@@ -157,6 +212,14 @@ const VideosPage = () => {
                         >
                           <FontAwesomeIcon color="white" icon={faPencilAlt} />
                         </a>
+                        <button
+                          className="btn delete-btn"
+                          // style={{ background: "#28a745" }}
+                          onClick={() => handleDelete(item.id)}
+                          title="Delete"
+                        >
+                          <MdDelete size={19} color="white" />
+                        </button>
                       </div>
                     </td>
                   </tr>

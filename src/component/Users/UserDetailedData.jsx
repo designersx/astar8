@@ -90,7 +90,7 @@ export default function UserDetailedData() {
   return (
     <>
       {loading ? (
-        <div>
+        <div className="main-container">
           <DashBoardLoader />
         </div>
       ) : error ? (

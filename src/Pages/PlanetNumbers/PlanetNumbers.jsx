@@ -45,7 +45,7 @@ const PlanetNumbers = () => {
       {/* <Header /> */}
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
-          <h2>Plannet Numbers</h2>
+          <h2>Planet Numbers</h2>
         </div>
 
         <div className="pd-20 card-box mb-30">

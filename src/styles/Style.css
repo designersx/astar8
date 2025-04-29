@@ -9692,7 +9692,7 @@ input[type="submit"].btn-block {
   margin-left: -1px;
   line-height: 1.25;
   /* color: #1b00ff; */
-  color: #b9b9b9;
+  color: black;
 
   background-color: #fff;
   border: 1px solid #dee2e6;
@@ -20351,6 +20351,16 @@ select.selectpicker {
 }
 
 .custom-active5 {
-  background-color: #2a3146 !important;
+  background-color: #1800e2 !important;
   color: white !important; /* Optional: Ensure text is readable */
+}
+
+.delete-btn {
+  background-color: #28a745;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #1e7e34; /* Light green on hover */
 }

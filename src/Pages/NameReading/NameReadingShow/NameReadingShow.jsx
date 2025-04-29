@@ -61,7 +61,7 @@ const NameReadingShow = () => {
                   <div className="form-group">
                     <strong>Description:</strong>
                     <p className="mt-2">Positive: {positive}</p>
-                    <p>Negetive: {negative}</p>
+                    <p>Negative: {negative}</p>
                   </div>
                 </div>
               </div>

@@ -21,10 +21,10 @@ export default function LifeCoachDescriptionShow() {
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-12">
               <div className="">
                 <h2>
-                  Number: {showData?.number} And {showData?.star_type}{" "}
+                Description {showData?.type === 1 ? "(Day)" : "(Week)"}  For Number: {showData?.number} And {" "}
                   {showData?.star_type === 1
                     ? "Green Star"
                     : showData?.star_type === 2
@@ -35,11 +35,7 @@ export default function LifeCoachDescriptionShow() {
                 </h2>
               </div>
             </div>
-            <div className="col-md-6">
-              <div className="text-right">
-                {/* <a class="btn btn-primary" href="https://be.astar8.com/lifecoach_descriptions"> Back </a> */}
-              </div>
-            </div>
+            
           </div>
         </div>
         <div className="pd-20 card-box mb-30">

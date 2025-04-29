@@ -6,6 +6,7 @@ const ChatItem = ({ user, onSelectUser }) => {
   // console.log("chatitemmmmm", user);
   const [unseenMessagesCount, setUnseenMessagesCount] = useState(0);
   const [isLoading, setisLoading] = useState(false);
+  const userRole = localStorage.getItem("Role")
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "short", day: "numeric" };
@@ -28,17 +29,27 @@ const ChatItem = ({ user, onSelectUser }) => {
   )[0];
 
   const setSeenMessage = async (id) => {
+    if (userRole == "2") {
+      onSelectUser(id);
+      setisLoading(false);
+      return;
+    }
+    
+    
     setisLoading(true);
     const finalDate = {
       userId: id,
       isSeen: 1,
     };
     const response = await setSeenMessages(finalDate);
+
     if (response.status === 200) {
       setisLoading(false);
     }
+
     onSelectUser(id);
   };
+
 
   return (
     <>
@@ -71,7 +82,7 @@ const ChatItem = ({ user, onSelectUser }) => {
           style={{ cursor: "pointer" }}
         >
           {/* Profile Picture */}
-          <div className="me-3 pr-3" style={{  height: "60px" }}>
+          <div className="me-3 pr-3" style={{ height: "60px" }}>
             <img
               src={
                 user.user_profile_pic

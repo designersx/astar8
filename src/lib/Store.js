@@ -670,6 +670,7 @@ export const addVideo = async (formData) => {
     throw err;
   }
 };
+
 //  get videos list api
 export const Videos = async () => {
   try {
@@ -680,7 +681,6 @@ export const Videos = async () => {
     return error;
   }
 };
-
 // edit video list
 export const editVideoList = async (finalData) => {
   try {
@@ -695,6 +695,21 @@ export const editVideoList = async (finalData) => {
     return err;
   }
 };
+// delete Video 
+export const deleteVideo = async (id) => {
+  try {
+    const response = await axios.post(
+      `${Url}/v1qaz2wsx3e/kju78y89ut`,
+      { id }
+    );
+    const data = await response.data;
+    return data;
+  } catch (err) {
+    console.log(err, "error");
+    return err;
+  }
+};
+
 // get lifecoach description
 export const getLifeCoachdescription = async () => {
   try {
