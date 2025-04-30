@@ -3,7 +3,7 @@ import Header from "../../component/Dashboard/Header";
 export default function LifeCoachDescriptionShow() {
   const [showData, setshowData] = useState(null);
   const [loading, setLoading] = useState(true);
-  console.log("ShoWdata", showData);
+  // console.log("ShoWdata", showData);
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("viewData"));
@@ -24,7 +24,7 @@ export default function LifeCoachDescriptionShow() {
             <div className="col-md-12">
               <div className="">
                 <h2>
-                Description {showData?.type === 1 ? "(Day)" : "(Week)"}  For Number: {showData?.number} And {" "}
+                Description of {showData?.type === 1 ? "Day" : "Week"}  for Number: {showData?.number} And {" "}
                   {showData?.star_type === 1
                     ? "Green Star"
                     : showData?.star_type === 2
