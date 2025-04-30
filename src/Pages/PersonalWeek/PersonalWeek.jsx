@@ -6,6 +6,7 @@ import { FaUnlock } from "react-icons/fa6";
 import Header from "../../component/Dashboard/Header";
 import Loader from "../../component/Loader/Loader";
 import { getPersonalWeek } from "../../lib/Store";
+import { FaTools } from "react-icons/fa"; // or any other icon you prefer
 
 const PersonalWeek = () => {
   const [weeks, setWeeks] = useState([]);
@@ -45,92 +46,104 @@ const PersonalWeek = () => {
       {/* <Header /> */}
       <div className="main-container">
         <div className="pd-20 card-box mb-30">
-          <h2>Personal Week (STATIC)</h2>
+          <h2>Personal Week</h2>
         </div>
 
         <div className="pd-20 card-box mb-30">
-          {loading ? (
+          {/* {loading ? (
             <Loader />
           ) : (
-            <div className="card-block table-border-style">
-              <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Number</th>
-                    <th>Description</th>
-                    <th style={{ width: "280px" }}>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {weeks.map(
-                    ({
-                      id,
-                      number,
-                      description,
-                      love_relationship,
-                      health,
-                      career,
-                      travel,
-                    }) => (
-                      <tr key={id}>
-                        <td>{number}</td>
-                        <td>
-                          {description.length > 100
-                            ? `${description.slice(0, 100)}...`
-                            : description}
-                        </td>
-                        <td>
-                          <div style={{ display: "flex", gap: "10px" }}>
-                            <button
-                              className="btn btn-info"
-                              onClick={() =>
-                                handleView({
-                                  id,
-                                  number,
-                                  description,
-                                  love_relationship,
-                                  health,
-                                  career,
-                                  travel,
-                                })
-                              }
-                              title="View"
-                            >
-                              <IoIosEye size={18} />
-                            </button>
-                            <button
-                              className="btn btn-primary"
-                              onClick={() =>
-                                handleEdit({
-                                  id,
-                                  number,
-                                  description,
-                                  love_relationship,
-                                  health,
-                                  career,
-                                  travel,
-                                })
-                              }
-                              title="Edit"
-                            >
-                              <FontAwesomeIcon icon={faPencilAlt} />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    )
-                  )}
-                  {weeks.length === 0 && (
-                    <tr>
-                      <td colSpan={3} style={{ textAlign: "center" }}>
-                        No records found.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+            // <div className="card-block table-border-style">
+            //   <table className="table table-striped">
+            //     <thead>
+            //       <tr>
+            //         <th>Number</th>
+            //         <th>Description</th>
+            //         <th style={{ width: "280px" }}>Action</th>
+            //       </tr>
+            //     </thead>
+            //     <tbody>
+            //       {weeks.map(
+            //         ({
+            //           id,
+            //           number,
+            //           description,
+            //           love_relationship,
+            //           health,
+            //           career,
+            //           travel,
+            //         }) => (
+            //           <tr key={id}>
+            //             <td>{number}</td>
+            //             <td>
+            //               {description.length > 100
+            //                 ? `${description.slice(0, 100)}...`
+            //                 : description}
+            //             </td>
+            //             <td>
+            //               <div style={{ display: "flex", gap: "10px" }}>
+            //                 <button
+            //                   className="btn btn-info"
+            //                   onClick={() =>
+            //                     handleView({
+            //                       id,
+            //                       number,
+            //                       description,
+            //                       love_relationship,
+            //                       health,
+            //                       career,
+            //                       travel,
+            //                     })
+            //                   }
+            //                   title="View"
+            //                 >
+            //                   <IoIosEye size={18} />
+            //                 </button>
+            //                 <button
+            //                   className="btn btn-primary"
+            //                   onClick={() =>
+            //                     handleEdit({
+            //                       id,
+            //                       number,
+            //                       description,
+            //                       love_relationship,
+            //                       health,
+            //                       career,
+            //                       travel,
+            //                     })
+            //                   }
+            //                   title="Edit"
+            //                 >
+            //                   <FontAwesomeIcon icon={faPencilAlt} />
+            //                 </button>
+            //               </div>
+            //             </td>
+            //           </tr>
+            //         )
+            //       )}
+            //       {weeks.length === 0 && (
+            //         <tr>
+            //           <td colSpan={3} style={{ textAlign: "center" }}>
+            //             No records found.
+            //           </td>
+            //         </tr>
+            //       )}
+            //     </tbody>
+            //   </table>
+            // </div>
+            <div style={{ textAlign: "center", padding: "40px 0" }}>
+              <FaTools size={40} color="#888" />
+              <h4 style={{ marginTop: "10px", color: "#555" }}>
+                Personal Week is coming soon
+              </h4>
             </div>
-          )}
+          )} */}
+          <div style={{ textAlign: "center", padding: "40px 0" }}>
+            <FaTools size={40} color="#888" />
+            <h4 style={{ marginTop: "10px", color: "#555" }}>
+              Personal Week is coming soon
+            </h4>
+          </div>
         </div>
       </div>
     </>

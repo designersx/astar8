@@ -124,7 +124,7 @@ const UnfavParamaters = () => {
         <div className="card shadow-sm" style={{ marginBottom: "20px" }}>
           <div className="row no-gutters">
             {/* Month Selector */}
-            <div className="col-md-3 border-right">
+            <div className="col-md-2 border-right">
               <div
                 className="list-group list-group-flush"
                 style={{ maxHeight: "470px", overflowY: "auto" }}
@@ -149,7 +149,7 @@ const UnfavParamaters = () => {
             </div>
 
             {/* Data Pane */}
-            <div className="col-md-9">
+            <div className="col-md-10">
               <div className="card-body">
                 <h5 className="card-title">
                   Month of {monthNames[activeMonth - 1]}
