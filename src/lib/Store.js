@@ -153,7 +153,7 @@ export const getAllUsers = async (token, status = null) => {
 };
 
 export const getAdminUserMessages = async (finalData) => {
-  console.log("dasdsa", finalData);
+  // console.log("dasdsa", finalData);
   try {
     const response = await axios.post(
       `${Url}/a3dm8k40ok/4fdfg8trc1`,
@@ -229,7 +229,7 @@ export const addDailyForecast = async (token, date, prediction, user_id) => {
 
 // get forecast
 export const getForecastData = async (token, status) => {
-  console.log("statusss", status);
+  // console.log("statusss", status);
   try {
     const response = await axios.get(
       `${Url}/p1g6s9ik3n/dlyf45v3rf?status=${status}`,
@@ -263,7 +263,7 @@ export const dashboardApi = async (req, res) => {
 // .. user details data click on eye in user page
 
 export const userDetailedData = async (user_id, token) => {
-  console.log("dasasdd", user_id);
+  // console.log("dasasdd", user_id);
   try {
     const response = await axios.get(
       `${Url}/u163mjh02f/usrdlsp87a/${user_id}`,
@@ -382,7 +382,7 @@ export const subscriptionsUpdateUser = async (finalData) => {
 
 // Payment setting change api
 export const paymentSettingChange = async (finalData) => {
-  console.log("asdasd0000000000", finalData);
+  // console.log("asdasd0000000000", finalData);
   try {
     const response = await axios.post(`${Url}/stripe/458fjiy5dt`, finalData);
     const data = await response.data;
@@ -495,7 +495,7 @@ export const getLuckiestParameter = async () => {
 };
 // edit Master Number
 export const editLuckiestParameter = async (finalData) => {
-  console.log("finalData", finalData);
+  // console.log("finalData", finalData);
   try {
     const response = await axios.put(`${Url}/fg47ghrfgf/123cvb4fg7`, finalData);
     const data = await response.data;
@@ -520,7 +520,7 @@ export const getNameReading = async () => {
 };
 // edit Name Reading
 export const editNameReading = async (finalData) => {
-  console.log("finalData", finalData);
+  // console.log("finalData", finalData);
   try {
     const response = await axios.put(`${Url}/174hs0ad4m/e10amvrghp`, finalData);
     const data = await response.data;
@@ -545,7 +545,7 @@ export const getDobReading = async () => {
 };
 // edit DOB Reading
 export const editDobReading = async (finalData) => {
-  console.log("finalData", finalData);
+  // console.log("finalData", finalData);
   try {
     const response = await axios.put(`${Url}/2w7ui45io9/ed19ik45mo`, finalData);
     const data = await response.data;
@@ -598,7 +598,7 @@ export const getMagicBox = async () => {
 };
 // edit Magic Box
 export const editMagicBox = async (finalData) => {
-  console.log("finalData", finalData);
+  // console.log("finalData", finalData);
   try {
     const response = await axios.put(`${Url}/m1q2derf54/me30mjn45b`, finalData);
     const data = await response.data;
@@ -623,7 +623,7 @@ export const getElementalNumber = async () => {
 };
 // edit Elemental number
 export const editElementalNumber = async (finalData) => {
-  console.log("finalData", finalData);
+  // console.log("finalData", finalData);
   try {
     const response = await axios.put(`${Url}/m1q2derf54/me30mjn45b`, finalData);
     const data = await response.data;
@@ -761,7 +761,7 @@ export const filterUsers = async (
   pageNumber = 1,
   pageToken = null
 ) => {
-  console.log("Dataa", name, email, subscription, platform, pageToken);
+  // console.log("Dataa", name, email, subscription, platform, pageToken);
   try {
     let url = `${Url}/u1r5a03ki8/ufrm8u4j8i?`;
     const params = new URLSearchParams();
@@ -807,7 +807,7 @@ export const getPaymentSettingData = async () => {
 };
 // update version
 export const updateVersion = async (platform, version) => {
-  console.log(version, platform, "version,platofrm");
+  // console.log(version, platform, "version,platofrm");
   try {
     const response = await axios.post(`${Url}/lvp4m6m7f5/plv5mg8i3d`, {
       platform,
@@ -824,7 +824,7 @@ export const updateVersion = async (platform, version) => {
 export const getLatestVersions = async (req, res) => {
   try {
     const response = await axios.get(`${Url}/lvp4m6m7f5/glvp3m7m5r`);
-    console.log(response, "response");
+    // console.log(response, "response");
     const data = await response.data;
     return data;
   } catch (error) {
@@ -894,7 +894,7 @@ export const getHealthPrecautions = async () => {
 };
 // edit Health Precautions
 export const editHealthPrecautions = async (finalData) => {
-  console.log("dadsa", finalData);
+  // console.log("dadsa", finalData);
   try {
     const response = await axios.put(`${Url}/hj76m4dgm4/ehj6545654`, finalData);
     const data = await response.data;
@@ -975,7 +975,7 @@ export const getPersonalYear = async () => {
 };
 // edit Health Suggestions
 export const editPersonal = async (id, finalData) => {
-  console.log("finalData", finalData);
+  // console.log("finalData", finalData);
   try {
     const response = await axios.put(`${Url}/edpymk5mkd/${id}`, finalData);
     const data = await response.data;
