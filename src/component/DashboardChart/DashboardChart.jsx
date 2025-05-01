@@ -25,7 +25,7 @@ const DashboardChart = () => {
   const [compDays, setCompDays] = useState("week");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedLine, setSelectedLine] = useState("all"); // Default selection: 'car'
+  const [selectedLine, setSelectedLine] = useState("all");
 
   const fetchHistory = async () => {
     setLoading(true);
@@ -75,6 +75,77 @@ const DashboardChart = () => {
   // Function to check if a line should be shown
   const shouldShowLine = (line) => {
     return selectedLine === "all" || selectedLine === line;
+  };
+
+  const filteredData1 = () => {
+    const rawSlice = compDays === "month" ? data : data.slice(-7);
+
+    const arr = rawSlice.map((item) => ({
+      date: item.date,
+      car: item.car || 0,
+      business: item.business || 0,
+      property: item.property || 0,
+      relation: item.relation || 0,
+      other: item.other || 0,
+      travel: item.travel || 0,
+    }));
+
+    if (arr.length === 1) {
+      const single = arr[0];
+      // first: zero values with an empty date
+      const zeroPoint = {
+        date: "",
+        car: 0,
+        business: 0,
+        property: 0,
+        relation: 0,
+        other: 0,
+        travel: 0,
+      };
+      // second: the real data on its actual date
+      return [zeroPoint, single];
+    }
+
+    return arr;
+  };
+
+  const CustomTooltip = ({ active }) => {
+    if (!active) return null;
+
+    const hoverData = filteredData1()[1] || {};
+    // decide which keys to render
+    const keysToShow =
+      selectedLine === "all" ? Object.keys(COLORS) : [selectedLine];
+
+    return (
+      <div
+        style={{
+          background: "#fff",
+          border: "1px solid #ccc",
+          borderRadius: 8,
+          padding: 10,
+        }}
+      >
+        <p style={{ margin: 0, fontSize: 12, color: "#666" }}>
+          {hoverData.date}
+        </p>
+        {keysToShow.map((key) => (
+          <p
+            key={key}
+            style={{
+              margin: "4px 0",
+              fontSize: 16,
+              color: COLORS[key],
+            }}
+          >
+            {key === "other"
+              ? "Other Person's Compatibility"
+              : `${key.charAt(0).toUpperCase() + key.slice(1)} Compatibility`}
+            : {hoverData[key]}
+          </p>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -162,6 +233,65 @@ const DashboardChart = () => {
                 Loading Chart...
               </h4>
             </div>
+          ) : filteredData().length === 1 ? (
+            <ResponsiveContainer width="100%" height={450}>
+              <LineChart
+                data={filteredData1()}
+                margin={{ top: 20, right: 30, left: -10, bottom: 50 }} // Increased bottom margin for legend
+              >
+                <CartesianGrid strokeDasharray="4 4" opacity={0.3} />
+                <XAxis
+                  dataKey="date"
+                  tickFormatter={(date) => {
+                    const d = new Date(date);
+                    return isNaN(d)
+                      ? date
+                      : d.toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "2-digit",
+                        });
+                  }}
+                  tick={{ fontSize: 13 }}
+                />
+                <YAxis tick={{ fontSize: 13 }} />
+                <Tooltip
+                  content={<CustomTooltip />}
+                  cursor={{ stroke: "#ddd", strokeWidth: 2 }}
+                />
+
+                {/* Render the selected line(s) */}
+                {Object.keys(COLORS).map((line) =>
+                  shouldShowLine(line) ? (
+                    <Line
+                      key={line}
+                      type="monotone"
+                      dataKey={line}
+                      stroke={COLORS[line]}
+                      strokeWidth={2.5}
+                      dot={false} // Disable the default dots
+                      activeDot={{ r: 6 }} // Show dot on hover
+                      name={
+                        line === "other"
+                          ? "Other Person's Compatibility"
+                          : `${line.charAt(0).toUpperCase()}${line.slice(
+                              1
+                            )} Compatibility`
+                      }
+                    />
+                  ) : null
+                )}
+
+                {/* Legend moved below */}
+                <Legend
+                  verticalAlign="bottom"
+                  wrapperStyle={{
+                    bottom: "15px",
+                    left: "20px",
+                    // cursor: "pointer",
+                  }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           ) : (
             <ResponsiveContainer width="100%" height={450}>
               <LineChart
