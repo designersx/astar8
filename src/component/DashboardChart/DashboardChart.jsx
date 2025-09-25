@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   LineChart,
   Line,
@@ -23,6 +23,8 @@ const COLORS = {
 
 const DashboardChart = () => {
   const [compDays, setCompDays] = useState("week");
+  const getMonthKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+  const [selectedMonth, setSelectedMonth] = useState(getMonthKey(new Date()));
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedLine, setSelectedLine] = useState("all");
@@ -47,9 +49,32 @@ const DashboardChart = () => {
     fetchHistory();
   }, []);
 
-  const handleSelectChange = (e) => {
-    setCompDays(e.target.value);
-  };
+  // const handleSelectChange = (e) => {
+  //   setCompDays(e.target.value);
+  // };
+
+  const lastSixMonths = useMemo(() => {
+    const now = new Date();
+    const arr = [];
+    for (let i = 5; i >= 0; i--) {
+      const start = new Date(now.getFullYear(), now.getMonth() - i, 1, 0, 0, 0, 0);
+      const end = new Date(now.getFullYear(), now.getMonth() - i + 1, 0, 23, 59, 59, 999);
+      arr.push({
+        key: getMonthKey(start), // "YYYY-MM"
+        label: start.toLocaleString("en-US", { month: "short", year: "numeric" }), // e.g. "Apr 2025"
+        start, end,
+      });
+    }
+    return arr;
+  }, []);
+
+  // Make sure initial selection is in the 6-month list
+  useEffect(() => {
+    if (!lastSixMonths.some(m => m.key === selectedMonth)) {
+      setSelectedMonth(lastSixMonths[lastSixMonths.length - 1].key);
+    }
+  }, [lastSixMonths, selectedMonth]);
+
 
   const handleLineSelectionChange = (e) => {
     setSelectedLine(e.target.value); // Update selected line
@@ -72,33 +97,45 @@ const DashboardChart = () => {
     setSelectedLine("all"); // Reset to the default selection: 'car'
   };
 
-  // New logic
-  const toDate = (d) => new Date(d); // item.date is like "Fri Aug 01 2025"
-  const now = new Date();
-  const startOfCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-  const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-  const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999);
+  // // New logic
+  // const toDate = (d) => new Date(d); // item.date is like "Fri Aug 01 2025"
+  // const now = new Date();
+  // const startOfCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  // const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  // const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999);
 
+  // const getRangeData = () => {
+  //   if (!Array.isArray(data) || data.length === 0) return [];
+
+  //   if (compDays === "week") {
+  //     // keep the last 7 points (already sorted from backend)
+  //     return data.slice(-7);
+  //   }
+
+  //   if (compDays === "lastMonth") {
+  //     // only last month dates
+  //     return data.filter((item) => {
+  //       const d = toDate(item.date);
+  //       return d >= startOfLastMonth && d <= endOfLastMonth;
+  //     });
+  //   }
+
+  //   // "month" -> only current month dates
+  //   return data.filter((item) => {
+  //     const d = toDate(item.date);
+  //     return d >= startOfCurrentMonth; // up to today (data already capped)
+  //   });
+  // };
+
+  const toDate = (d) => new Date(d); // item.date like "Tue Apr 01 2025"
   const getRangeData = () => {
     if (!Array.isArray(data) || data.length === 0) return [];
-
-    if (compDays === "week") {
-      // keep the last 7 points (already sorted from backend)
-      return data.slice(-7);
-    }
-
-    if (compDays === "lastMonth") {
-      // only last month dates
-      return data.filter((item) => {
-        const d = toDate(item.date);
-        return d >= startOfLastMonth && d <= endOfLastMonth;
-      });
-    }
-
-    // "month" -> only current month dates
+    const monthMeta = lastSixMonths.find(m => m.key === selectedMonth);
+    if (!monthMeta) return [];
+    const { start, end } = monthMeta;
     return data.filter((item) => {
       const d = toDate(item.date);
-      return d >= startOfCurrentMonth; // up to today (data already capped)
+      return d >= start && d <= end;
     });
   };
 
@@ -244,7 +281,7 @@ const DashboardChart = () => {
                 </select>
 
                 {/* Time Period Dropdown */}
-                <select
+                {/* <select
                   className="custom-select col-sm-3 col-md-2"
                   value={compDays}
                   onChange={handleSelectChange}
@@ -258,6 +295,18 @@ const DashboardChart = () => {
                   <option value="week">This Week</option>
                   <option value="month">This Month</option>
                   <option value="lastMonth">Last Month</option> {/* ⬅️ new */}
+                {/* </select> */}
+
+                +{/* Month Dropdown: last 6 recent months */}
+                <select
+                  className="custom-select col-sm-3 col-md-2"
+                  value={selectedMonth}
+                  onChange={(e) => setSelectedMonth(e.target.value)}
+                  style={{ marginLeft: "10px", cursor: "pointer", width: "170px", maxWidth: "fit-content" }}
+                >
+                  {lastSixMonths.map((m) => (
+                    <option key={m.key} value={m.key}>{m.label}</option>
+                  ))}
                 </select>
               </div>
             </div>
