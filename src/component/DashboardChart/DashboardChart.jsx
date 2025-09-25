@@ -55,9 +55,55 @@ const DashboardChart = () => {
     setSelectedLine(e.target.value); // Update selected line
   };
 
-  const filteredData = () => {
-    const rawData = compDays === "month" ? data : data.slice(-7);
-    return rawData.map((item) => ({
+  // const filteredData = () => {
+  //   const rawData = compDays === "month" ? data : data.slice(-7);
+  //   return rawData.map((item) => ({
+  //     date: item.date,
+  //     car: item.car || 0,
+  //     business: item.business || 0,
+  //     property: item.property || 0,
+  //     relation: item.relation || 0,
+  //     other: item.other || 0,
+  //     travel: item.travel || 0,
+  //   }));
+  // };
+
+  const handleReset = () => {
+    setSelectedLine("all"); // Reset to the default selection: 'car'
+  };
+
+  // New logic
+  const toDate = (d) => new Date(d); // item.date is like "Fri Aug 01 2025"
+  const now = new Date();
+  const startOfCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999);
+
+  const getRangeData = () => {
+    if (!Array.isArray(data) || data.length === 0) return [];
+
+    if (compDays === "week") {
+      // keep the last 7 points (already sorted from backend)
+      return data.slice(-7);
+    }
+
+    if (compDays === "lastMonth") {
+      // only last month dates
+      return data.filter((item) => {
+        const d = toDate(item.date);
+        return d >= startOfLastMonth && d <= endOfLastMonth;
+      });
+    }
+
+    // "month" -> only current month dates
+    return data.filter((item) => {
+      const d = toDate(item.date);
+      return d >= startOfCurrentMonth; // up to today (data already capped)
+    });
+  };
+
+  const normalize = (arr) =>
+    arr.map((item) => ({
       date: item.date,
       car: item.car || 0,
       business: item.business || 0,
@@ -66,48 +112,61 @@ const DashboardChart = () => {
       other: item.other || 0,
       travel: item.travel || 0,
     }));
+
+  const filteredData = () => normalize(getRangeData());
+
+  // keep your “one-point” padding logic for nicer tooltip/line rendering
+  const filteredData1 = () => {
+    const arr = normalize(getRangeData());
+    if (arr.length === 1) {
+      return [
+        { date: "", car: 0, business: 0, property: 0, relation: 0, other: 0, travel: 0 },
+        arr[0],
+      ];
+    }
+    return arr;
   };
 
-  const handleReset = () => {
-    setSelectedLine("all"); // Reset to the default selection: 'car'
-  };
+
+
+
 
   // Function to check if a line should be shown
   const shouldShowLine = (line) => {
     return selectedLine === "all" || selectedLine === line;
   };
 
-  const filteredData1 = () => {
-    const rawSlice = compDays === "month" ? data : data.slice(-7);
+  // const filteredData1 = () => {
+  //   const rawSlice = compDays === "month" ? data : data.slice(-7);
 
-    const arr = rawSlice.map((item) => ({
-      date: item.date,
-      car: item.car || 0,
-      business: item.business || 0,
-      property: item.property || 0,
-      relation: item.relation || 0,
-      other: item.other || 0,
-      travel: item.travel || 0,
-    }));
+  //   const arr = rawSlice.map((item) => ({
+  //     date: item.date,
+  //     car: item.car || 0,
+  //     business: item.business || 0,
+  //     property: item.property || 0,
+  //     relation: item.relation || 0,
+  //     other: item.other || 0,
+  //     travel: item.travel || 0,
+  //   }));
 
-    if (arr.length === 1) {
-      const single = arr[0];
-      // first: zero values with an empty date
-      const zeroPoint = {
-        date: "",
-        car: 0,
-        business: 0,
-        property: 0,
-        relation: 0,
-        other: 0,
-        travel: 0,
-      };
-      // second: the real data on its actual date
-      return [zeroPoint, single];
-    }
+  //   if (arr.length === 1) {
+  //     const single = arr[0];
+  //     // first: zero values with an empty date
+  //     const zeroPoint = {
+  //       date: "",
+  //       car: 0,
+  //       business: 0,
+  //       property: 0,
+  //       relation: 0,
+  //       other: 0,
+  //       travel: 0,
+  //     };
+  //     // second: the real data on its actual date
+  //     return [zeroPoint, single];
+  //   }
 
-    return arr;
-  };
+  //   return arr;
+  // };
 
   const CustomTooltip = ({ active }) => {
     if (!active) return null;
@@ -147,6 +206,8 @@ const DashboardChart = () => {
       </div>
     );
   };
+
+
 
   return (
     <div className="row" style={{ marginTop: "15px" }}>
@@ -196,6 +257,7 @@ const DashboardChart = () => {
                 >
                   <option value="week">This Week</option>
                   <option value="month">This Month</option>
+                  <option value="lastMonth">Last Month</option> {/* ⬅️ new */}
                 </select>
               </div>
             </div>
@@ -247,9 +309,9 @@ const DashboardChart = () => {
                     return isNaN(d)
                       ? date
                       : d.toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "2-digit",
-                        });
+                        month: "short",
+                        day: "2-digit",
+                      });
                   }}
                   tick={{ fontSize: 13 }}
                 />
@@ -274,8 +336,8 @@ const DashboardChart = () => {
                         line === "other"
                           ? "Other Person's Compatibility"
                           : `${line.charAt(0).toUpperCase()}${line.slice(
-                              1
-                            )} Compatibility`
+                            1
+                          )} Compatibility`
                       }
                     />
                   ) : null
@@ -306,9 +368,9 @@ const DashboardChart = () => {
                     return isNaN(d)
                       ? date
                       : d.toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "2-digit",
-                        });
+                        month: "short",
+                        day: "2-digit",
+                      });
                   }}
                   tick={{ fontSize: 13 }}
                 />
@@ -337,8 +399,8 @@ const DashboardChart = () => {
                         line === "other"
                           ? "Other Person's Compatibility"
                           : `${line.charAt(0).toUpperCase()}${line.slice(
-                              1
-                            )} Compatibility`
+                            1
+                          )} Compatibility`
                       }
                     />
                   ) : null
